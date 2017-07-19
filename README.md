@@ -1,12 +1,6 @@
-The cardline project
-====================
-====================
+The cardline project (Work in progress)
+=======================================
 
-Work in progress
-================
-
-Description
-===========
 
 There is a simple game project make with [Haxeflixel](http://haxeflixel.com/).
 
