@@ -1,91 +1,66 @@
 package state;
 
+import assets.AssetPaths;
 import data.manager.CardExtentionManager;
 import data.card.CardsExtention;
 import data.manager.GameDatas;
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.util.FlxSort;
+import openfl.Assets;
 import source.data.card.CardData;
 import source.ui.skin.CardSkin;
 import ui.group.CardSkinGroup;
+import ui.zone.DeckUi;
+import ui.zone.MainHandUi;
+import flixel.addons.display.FlxBackdrop;
 
 class PlayState extends FlxState
 {
-	private static var m_maxCardsOnMainHand : Int = 6 ;
+	private static var m_maxCardOnHand : Int = 6;
 	
-	private var m_playedExtention : Array<String>;
+	private var m_board : FlxSprite;
 	
-	//raw data
-	private var m_deck : Array<CardData>;
-	private var m_onHand : Array<CardData>;
-	private var m_graveyard : Array<CardData>;
+	private var m_deckUI : DeckUi;
 	
-	//display only
-	private var m_mainHand : CardSkinGroup;
+	private var m_mainHandUI : MainHandUi;
+
 
 	override public function create():Void
 	{
 		super.create();	
-		m_playedExtention = GameDatas.self.extentionManager.getAllExtentionsName();
-		m_mainHand = new CardSkinGroup();
 		
-		fillDeck();
+		m_board = new FlxSprite(0, 0, AssetPaths.board__jpg);
 		
-		this.add(m_mainHand.groups);
-		fillMainHand();
+		m_deckUI = new DeckUi(GameDatas.self.extentionManager.getAllExtentionsName());
+		m_mainHandUI = new MainHandUi(m_maxCardOnHand);
+		
+		for (i in 0...m_maxCardOnHand)
+		{
+			deckToMainHand();
+		}
+		
+		this.add(m_board);
+		m_deckUI.attachTo(this);
+		m_mainHandUI.attachTo(this);
 	}
 
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-		m_mainHand.sortCard();
+		m_mainHandUI.update(elapsed);
 	}
 	
-	private function fillDeck() : Void
+	private function deckToMainHand() : Void
 	{
-		m_deck = new Array<CardData>();
-		m_onHand = new Array<CardData>();
-		m_graveyard = new Array<CardData>();
-		
-		for (extName in m_playedExtention)
-		{
-			var ext : CardsExtention = GameDatas.self.extentionManager.getExtentionByName(extName);
-			
-			if (ext == null)
-				continue;
-				
-			m_deck = m_deck.concat(ext.GetAllCard());
-		}
+		var cardDrawed = m_deckUI.drawACard();
+		if (!m_mainHandUI.addToHand(cardDrawed))
+			m_deckUI.putCard(cardDrawed);
 	}
 	
-	private function fillMainHand() : Void
-	{
-		for (i in 0...m_maxCardsOnMainHand)
-		{
-			drawACard();
-		}
-	}
-	
-	/**
-	 * Pick a random card on a random Played Extention
-	 * @return
-	 */
-	private function drawACard() : Void
-	{
-		if (m_deck == null || m_deck.length == 0)
-			return;
-		
-		var rand = Std.random(m_deck.length);
-		
-		var card = m_deck[rand];
-		
-		if (card == null)
-			return;
-			
-		m_onHand.push(card);
-		m_mainHand.add(new CardSkin(card));
-		m_deck.remove(card);
-	}
+
+
 }

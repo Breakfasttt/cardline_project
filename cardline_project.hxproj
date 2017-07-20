@@ -6,8 +6,8 @@
     <movie input="" />
     <movie path="Project.xml" />
     <movie fps="60" />
-    <movie width="800" />
-    <movie height="600" />
+    <movie width="1280" />
+    <movie height="720" />
     <movie version="1" />
     <movie minorVersion="0" />
     <movie platform="Lime" />
@@ -18,13 +18,15 @@
     <class path="C:\dev\HaxeToolkit\haxe\lib\flixel\4,2,1" />
     <class path="C:\dev\HaxeToolkit\haxe\lib\openfl\3,6,1" />
     <class path="C:\dev\HaxeToolkit\haxe\lib\lime\2,9,1" />
+    <class path="C:\dev\HaxeToolkit\haxe\lib\flixel-addons\2,4,1" />
+    <class path="C:\dev\HaxeToolkit\haxe\lib\flixel-ui\2,2,0" />
     <class path="source" />
     <class path="C:\dev\HaxeToolkit\haxe\lib\openfl\3,6,1\extern" />
     <class path="export\flash\haxe" />
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="flixel=4.2.1&#xA;openfl=3.6.1&#xA;lime=2.9.1&#xA;HXCPP_QUIET&#xA;openfl-next&#xA;tools=2.9.1&#xA;no-compilation&#xA;openfl-flash&#xA;web&#xA;display" />
+    <option directives="flixel=4.2.1&#xA;openfl=3.6.1&#xA;lime=2.9.1&#xA;flixel-addons=2.4.1&#xA;flixel-ui=2.2.0&#xA;HXCPP_QUIET&#xA;openfl-next&#xA;tools=2.9.1&#xA;no-compilation&#xA;openfl-flash&#xA;web&#xA;display" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />

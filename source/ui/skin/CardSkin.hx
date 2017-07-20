@@ -19,8 +19,8 @@ import source.data.card.CardData;
 class CardSkin extends FlxTypedGroup<FlxSprite>
 {
 
-	public static var m_cardWidth : Int = 150;
-	public static var m_cardHeight : Int = 200;
+	public static var cardWidth : Int = 150;
+	public static var cardHeight : Int = 200;
 	
 	private var m_cardDataRef : CardData;
 	
@@ -36,13 +36,27 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	
 	public var draggable : Bool;
 	
+	/**
+	 * Called when dragg start
+	 */
+	public var onStartDragCallback : CardSkin->Void;
+	
+	/**
+	 * Called when dragg stop
+	 */
+	public var onStopDragCallback : CardSkin->Void;
+	 
+	/**
+	 * Called when dragging adn AFTER position update
+	 */
+	public var onDragCallback : CardSkin->Void;
 	
 	public function new(cardData : CardData = null) 
 	{
 		super(3);
 		
 		m_background = new FlxSprite(0, 0, null);
-		m_background.makeGraphic(m_cardWidth, m_cardHeight, FlxColor.WHITE, false, "cardBackground");
+		m_background.makeGraphic(cardWidth, cardHeight, FlxColor.WHITE, false, "cardBackground");
 		
 		m_titleTxt = new FlxText(0, 0, -1, "", 16);
 		m_valueTxt = new FlxText(0, 0, -1, "", 16);
@@ -60,7 +74,6 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		FlxMouseEventManager.add(m_background, onMouseDown, onMouseUp);
 		
 		setCardData(cardData);
-		
 	}
 	
 	public function setCardData(cardData : CardData) : Void
@@ -128,8 +141,11 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 			return;
 		
 		isDrag = true;
-		m_mouseOffsetX = FlxG.mouse.x - cast(m_background.x,Int);
-		m_mouseOffsetY = FlxG.mouse.y - cast(m_background.y, Int);
+		m_mouseOffsetX = FlxG.mouse.x - Math.ceil(m_background.x);
+		m_mouseOffsetY = FlxG.mouse.y - Math.ceil(m_background.y);
+		
+		if (onStartDragCallback != null)
+			onStartDragCallback(this);
 	}
 	
 	private function stopDrag()
@@ -138,15 +154,15 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 			return;
 		
 		isDrag = false;
+
+		if (onStopDragCallback != null)
+			onStopDragCallback(this);
 	}
 	
 	private function onDrag() : Void
 	{
 		if (!isDrag)
 			return;
-			
-		//if (FlxG.mouse.justReleased)
-			//m_onDrag = false;
 			
 		m_background.x = FlxG.mouse.x - m_mouseOffsetX;
 		m_background.y = FlxG.mouse.y - m_mouseOffsetY;
@@ -163,6 +179,10 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		
 		if ( m_background.y  > (FlxG.height - m_background.height ))
 			m_background.y = FlxG.height - m_background.height;
+			
+
+		if (onDragCallback != null)
+			onDragCallback(this);			
 	}
 	
 	
@@ -171,6 +191,11 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		setVisible(!isVisible);
 	}
 	
+	/**
+	 * Hide or show the value.
+	 * todo : change background skin
+	 * @param	vis
+	 */
 	public function setVisible(vis : Bool)
 	{
 		isVisible = vis;	
@@ -186,6 +211,13 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 			//m_titleTxt.revive();
 			m_valueTxt.revive();
 		}
+	}
+	
+	public function setPosition(x : Float, y : Float)
+	{
+		m_background.x = x;
+		m_background.y = y;
+		updateTextPosition();
 	}
 	
 }

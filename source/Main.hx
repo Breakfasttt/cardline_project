@@ -14,7 +14,7 @@ class Main extends Sprite
 	{
 		super();
 		
-		addChild(new FlxGame(800, 600, LoadingState, 1.0, 60 , 60, true, false));
+		addChild(new FlxGame(1920, 1080, LoadingState, 1.0, 60 , 60, true, false));
 		FlxG.plugins.add(new FlxMouseEventManager());
 		
 	}
