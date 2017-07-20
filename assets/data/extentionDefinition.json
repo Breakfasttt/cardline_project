@@ -1,0 +1,14 @@
+{
+	"extentionFolder":"assets/data/extentions/",
+	"allExtentions":
+	[
+		{
+			"extentionName":"Jeu de base",
+			"extentionFile":"baseExtention.json"
+		},
+		{
+			"extentionName":"Les inventions",
+			"extentionFile":"inventionsExtention.json"
+		}
+	]
+}

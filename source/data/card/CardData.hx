@@ -6,10 +6,8 @@ import flixel.FlxSprite;
  * ...
  * @author Breakyt
  */
-class TLCard 
+class CardData 
 {
-	
-	public var skin(default, null) : FlxSprite;
 	
 	public var name(default,null) : String;
 	public var year(default,null) : Int;
@@ -18,14 +16,12 @@ class TLCard
 	{
 		this.name = name;
 		this.year = year;
-		this.skin = null;
 	}
 	
 	public function release()
 	{
 		this.name = null;
 		this.year = -1;
-		this.skin = null;
 	}
 	
 }

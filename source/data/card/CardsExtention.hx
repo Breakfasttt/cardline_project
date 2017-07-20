@@ -4,7 +4,7 @@ import flixel.FlxG;
 import flixel.system.debug.log.Log;
 import haxe.Json;
 import openfl.Assets;
-import source.data.card.TLCard;
+import source.data.card.CardData;
 
 /**
  * ...
@@ -17,7 +17,7 @@ import source.data.card.TLCard;
 	var year : Int;
  }
  
-class CardsExtension 
+class CardsExtention 
 {
 
 	public var name(default, null) : String;
@@ -28,7 +28,7 @@ class CardsExtension
 	
 	private var m_rawData : String;
 	
-	private var m_allCardData : Array<TLCard>;
+	private var m_allCardData : Array<CardData>;
 	
 	public function new(name : String, JsonFilename : String, Jsonfilepath : String = "./") 
 	{
@@ -39,22 +39,25 @@ class CardsExtension
 		
 	}
 	
-	private function loadRawData() : Void
+	private function loadRawData() : Bool
 	{
 		m_rawData = Assets.getText(m_fullpath);
 		if (m_rawData == null)
 		{
 			trace("Card extention " + name + " : file not found [" + m_fullpath + "]" );
-			FlxG.log.error("Card extention " + name + " : file not found [" + m_fullpath + "]" );
-		}	
+			FlxG.log.warn("Card extention " + name + " : file not found [" + m_fullpath + "]" );
+			return false;
+		}
+		
+		return true;
 	}
 	
-	private function parseRawData() : Void
+	private function parseRawData() : Bool
 	{
 		m_allCardData = new Array();
 		
 		if (m_rawData == null)
-			return;
+			return false;
 		
 		var allCardinfos : Array<CardInfos> = null;
 		
@@ -66,22 +69,28 @@ class CardsExtension
 		{
 			trace("Fail to parse Json for extention " + this.name + " because " + e);
 			FlxG.log.error("Fail to parse Json for extention " + this.name + " because " + e);
+			return false;
 		}
 		
 		if (allCardinfos == null)
-			return;
+			return false;
 		
 		for (info in allCardinfos)
 		{
-			m_allCardData.push(new TLCard(info.name, info.year));
+			m_allCardData.push(new CardData(info.name, info.year));
 		}
+		
+		return true;
 	}
 	
-	public function init() : Void
+	public function init() : Bool
 	{
 		this.release();
-		this.loadRawData();
-		this.parseRawData();
+		
+		var loadResult : Bool = this.loadRawData();
+		var loadParse : Bool = this.parseRawData();
+		
+		return loadResult && loadParse;
 	}
 	
 	public function release() : Void
@@ -103,7 +112,7 @@ class CardsExtension
 		return m_allCardData.length;
 	}
 	
-	public function getTLCard(cardIndex : Int) : TLCard
+	public function getTLCard(cardIndex : Int) : CardData
 	{
 		if (m_allCardData == null)
 			return null;
@@ -113,6 +122,25 @@ class CardsExtension
 			return null;
 			
 		return m_allCardData[cardIndex];
+	}
+	
+	public function getRandomCard() : CardData
+	{
+		if (m_allCardData == null)
+			return null;
+		else if (m_allCardData.length == 0)
+			return null;
+		
+		var rand : Int = Std.random(m_allCardData.length);
+		return m_allCardData[rand];
+	}
+	
+	public function GetAllCard() : Array<CardData>
+	{
+		if (m_allCardData  == null)
+			return null;
+			
+		return m_allCardData.copy();
 	}
 	
 	

@@ -10,6 +10,7 @@ import flixel.util.FlxSort;
 import haxe.unit.TestRunner;
 import openfl.text.AntiAliasType;
 import openfl.text.TextFieldAutoSize;
+import source.data.card.CardData;
 
 /**
  * ...
@@ -21,20 +22,22 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	public static var m_cardWidth : Int = 150;
 	public static var m_cardHeight : Int = 200;
 	
+	private var m_cardDataRef : CardData;
+	
 	private var m_background: FlxSprite;
 	private var m_titleTxt : FlxText;
-	private var m_yearTxt : FlxText;
+	private var m_valueTxt : FlxText;
 	
-	private var m_onDrag : Bool;
+	public var isDrag(default,null) : Bool;
 	private var m_mouseOffsetX : Int;
 	private var m_mouseOffsetY : Int;
 	
 	public var isVisible(default, null) : Bool;
 	
-	public var depth(default,null) : Int;
+	public var draggable : Bool;
 	
 	
-	public function new() 
+	public function new(cardData : CardData = null) 
 	{
 		super(3);
 		
@@ -42,32 +45,42 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		m_background.makeGraphic(m_cardWidth, m_cardHeight, FlxColor.WHITE, false, "cardBackground");
 		
 		m_titleTxt = new FlxText(0, 0, -1, "", 16);
-		m_yearTxt = new FlxText(0, 0, -1, "", 16);
-		
-		m_titleTxt.font = "arial";
-		m_yearTxt.font = "arial";
+		m_valueTxt = new FlxText(0, 0, -1, "", 16);
 		
 		m_titleTxt.bold = true;
-		m_yearTxt.bold = true;
+		m_valueTxt.bold = true;
 		
 		this.add(m_background);
 		this.add(m_titleTxt);
-		this.add(m_yearTxt);
-		
+		this.add(m_valueTxt);
 		
 		setVisible(true);
-		
-		this.depth = 0;
+		this.draggable = true;
 		
 		FlxMouseEventManager.add(m_background, onMouseDown, onMouseUp);
 		
+		setCardData(cardData);
+		
+	}
+	
+	public function setCardData(cardData : CardData) : Void
+	{
+		if (cardData == null)
+		{
+			m_cardDataRef = null;
+			setText("", null);
+			return;
+		}
+		
+		m_cardDataRef = cardData;
+		setText(m_cardDataRef.name, Std.string(m_cardDataRef.year));
 	}
 	
 	override public function update(elapsed:Float):Void 
 	{
 		super.update(elapsed);
 		
-		if (m_onDrag)
+		if (isDrag)
 		{
 			// to prevent release btn mouse out the game window
 			// if btn release out the game window, The event "onMouseDown" is not call
@@ -79,10 +92,12 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		}
 	}
 	
-	public function setText(name : String, year : String)
+	private function setText(name : String, value : String)
 	{
 		m_titleTxt.text = name;
-		m_yearTxt.text = year;
+		
+		m_valueTxt.text = "";
+			
 		updateTextPosition();
 	}
 	
@@ -91,14 +106,15 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		m_titleTxt.x = m_background.x + m_background.width / 2.0 - m_titleTxt.fieldWidth / 2.0;
 		m_titleTxt.y = m_background.y;
 		
-		m_yearTxt.x = m_background.x + m_background.width / 2.0 - m_yearTxt.fieldWidth / 2.0;
-		m_yearTxt.y = m_background.y + m_background.height - m_yearTxt.height;			
+		m_valueTxt.x = m_background.x + m_background.width / 2.0 - m_valueTxt.fieldWidth / 2.0;
+		m_valueTxt.y = m_background.y + m_background.height - m_valueTxt.height;			
 	}
 	
 	
 	private function onMouseDown(item : FlxSprite)
 	{
-		startDrag();
+		if(this.draggable)
+			startDrag();
 	}
 	
 	private function onMouseUp(item : FlxSprite)
@@ -108,27 +124,25 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	
 	private function startDrag() : Void
 	{
-		if (m_onDrag)
+		if (isDrag)
 			return;
 		
-		m_onDrag = true;
+		isDrag = true;
 		m_mouseOffsetX = FlxG.mouse.x - cast(m_background.x,Int);
 		m_mouseOffsetY = FlxG.mouse.y - cast(m_background.y, Int);
-		this.depth = 1;
 	}
 	
 	private function stopDrag()
 	{
-		if (!m_onDrag)
+		if (!isDrag)
 			return;
 		
-		this.depth = 0;
-		m_onDrag = false;
+		isDrag = false;
 	}
 	
 	private function onDrag() : Void
 	{
-		if (!m_onDrag)
+		if (!isDrag)
 			return;
 			
 		//if (FlxG.mouse.justReleased)
@@ -164,13 +178,13 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		{
 			m_background.color = FlxColor.GRAY;
 			//m_titleTxt.kill();
-			m_yearTxt.kill();
+			m_valueTxt.kill();
 		}
 		else
 		{
 			m_background.color = FlxColor.BLUE;
 			//m_titleTxt.revive();
-			m_yearTxt.revive();
+			m_valueTxt.revive();
 		}
 	}
 	
