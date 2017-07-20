@@ -126,6 +126,14 @@ class MainHandUi
 	public function update(elapsed : Float)
 	{
 		m_handUI.sortCard();
+		
+		if (FlxG.keys.anyJustPressed([S]))
+		{
+			for (card in m_cards)
+			{
+				card.skin.scaleSkin(1.5, 1.5);
+			}
+		}
 	}
 	
 	/**

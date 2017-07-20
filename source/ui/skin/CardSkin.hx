@@ -64,6 +64,9 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		m_titleTxt.bold = true;
 		m_valueTxt.bold = true;
 		
+		m_titleTxt.alignment = FlxTextAlign.CENTER;
+		m_valueTxt.alignment = FlxTextAlign.CENTER;
+		
 		this.add(m_background);
 		this.add(m_titleTxt);
 		this.add(m_valueTxt);
@@ -87,6 +90,20 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		
 		m_cardDataRef = cardData;
 		setText(m_cardDataRef.name, Std.string(m_cardDataRef.year));
+	}
+	
+	//stupid
+	public function scaleSkin(x: Float, y : Float)
+	{
+		forEach(scale.bind(_, x, y));
+	}
+	
+	//Stupid
+	private function scale(sprite : FlxSprite, x: Float, y : Float) : Void
+	{
+		sprite.scale.set(x, y);
+		sprite.updateHitbox();
+		this.updateTextPosition();
 	}
 	
 	override public function update(elapsed:Float):Void 
@@ -116,8 +133,10 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	
 	private function updateTextPosition() : Void
 	{
-		m_titleTxt.x = m_background.x + m_background.width / 2.0 - m_titleTxt.fieldWidth / 2.0;
+		m_titleTxt.x = m_background.x+ (m_background.width / 2.0) - m_titleTxt.fieldWidth / 2.0;
 		m_titleTxt.y = m_background.y;
+		
+		
 		
 		m_valueTxt.x = m_background.x + m_background.width / 2.0 - m_valueTxt.fieldWidth / 2.0;
 		m_valueTxt.y = m_background.y + m_background.height - m_valueTxt.height;			
