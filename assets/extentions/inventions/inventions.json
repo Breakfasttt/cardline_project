@@ -1,0 +1,35 @@
+{
+	"name":"Extension de base",
+	"background":"assets/extentions/common/cardBg.png",
+	"illusFolder":"assets/extentions/inventions/illus/",
+	"cards":
+	[
+		{
+			"name":"l'ampoule",
+			"illustration":"ampoule.jpg",
+			"values": 
+			{
+				"year":1960,
+				"esperance":18
+			}
+		},
+		{
+			"name":"le fer à repasser",
+			"illustration":"ferarepasser.jpg",
+			"values": 
+			{
+				"year":1960,
+				"esperance":18
+			}
+		},
+		{
+			"name":"la brosse à dent",
+			"illustration":"brosseadent.jpg",
+			"values": 
+			{
+				"year":1960,
+				"esperance":18
+			}
+		}
+	]
+}

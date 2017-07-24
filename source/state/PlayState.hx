@@ -1,6 +1,7 @@
 package state;
 
 import assets.AssetPaths;
+import assets.AssetsManager;
 import data.manager.CardExtentionManager;
 import data.card.CardsExtention;
 import data.manager.GameDatas;
@@ -33,7 +34,7 @@ class PlayState extends FlxState
 	{
 		super.create();	
 		
-		m_board = new FlxSprite(0, 0, AssetPaths.board__jpg);
+		m_board = new FlxSprite(0, 0, AssetsManager.global.getFlxGraphic("assets/images/board.jpg"));
 		
 		m_deckUI = new DeckUi(GameDatas.self.extentionManager.getAllExtentionsName());
 		m_mainHandUI = new MainHandUi(m_maxCardOnHand);

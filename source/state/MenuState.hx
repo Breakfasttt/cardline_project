@@ -1,12 +1,14 @@
 package state;
 
 import assets.AssetPaths;
+import assets.AssetsManager;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.display.FlxBackdrop;
 import flixel.addons.text.FlxTextField;
 import flixel.addons.ui.FlxButtonPlus;
+import flixel.graphics.FlxGraphic;
 import flixel.text.FlxText;
 import flixel.text.FlxText.FlxTextFormat;
 import flixel.ui.FlxButton;
@@ -25,7 +27,7 @@ class MenuState extends FlxState
 	{
 		super.create();
 		
-		m_board = new FlxSprite(0, 0, AssetPaths.board__jpg);
+		m_board = new FlxSprite(0, 0, AssetsManager.global.getFlxGraphic("assets/images/board.jpg"));
 		
 		m_title = new FlxText(0, 300, -1, "Timeline Project", 56);
 		m_title.screenCenter(FlxAxes.X);
@@ -45,8 +47,6 @@ class MenuState extends FlxState
 		this.add(m_title);
 		this.add(m_playBtn);
 		this.add(m_optionsBtn);
-		
-		
 	}
 
 	override public function update(elapsed:Float):Void

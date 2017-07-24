@@ -14,17 +14,6 @@ class GameDatas
 	
 	private function new() 
 	{
-		
+		extentionManager = new CardExtentionManager();
 	}
-	
-	public function init() : Void
-	{
-		extentionManager = new CardExtentionManager("extentionDefinition.json", "assets/data/");
-		extentionManager.init();
-	}
-	
-	
-	
-	
-	
 }

@@ -9,19 +9,34 @@ import flixel.FlxSprite;
 class CardData 
 {
 	
-	public var name(default,null) : String;
-	public var year(default,null) : Int;
+	public var name(default, null) : String;
+	public var background(default,null) : String;
+	public var illustration(default,null) : String;
+	public var value(default,null) : Map<String,Int>;
 	
-	public function new(name : String, year : Int) 
+	public function new(name : String, background : String, illustration : String, value : Map<String,Int>) 
 	{
 		this.name = name;
-		this.year = year;
+		this.background = background;
+		this.illustration = illustration;
+		this.value = value;
+	}
+	
+	public function getAllPlayableValue() : Array<String>
+	{
+		var result = new Array();
+		for (key in this.value.keys())
+		{
+			result.push(key);
+		}
+		return result;
 	}
 	
 	public function release()
 	{
 		this.name = null;
-		this.year = -1;
+		this.illustration = null;
+		this.value = null;
 	}
 	
 }

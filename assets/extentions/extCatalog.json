@@ -1,0 +1,16 @@
+{
+	"extentionsFolder":"assets/extentions/",
+	"allExtentions":
+	[
+		{
+			"uniqueId":"com.ext.base",
+			"extentionFolder":"base/",
+			"extentionFile":"base.json"
+		},
+		{
+			"uniqueId":"com.ext.inventions",
+			"extentionFolder":"inventions/",
+			"extentionFile":"inventions.json"
+		}
+	]
+}

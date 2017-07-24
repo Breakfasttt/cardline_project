@@ -1,4 +1,5 @@
 package data.manager;
+import assets.AssetsManager;
 import data.card.CardsExtention;
 import flixel.FlxG;
 import flixel.util.FlxSort;
@@ -10,13 +11,14 @@ import tools.TimelineTools;
 
 typedef ExtentionDef =
 {
-	var extentionName : String;
+	var uniqueId : String;
+	var extentionFolder : String;
 	var extentionFile : String;
 }
 
 typedef ExtentionDefFile = 
 {
-	var extentionFolder : String;
+	var extentionsFolder : String;
 	var allExtentions : Array<ExtentionDef>;
 }
 
@@ -26,43 +28,27 @@ typedef ExtentionDefFile =
  */
 class CardExtentionManager 
 {
-
-	// path for extentions definitions
-	private var m_extDefFilename : String;
-	private var m_extDefFilepath : String;
-	private var m_fullpath : String;
-	
 	//path to extentions folder
+	private var m_rawDataFiles : String;
+	
 	private var m_extentionsFolderPath : String;
 	
 	private var m_rawData : String;
 	
 	private var m_extentions : Map<String, CardsExtention>;
 	
-	public function new(defFilename : String, defFilepath : String = "./") 
+	public function new() 
 	{
-		m_extDefFilename = defFilename;
-		m_extDefFilepath = defFilepath;
-		m_fullpath = m_extDefFilepath + m_extDefFilename;
-		
 		m_extentionsFolderPath = "";
-	}
-	
-	public function init() : Void
-	{
-		releaseExtentions();
-		loadDefinitionFile();
-		parseRawData();
-	}
-	
-	private function loadDefinitionFile() : Void
-	{
-		m_rawData = Assets.getText(m_fullpath);
 		
-		if (m_rawData == null)
-		{
-			FlxG.log.error("CardExtentionManager:: " + m_fullpath + "Files not found");
-		}
+	}
+	
+	public function init(rawDataFile : String) : Void
+	{
+		m_rawDataFiles = rawDataFile;
+		m_rawData = AssetsManager.global.getText(m_rawDataFiles);
+		releaseExtentions();
+		parseRawData();
 	}
 	
 	private function parseRawData() : Void
@@ -81,32 +67,56 @@ class CardExtentionManager
 		}
 		catch (e : Dynamic)
 		{
-			FlxG.log.error("CardExtentionManager:: Fail to parse file :" + m_fullpath);
+			FlxG.log.error("CardExtentionManager:: Fail to parse file :" + m_rawDataFiles);
 		}
 		
 		if (data == null)
 		{
-			FlxG.log.error("CardExtentionManager:: Invalid file :" + m_fullpath);
+			FlxG.log.error("CardExtentionManager:: Invalid file :" + m_rawDataFiles);
 			return;
 		}
 		
-		m_extentionsFolderPath = data.extentionFolder;
+		m_extentionsFolderPath = data.extentionsFolder;
 		
 		for (extData in data.allExtentions)
 		{
-			if (m_extentions.exists(extData.extentionName))
+			if (m_extentions.exists(extData.uniqueId))
 			{
-				FlxG.log.warn("CardExtentionManager:: Extention " + extData.extentionName + " already exist. Skipped");
+				FlxG.log.warn("CardExtentionManager:: Extention " + extData.uniqueId + " already exist. Skipped");
 				continue;
 			}
 			
-			var loadedExtensions : CardsExtention = new CardsExtention(extData.extentionName, extData.extentionFile, m_extentionsFolderPath);
-			
-			if(loadedExtensions.init())
-				m_extentions.set(loadedExtensions.name, loadedExtensions);
-			else
-				FlxG.log.warn("CardExtentionManager:: Extention " + loadedExtensions.name + " failed init. Store cancelled");
+			var loadedExtensions : CardsExtention = new CardsExtention(extData.uniqueId, m_extentionsFolderPath + extData.extentionFolder, extData.extentionFile);
+			m_extentions.set(extData.uniqueId, loadedExtensions);
 		}
+	}
+	
+	
+	public function getAllExtentionFiles() : Array<String>
+	{
+		var result : Array<String> = new Array();
+		for (ext in m_extentions)
+		{
+			if(!Lambda.has(result, ext.extentionFile))
+				result.push(ext.extentionFile);
+		}
+			
+		return result;
+	}
+	
+	public function initAllExtention() : Void
+	{
+		for (ext in m_extentions)
+			ext.init();
+	}
+	
+	public function getAllIllustration() : Array<String>
+	{
+		var result : Array<String> = new Array();
+		for (ext in m_extentions)
+			result = result.concat(ext.getAllIllustrationPath());
+			
+		return result;
 	}
 	
 	private function releaseExtentions() : Void

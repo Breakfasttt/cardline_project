@@ -1,4 +1,6 @@
 package source.ui.skin;
+import assets.AssetPaths;
+import assets.AssetsManager;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -19,12 +21,19 @@ import source.data.card.CardData;
 class CardSkin extends FlxTypedGroup<FlxSprite>
 {
 
-	public static var cardWidth : Int = 150;
-	public static var cardHeight : Int = 200;
+	public static var cardWidth : Int = 150; //px
+	public static var cardHeight : Int = 200; //px
+	
+	public static var cardBorder : Int = 6; //px
+	
+	public static var illusWidth : Int = cardWidth - (cardBorder*2); //px
+	public static var illusHeight : Int = cardHeight - (cardBorder*2); //px
 	
 	private var m_cardDataRef : CardData;
 	
 	private var m_background: FlxSprite;
+	private var m_illustration: FlxSprite;
+	
 	private var m_titleTxt : FlxText;
 	private var m_valueTxt : FlxText;
 	
@@ -55,11 +64,16 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	{
 		super(3);
 		
-		m_background = new FlxSprite(0, 0, null);
-		m_background.makeGraphic(cardWidth, cardHeight, FlxColor.WHITE, false, "cardBackground");
-		
+		initBackGround();
+		initIllustration();
 		m_titleTxt = new FlxText(0, 0, -1, "", 16);
 		m_valueTxt = new FlxText(0, 0, -1, "", 16);
+		
+		//m_titleTxt.setFormat(AssetPaths.OptimusPrinceps__ttf,24);
+		//m_valueTxt.setFormat(AssetPaths.OptimusPrinceps__ttf,24);
+		
+		m_titleTxt.color = FlxColor.BLACK;
+		m_valueTxt.color = FlxColor.BLACK;
 		
 		m_titleTxt.bold = true;
 		m_valueTxt.bold = true;
@@ -68,13 +82,12 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		m_valueTxt.alignment = FlxTextAlign.CENTER;
 		
 		this.add(m_background);
+		this.add(m_illustration);
 		this.add(m_titleTxt);
 		this.add(m_valueTxt);
 		
 		setVisible(true);
 		this.draggable = true;
-		
-		FlxMouseEventManager.add(m_background, onMouseDown, onMouseUp);
 		
 		setCardData(cardData);
 	}
@@ -89,7 +102,11 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		}
 		
 		m_cardDataRef = cardData;
-		setText(m_cardDataRef.name, Std.string(m_cardDataRef.year));
+		
+		initBackGround();
+		initIllustration();
+		
+		setText(m_cardDataRef.name, Std.string(m_cardDataRef.value.get("year"))); // temp
 	}
 	
 	//stupid
@@ -124,19 +141,24 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	
 	private function setText(name : String, value : String)
 	{
-		m_titleTxt.text = name;
+		if(m_titleTxt!=null)
+			m_titleTxt.text = name;
 		
-		m_valueTxt.text = "";
+		if(m_titleTxt!=null)
+			m_valueTxt.text = "";
 			
 		updateTextPosition();
 	}
 	
 	private function updateTextPosition() : Void
 	{
-		m_titleTxt.x = m_background.x+ (m_background.width / 2.0) - m_titleTxt.fieldWidth / 2.0;
+		if (m_background == null || m_illustration == null || m_titleTxt == null || m_valueTxt == null)
+			return;
+			
+		m_illustration.setPosition(m_background.x + cardBorder, m_background.y + cardBorder);
+		
+		m_titleTxt.x = m_background.x + (m_background.width / 2.0) - m_titleTxt.fieldWidth / 2.0;
 		m_titleTxt.y = m_background.y;
-		
-		
 		
 		m_valueTxt.x = m_background.x + m_background.width / 2.0 - m_valueTxt.fieldWidth / 2.0;
 		m_valueTxt.y = m_background.y + m_background.height - m_valueTxt.height;			
@@ -220,13 +242,13 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		isVisible = vis;	
 		if (!isVisible)
 		{
-			m_background.color = FlxColor.GRAY;
+			//m_background.color = FlxColor.GRAY;
 			//m_titleTxt.kill();
 			m_valueTxt.kill();
 		}
 		else
 		{
-			m_background.color = FlxColor.BLUE;
+			//m_background.color = FlxColor.BLUE;
 			//m_titleTxt.revive();
 			m_valueTxt.revive();
 		}
@@ -238,5 +260,48 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		m_background.y = y;
 		updateTextPosition();
 	}
+	
+	private function initBackGround() : Void
+	{
+		if (m_background == null)
+			m_background = new FlxSprite(0, 0, null);
+		
+		FlxMouseEventManager.remove(m_background);
+		
+		if (m_cardDataRef != null && m_cardDataRef.background != null && AssetsManager.global.exist(m_cardDataRef.background))
+		{
+			var graphic = AssetsManager.global.getFlxGraphic(m_cardDataRef.background);
+			m_background.loadGraphic(graphic);
+			m_background.setGraphicSize(cardWidth, cardHeight);
+			m_background.updateHitbox();
+		}
+		else
+		{
+			m_background.makeGraphic(cardWidth, cardHeight, FlxColor.WHITE, false, "cardBackground");
+		}
+		
+		FlxMouseEventManager.add(m_background, onMouseDown, onMouseUp, null, null,false, true, false);
+	}
+	
+	private function initIllustration() : Void
+	{
+		if (m_illustration == null)
+			m_illustration = new FlxSprite(0, 0, null);	
+		
+		if (m_cardDataRef != null && m_cardDataRef.illustration != null && AssetsManager.global.exist(m_cardDataRef.illustration))
+		{
+			var graphic = AssetsManager.global.getFlxGraphic(m_cardDataRef.illustration);
+			m_illustration.loadGraphic(graphic);
+			m_illustration.setGraphicSize(illusWidth, illusWidth);
+			m_illustration.updateHitbox();
+		}
+		else
+		{
+			
+			m_illustration.makeGraphic(cardWidth, cardHeight, FlxColor.PURPLE, false, "cardIllus");
+		}
+	}
+	
+	
 	
 }

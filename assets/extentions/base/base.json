@@ -1,0 +1,80 @@
+{
+	"name":"Extension de base",
+	"background":"assets/extentions/common/cardBg.png",
+	"illusFolder":"assets/extentions/base/illus/",
+	"cards":
+	[
+		{
+			"name":"carte de test",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1960,
+				"esperance":18
+			}
+		},
+		{
+			"name":"carte de test 2",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1960,
+				"esperance":18
+			}
+		},
+		{
+			"name":"carte de test 3",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1960,
+				"esperance":18
+			}
+		},
+		{
+			"name":"carte de test 4",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1960,
+				"esperance":18
+			}
+		},
+		{
+			"name":"carte de test 5",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1960,
+				"esperance":18
+			}
+		},
+		{
+			"name":"carte de test 6",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1960,
+				"esperance":18
+			}
+		},
+		{
+			"name":"carte de test 7",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1960,
+				"esperance":18
+			}
+		},
+		{
+			"name":"Pour les viewers",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1960,
+				"esperance":18
+			}
+		}
+	]
+}
