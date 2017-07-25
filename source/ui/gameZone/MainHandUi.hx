@@ -1,10 +1,10 @@
-package ui.zone;
+package ui.gameZone;
 import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.input.FlxAccelerometer;
 import source.ui.skin.CardSkin;
 import ui.elements.Card;
-import ui.group.CardSkinGroup;
+import ui.skin.CardSkinGroup;
 
 /**
  * Representation of Main Hand

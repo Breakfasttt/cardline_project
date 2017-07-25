@@ -14,9 +14,9 @@ import flixel.util.FlxSort;
 import openfl.Assets;
 import source.data.card.CardData;
 import source.ui.skin.CardSkin;
-import ui.group.CardSkinGroup;
-import ui.zone.DeckUi;
-import ui.zone.MainHandUi;
+import ui.skin.CardSkinGroup;
+import ui.gameZone.DeckUi;
+import ui.gameZone.MainHandUi;
 import flixel.addons.display.FlxBackdrop;
 
 class PlayState extends FlxState

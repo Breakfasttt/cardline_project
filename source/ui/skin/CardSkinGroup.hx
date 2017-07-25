@@ -1,10 +1,10 @@
-package ui.group;
+package ui.skin;
 import flixel.FlxG;
 import flixel.group.FlxGroup;
 import source.ui.skin.CardSkin;
 
 /**
- * ...
+ * An helper class to sort Card Display on drag
  * @author Breakyt
  */
 class CardSkinGroup 

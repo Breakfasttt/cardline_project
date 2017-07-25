@@ -1,4 +1,4 @@
-package ui.zone;
+package ui.gameZone;
 
 /**
  * ...

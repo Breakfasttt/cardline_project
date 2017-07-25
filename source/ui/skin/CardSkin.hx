@@ -20,7 +20,6 @@ import source.data.card.CardData;
  */
 class CardSkin extends FlxTypedGroup<FlxSprite>
 {
-
 	public static var cardWidth : Int = 150; //px
 	public static var cardHeight : Int = 200; //px
 	

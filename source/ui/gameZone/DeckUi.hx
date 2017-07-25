@@ -1,4 +1,4 @@
-package ui.zone;
+package ui.gameZone;
 import data.card.CardsExtention;
 import data.manager.GameDatas;
 import flixel.FlxSprite;
@@ -8,7 +8,7 @@ import flixel.util.FlxSpriteUtil;
 import source.data.card.CardData;
 import source.ui.skin.CardSkin;
 import ui.elements.Card;
-import ui.group.CardSkinGroup;
+import ui.skin.CardSkinGroup;
 
 /**
  * ...
