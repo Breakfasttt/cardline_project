@@ -101,6 +101,30 @@ class MainHandUi
 	}
 	
 	/**
+	 * pick a card from hand and return it.
+	 * Warning ! Ref in MainHand are totally remove.
+	 * @return
+	 */
+	public function pickACard():Card
+	{
+		//to remove null slot
+		var randCardArray : Array<Card> = new Array();
+		
+		for (card in m_cards)
+		{
+			if (card == null)
+				continue;
+				
+			randCardArray.push(card);
+		}
+		
+		var random : Int = Std.random(randCardArray.length);
+		var card : Card = randCardArray[random];
+		removeToHand(card);
+		return card;
+	}
+	
+	/**
 	 * remove a card to the hand
 	 * @param	card
 	 * @return
@@ -126,14 +150,6 @@ class MainHandUi
 	public function update(elapsed : Float)
 	{
 		m_handUI.sortCard();
-		
-		if (FlxG.keys.anyJustPressed([S]))
-		{
-			for (card in m_cards)
-			{
-				card.skin.scaleSkin(1.5, 1.5);
-			}
-		}
 	}
 	
 	/**
@@ -218,6 +234,13 @@ class MainHandUi
 		
 		m_xStart = FlxG.width / 2.0 - totalWidth / 2.0;
 		m_yLine = FlxG.height - (CardSkin.cardHeight * 75/100);
+	}
+	
+	public function flip1() : Void
+	{
+		if (m_cards[0] == null)
+			return;
+		m_cards[0].skin.flip();
 		
 	}
 }

@@ -61,7 +61,7 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	
 	public function new(cardData : CardData = null) 
 	{
-		super(3);
+		super();
 		
 		initBackGround();
 		initIllustration();
@@ -79,11 +79,6 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		
 		m_titleTxt.alignment = FlxTextAlign.CENTER;
 		m_valueTxt.alignment = FlxTextAlign.CENTER;
-		
-		this.add(m_background);
-		this.add(m_illustration);
-		this.add(m_titleTxt);
-		this.add(m_valueTxt);
 		
 		setVisible(true);
 		this.draggable = true;
@@ -105,7 +100,10 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		initBackGround();
 		initIllustration();
 		
-		setText(m_cardDataRef.name, Std.string(m_cardDataRef.value.get("year"))); // temp
+		var test = m_cardDataRef.value.get("year");
+		setText(m_cardDataRef.name, Std.string(test)); // temp
+		
+		reconstructSkinOrder();
 	}
 	
 	//stupid
@@ -143,8 +141,8 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		if(m_titleTxt!=null)
 			m_titleTxt.text = name;
 		
-		if(m_titleTxt!=null)
-			m_valueTxt.text = "";
+		if(m_valueTxt!=null)
+			m_valueTxt.text = value;
 			
 		updateTextPosition();
 	}
@@ -159,8 +157,8 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		m_titleTxt.x = m_background.x + (m_background.width / 2.0) - m_titleTxt.fieldWidth / 2.0;
 		m_titleTxt.y = m_background.y;
 		
-		m_valueTxt.x = m_background.x + m_background.width / 2.0 - m_valueTxt.fieldWidth / 2.0;
-		m_valueTxt.y = m_background.y + m_background.height - m_valueTxt.height;			
+		m_valueTxt.x = m_background.x + (m_background.width / 2.0) - m_valueTxt.fieldWidth / 2.0;
+		m_valueTxt.y = m_background.y + m_background.height - m_valueTxt.height;
 	}
 	
 	
@@ -238,19 +236,8 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	 */
 	public function setVisible(vis : Bool)
 	{
-		isVisible = vis;	
-		if (!isVisible)
-		{
-			//m_background.color = FlxColor.GRAY;
-			//m_titleTxt.kill();
-			m_valueTxt.kill();
-		}
-		else
-		{
-			//m_background.color = FlxColor.BLUE;
-			//m_titleTxt.revive();
-			m_valueTxt.revive();
-		}
+		isVisible = vis;
+		m_valueTxt.visible = isVisible;
 	}
 	
 	public function setPosition(x : Float, y : Float)
@@ -299,6 +286,26 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 			
 			m_illustration.makeGraphic(cardWidth, cardHeight, FlxColor.PURPLE, false, "cardIllus");
 		}
+	}
+	
+	private function reconstructSkinOrder() : Void
+	{
+		if (m_background != null)
+			this.remove(m_background);
+			
+		if (m_illustration != null)
+			this.remove(m_illustration);
+			
+		if (m_titleTxt != null)
+			this.remove(m_titleTxt);
+			
+		if (m_valueTxt != null)
+			this.remove(m_valueTxt);
+			
+		this.add(m_background);
+		this.add(m_illustration);
+		this.add(m_titleTxt);
+		this.add(m_valueTxt);
 	}
 	
 	

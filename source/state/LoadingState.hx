@@ -48,7 +48,6 @@ class LoadingState extends FlxState
 			m_loadingScreen.updateGlobalBar(total);
 			m_loadingScreen.updateCurrentBar(current);
 		}
-		
 	}
 	
 	private function onNeededFilesComplete(result : Array<String>) : Void

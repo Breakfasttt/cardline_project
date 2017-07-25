@@ -14,6 +14,7 @@ import flixel.util.FlxSort;
 import openfl.Assets;
 import source.data.card.CardData;
 import source.ui.skin.CardSkin;
+import ui.elements.Card;
 import ui.skin.CardSkinGroup;
 import ui.gameZone.DeckUi;
 import ui.gameZone.MainHandUi;
@@ -27,6 +28,8 @@ class PlayState extends FlxState
 	
 	private var m_deckUI : DeckUi;
 	
+	private var m_graveyardUI : DeckUi;
+	
 	private var m_mainHandUI : MainHandUi;
 
 
@@ -37,6 +40,8 @@ class PlayState extends FlxState
 		m_board = new FlxSprite(0, 0, AssetsManager.global.getFlxGraphic("assets/images/board.jpg"));
 		
 		m_deckUI = new DeckUi(GameDatas.self.extentionManager.getAllExtentionsName());
+		m_graveyardUI = new DeckUi(new Array<String>(), (1920 - 50 - CardSkin.cardWidth), 800);
+		
 		m_mainHandUI = new MainHandUi(m_maxCardOnHand);
 		
 		for (i in 0...m_maxCardOnHand)
@@ -46,6 +51,7 @@ class PlayState extends FlxState
 		
 		this.add(m_board);
 		m_deckUI.attachTo(this);
+		m_graveyardUI.attachTo(this);
 		m_mainHandUI.attachTo(this);
 	}
 
@@ -53,15 +59,36 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 		m_mainHandUI.update(elapsed);
+		
+		if (FlxG.keys.anyJustPressed([G]))
+		{
+			var card : Card = m_mainHandUI.pickACard();
+			cardToGraveyard(card);
+			deckToMainHand();
+		}
 	}
 	
 	private function deckToMainHand() : Void
 	{
-		var cardDrawed = m_deckUI.drawACard();
+		var cardDrawed : Card = m_deckUI.drawACard();
+		
+		if (cardDrawed == null)
+		{
+			trace("No card remaining in deck.");
+			return;
+		}
+		
 		if (!m_mainHandUI.addToHand(cardDrawed))
 			m_deckUI.putCard(cardDrawed);
+
 	}
 	
+	
+	private function cardToGraveyard(card : Card) : Void
+	{
+		m_graveyardUI.putCard(card, true, false, true);
+		//maybe other stuff ?
+	}
 
 
 }

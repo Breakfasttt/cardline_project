@@ -38,7 +38,12 @@ class CardSkinGroup
 			var cardIdToMove : Int = -1;
 			for (i in 0...groups.members.length)
 			{
-				if (groups.members[i].isDrag)
+				var card : CardSkin = groups.members[i];
+				
+				if (card == null)
+					continue;
+				
+				if (card.isDrag)
 				{
 					cardIdToMove = i;
 					break;

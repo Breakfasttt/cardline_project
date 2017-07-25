@@ -16,6 +16,7 @@ import ui.skin.CardSkinGroup;
  */
 class DeckUi 
 {
+	
 	/**
 	 * The ui group parent
 	 */
@@ -65,7 +66,6 @@ class DeckUi
 		
 		m_deckBorder.setPosition(m_posX-offsetx, m_posY-offsety);
 		
-
 		m_deckGroup = new FlxGroup();
 		m_deckGroup.add(m_deckBorder);
 		
@@ -124,6 +124,9 @@ class DeckUi
 	
 	private function shuffle() : Void
 	{
+		if (m_deck.length == 0)
+			return;
+		
 		var randShuffle = Std.random(50) + 50;
 		
 		for (nbreShuffle in 0...randShuffle)
@@ -137,11 +140,16 @@ class DeckUi
 		}
 	}
 	
-	private function displayTopOfTheDeck() : Void
+	private function displayTopOfTheDeck(revealCard : Bool = false) : Void
 	{
+		if (m_deck.length == 0)
+			return;
+		
 		var card : Card = m_deck[m_deck.length - 1];
 		card.skin.setPosition(m_posX, m_posY);
+		
 		m_deckGroup.add(card.skin);
+		card.skin.setVisible(revealCard);
 	}
 	
 	/**
@@ -153,6 +161,10 @@ class DeckUi
 	public function drawACard() : Card
 	{
 		var result = m_deck.pop();
+		
+		if (result == null)
+			return null;
+		
 		m_deckGroup.remove(result.skin);
 		displayTopOfTheDeck();
 		return result;
@@ -164,7 +176,7 @@ class DeckUi
 	 * @param	atTop : to put cards at the top of deck (like array.push()). Set to false to insert it at begining (array.unshift()). Random parameters make this parameters obsolete
 	 * @param	random : Insert it at a random index of the deck. Cancel the "atTop" parameters
 	 */
-	public function putCard(card : Card, atTop : Bool = true, random : Bool = false) : Void
+	public function putCard(card : Card, atTop : Bool = true, random : Bool = false, revealTop : Bool = false) : Void
 	{
 		if (card == null)
 			return;
@@ -185,8 +197,6 @@ class DeckUi
 			m_deck.insert(rand, card);
 		}
 		
-		displayTopOfTheDeck();
+		displayTopOfTheDeck(revealTop);
 	}
-	
-	
 }
