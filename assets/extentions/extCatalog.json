@@ -11,6 +11,11 @@
 			"uniqueId":"com.ext.inventions",
 			"extentionFolder":"inventions/",
 			"extentionFile":"inventions.json"
+		},
+		{
+			"uniqueId":"com.ext.animals",
+			"extentionFolder":"animals/",
+			"extentionFile":"animals.json"
 		}
 	]
 }

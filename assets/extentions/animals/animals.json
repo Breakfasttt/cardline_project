@@ -1,0 +1,32 @@
+{
+	"name":"Les animaux",
+	"background":"assets/extentions/common/cardBg.png",
+	"illusFolder":"assets/extentions/animals/illus/",
+	"cards":
+	[
+		{
+			"name":"le chien",
+			"illustration":"chien.jpg",
+			"values": 
+			{
+				"esperance":20
+			}
+		},
+		{
+			"name":"la fourmi",
+			"illustration":"fourmi.jpg",
+			"values": 
+			{
+				"esperance":2
+			}
+		},
+		{
+			"name":"le tigre",
+			"illustration":"tigre.jpg",
+			"values": 
+			{
+				"esperance":18
+			}
+		}
+	]
+}

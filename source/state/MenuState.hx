@@ -56,6 +56,6 @@ class MenuState extends FlxState
 	
 	private function onClickPlay() : Void
 	{
-		FlxG.switchState(new PlayState());
+		FlxG.switchState(new ConfigGameState());
 	}
 }

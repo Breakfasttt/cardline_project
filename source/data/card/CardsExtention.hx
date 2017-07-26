@@ -160,12 +160,20 @@ class CardsExtention
 		return m_allCardData[rand];
 	}
 	
-	public function GetAllCard() : Array<CardData>
+	public function getAllCard() : Array<CardData>
 	{
 		if (m_allCardData  == null)
 			return null;
 			
 		return m_allCardData.copy();
+	}
+	
+	public function getPlayableValue() : Array<String>
+	{
+		if (m_playableValue == null)
+			return null;
+			
+		return m_playableValue.copy();
 	}
 	
 	

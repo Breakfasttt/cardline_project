@@ -12,8 +12,14 @@ class GameDatas
 	
 	public var extentionManager(default, null) : CardExtentionManager;
 	
+	public var selectedValue : String;
+	
+	public var selectedExtention : Array<String>;
+	
 	private function new() 
 	{
 		extentionManager = new CardExtentionManager();
+		selectedValue = null;
+		selectedExtention = null;
 	}
 }

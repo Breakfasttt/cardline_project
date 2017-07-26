@@ -100,12 +100,12 @@ class DeckUi
 	{
 		for (extName in m_playedExtention)
 		{
-			var ext : CardsExtention = GameDatas.self.extentionManager.getExtentionByName(extName);
+			var ext : CardsExtention = GameDatas.self.extentionManager.getExtentionByUniqueId(extName);
 			
 			if (ext == null)
 				continue;
 				
-			for (cardData in ext.GetAllCard())
+			for (cardData in ext.getAllCard())
 				m_deck.push(new Card(cardData));
 		}
 	}	

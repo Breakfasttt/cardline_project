@@ -39,7 +39,7 @@ class PlayState extends FlxState
 		
 		m_board = new FlxSprite(0, 0, AssetsManager.global.getFlxGraphic("assets/images/board.jpg"));
 		
-		m_deckUI = new DeckUi(GameDatas.self.extentionManager.getAllExtentionsName());
+		m_deckUI = new DeckUi(GameDatas.self.extentionManager.getAllExtentionsUniqueId());
 		m_graveyardUI = new DeckUi(new Array<String>(), (1920 - 50 - CardSkin.cardWidth), 800);
 		
 		m_mainHandUI = new MainHandUi(m_maxCardOnHand);

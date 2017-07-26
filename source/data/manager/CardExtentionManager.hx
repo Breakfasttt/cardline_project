@@ -132,15 +132,24 @@ class CardExtentionManager
 		}	
 	}
 	
-	public function getExtentionByName(extentionName : String) : CardsExtention
+	public function getExtentionName(uniqueId : String) : String
+	{
+		var ext : CardsExtention = getExtentionByUniqueId(uniqueId);
+		if (ext == null)
+			return "";
+		
+		return ext.name;
+	}
+	
+	public function getExtentionByUniqueId(uniqueId : String) : CardsExtention
 	{
 		if (m_extentions == null)
 			return null;
 			
-		return m_extentions.get(extentionName);
+		return m_extentions.get(uniqueId);
 	}
 	
-	public function getAllExtentionsName() : Array<String>
+	public function getAllExtentionsUniqueId() : Array<String>
 	{
 		var ret : Array<String> = new Array<String>();
 		
@@ -153,5 +162,101 @@ class CardExtentionManager
 		ret.sort(TimelineTools.sortByString);
 			
 		return ret;
+	}
+	
+	public function getAllExtentionsName() : Array<String>
+	{
+		
+		var ret : Array<String> = new Array<String>();
+		
+		if (m_extentions == null)
+			return ret;
+			
+		for (key in  m_extentions.keys())
+			ret.push(m_extentions.get(key).name);
+			
+		ret.sort(TimelineTools.sortByString);
+			
+		return ret;
+	}
+	
+	public function getExtentionByName(extName : String) : CardsExtention
+	{
+		
+		if (m_extentions == null)
+			return null;
+			
+		for (key in m_extentions.keys())
+		{
+			var result = m_extentions.get(key);
+			if (result.name == extName)
+				return result;
+		}
+			
+		return null;
+	}
+	
+	public function getAllPlayableValueByExtentionsUID(uniqueIds : Array<String>) : Array<String>
+	{
+		var result : Array<String> = new Array<String>();
+		
+		if (uniqueIds == null)
+			return result;
+		else if (m_extentions == null)
+			return result;
+			
+		for (name in uniqueIds)
+		{
+			var ext : CardsExtention = this.getExtentionByUniqueId(name);
+			
+			if (ext == null)
+				continue;
+				
+			var tempResult : Array<String> = ext.getPlayableValue();
+			
+			if (tempResult == null)
+				continue;
+				
+			for (value in tempResult)
+			{
+				if (!Lambda.has(result, value))
+					result.push(value);
+			}	
+		}
+		
+		return result;		
+		
+	}
+	
+	public function getAllPlayableValueByExtentionsName(arrExtName : Array<String>) : Array<String>
+	{
+		var result : Array<String> = new Array<String>();
+		
+		if (arrExtName == null)
+			return result;
+		else if (m_extentions == null)
+			return result;
+			
+		for (name in arrExtName)
+		{
+			var ext : CardsExtention = this.getExtentionByName(name);
+			
+			if (ext == null)
+				continue;
+				
+			var tempResult : Array<String> = ext.getPlayableValue();
+			
+			if (tempResult == null)
+				continue;
+				
+			for (value in tempResult)
+			{
+				if (!Lambda.has(result, value))
+					result.push(value);
+			}
+				
+		}
+		
+		return result;
 	}
 }
