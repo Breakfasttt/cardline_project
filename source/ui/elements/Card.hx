@@ -12,7 +12,7 @@ class Card
 	public var data(default, null) : CardData;
 	public var skin(default, null) : CardSkin;
 	
-	public function new(data : CardData)  : Void
+	public function new(data : CardData, valueToUse : String)  : Void
 	{
 		if (data == null)
 		{
@@ -22,6 +22,6 @@ class Card
 		}
 		
 		this.data = data;
-		this.skin = new CardSkin(this.data);
+		this.skin = new CardSkin(this.data, valueToUse);
 	}
 }

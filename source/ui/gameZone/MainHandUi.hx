@@ -223,10 +223,7 @@ class MainHandUi
 		{
 			FlxG.log.error("MainHandUI::onCardDrag:: Strange error !");
 		}
-		
-		//no special effect for now
 	}
-	
 	
 	private function calculStartCoord() : Void
 	{
@@ -234,13 +231,5 @@ class MainHandUi
 		
 		m_xStart = FlxG.width / 2.0 - totalWidth / 2.0;
 		m_yLine = FlxG.height - (CardSkin.cardHeight * 75/100);
-	}
-	
-	public function flip1() : Void
-	{
-		if (m_cards[0] == null)
-			return;
-		m_cards[0].skin.flip();
-		
 	}
 }

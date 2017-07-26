@@ -59,7 +59,7 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	 */
 	public var onDragCallback : CardSkin->Void;
 	
-	public function new(cardData : CardData = null) 
+	public function new(cardData : CardData, valueToUse : String) 
 	{
 		super();
 		
@@ -83,10 +83,18 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		setVisible(true);
 		this.draggable = true;
 		
-		setCardData(cardData);
+		setCardData(cardData, valueToUse);
 	}
 	
-	public function setCardData(cardData : CardData) : Void
+	/**
+	 * Set CardData to the skin.
+	 * If value don't exist, the card data is not set. Return false in this case. 
+	 * Return true if set is ok
+	 * @param	cardData
+	 * @param	valueToUse
+	 * @return
+	 */
+	public function setCardData(cardData : CardData, valueToUse : String) : Void
 	{
 		if (cardData == null)
 		{
@@ -100,9 +108,11 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		initBackGround();
 		initIllustration();
 		
-		var test = m_cardDataRef.value.get("year");
-		setText(m_cardDataRef.name, Std.string(test)); // temp
+		var value : String = "";
+		if (m_cardDataRef.value.exists(valueToUse))
+			value = Std.string(m_cardDataRef.value.get(valueToUse));
 		
+		setText(m_cardDataRef.name, value); // temp
 		reconstructSkinOrder();
 	}
 	
@@ -284,7 +294,7 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		else
 		{
 			
-			m_illustration.makeGraphic(cardWidth, cardHeight, FlxColor.PURPLE, false, "cardIllus");
+			m_illustration.makeGraphic(illusWidth, illusHeight, FlxColor.PURPLE, false, "cardIllus");
 		}
 	}
 	

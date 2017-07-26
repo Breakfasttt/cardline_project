@@ -27,6 +27,14 @@
 			{
 				"esperance":18
 			}
+		},
+		{
+			"name":"le monstre",
+			"illustration":"monstre.jpg",
+			"values": 
+			{
+				"poid":50
+			}
 		}
 	]
 }

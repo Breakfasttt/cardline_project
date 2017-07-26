@@ -101,12 +101,20 @@ class DeckUi
 		for (extName in m_playedExtention)
 		{
 			var ext : CardsExtention = GameDatas.self.extentionManager.getExtentionByUniqueId(extName);
+			var valueToUse : String = GameDatas.self.selectedValue;
 			
 			if (ext == null)
 				continue;
 				
 			for (cardData in ext.getAllCard())
-				m_deck.push(new Card(cardData));
+			{
+				// if card data don't contains the value, don't create the card and skip it.
+				// maybe not the best to make this into DeckUi class. because of GameDatas access.
+				// it's ok for this project.
+				if (!cardData.value.exists(valueToUse)) 
+					continue;
+				m_deck.push(new Card(cardData, valueToUse));
+			}
 		}
 	}	
 	
