@@ -5,12 +5,12 @@
 	"cards":
 	[
 		{
-			"name":"carte de test",
-			"illustration":"test1.jpg",
+			"name":"La fougère",
+			"illustration":"fougere.jpg",
 			"values": 
 			{
 				"year":1960,
-				"esperance":18
+				"esperance":1
 			}
 		},
 		{
@@ -19,7 +19,7 @@
 			"values": 
 			{
 				"year":1960,
-				"esperance":18
+				"esperance":2
 			}
 		},
 		{
@@ -28,7 +28,7 @@
 			"values": 
 			{
 				"year":1960,
-				"esperance":18
+				"esperance":3
 			}
 		},
 		{
@@ -37,7 +37,7 @@
 			"values": 
 			{
 				"year":1960,
-				"esperance":18
+				"esperance":4
 			}
 		},
 		{
@@ -46,7 +46,7 @@
 			"values": 
 			{
 				"year":1960,
-				"esperance":18
+				"esperance":5
 			}
 		},
 		{
@@ -55,7 +55,7 @@
 			"values": 
 			{
 				"year":1960,
-				"esperance":18
+				"esperance":6
 			}
 		},
 		{
@@ -64,7 +64,7 @@
 			"values": 
 			{
 				"year":1960,
-				"esperance":18
+				"esperance":7
 			}
 		},
 		{
@@ -73,7 +73,7 @@
 			"values": 
 			{
 				"year":1960,
-				"esperance":18
+				"esperance":8
 			}
 		}
 	]

@@ -15,6 +15,7 @@ import openfl.Assets;
 import source.data.card.CardData;
 import source.ui.skin.CardSkin;
 import ui.elements.Card;
+import ui.gameZone.TimelineUi;
 import ui.skin.CardSkinGroup;
 import ui.gameZone.DeckUi;
 import ui.gameZone.MainHandUi;
@@ -33,6 +34,8 @@ class PlayState extends FlxState
 	private var m_graveyardUI : DeckUi;
 	
 	private var m_mainHandUI : MainHandUi;
+	
+	private var m_timeline : TimelineUi;
 
 
 	override public function create():Void
@@ -47,14 +50,21 @@ class PlayState extends FlxState
 		m_graveyardUI = new DeckUi(new Array<String>(), 50 + CardSkin.cardWidth*m_scaleDeckAndGraveyard + 30, 25);
 		m_graveyardUI.setScale(m_scaleDeckAndGraveyard, m_scaleDeckAndGraveyard);
 		
-		m_mainHandUI = new MainHandUi(m_maxCardOnHand);
+		m_mainHandUI = new MainHandUi(m_maxCardOnHand, onPutCard);
 		
+		m_timeline = new TimelineUi();
+		
+		// put a first card on timeline
+		var card : Card = m_deckUI.drawACard();
+		m_timeline.addCard(card);
+		
+		//pick X card from deck to hand
 		for (i in 0...m_maxCardOnHand)
-		{
 			deckToMainHand();
-		}
+			
 		
 		this.add(m_board);
+		m_timeline.attachTo(this);
 		m_deckUI.attachTo(this);
 		m_graveyardUI.attachTo(this);
 		m_mainHandUI.attachTo(this);
@@ -65,12 +75,24 @@ class PlayState extends FlxState
 		super.update(elapsed);
 		m_mainHandUI.update(elapsed);
 		
-		if (FlxG.keys.anyJustPressed([G]))
+		var draggedCard : Card = m_mainHandUI.getDraggedCard();
+		
+		if (draggedCard != null)
 		{
-			var card : Card = m_mainHandUI.pickACard();
-			cardToGraveyard(card);
-			deckToMainHand();
+			m_timeline.checkMoveCollision(elapsed, draggedCard);
+			
+			if (m_timeline.checkPutCollision(draggedCard))
+			{
+				// other stuff ?
+				draggedCard.skin.isPuttable = true;
+			}
+			else
+			{
+				draggedCard.skin.isPuttable = false;
+			}
+			
 		}
+		
 	}
 	
 	private function deckToMainHand() : Void
@@ -94,6 +116,32 @@ class PlayState extends FlxState
 		m_graveyardUI.putCard(card, true, false, true);
 		//maybe other stuff ?
 	}
-
+	
+	private function cardToTimeline(card : Card) : Void
+	{
+		if (!m_timeline.addCard(card))
+		{
+			cardToGraveyard(card);
+			deckToMainHand();
+		}
+		
+	}
+	
+	private function onPutCard(card : Card) : Void
+	{
+		if (card == null)
+			return;
+			
+		if (m_mainHandUI.removeToHand(card))
+		{
+			m_timeline.reinitPutColor();
+			if (!m_timeline.addCard(card))
+			{
+				cardToGraveyard(card);
+				deckToMainHand();
+			}
+		}
+			
+	}
 
 }

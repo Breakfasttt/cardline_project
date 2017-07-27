@@ -25,9 +25,10 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	public static var cardHeight : Int = 350; //px
 	
 	public static var cardBorder : Int = 6; //px
+	public static var offsetForText : Int = 35; //px
 	
 	public static var illusWidth : Int = cardWidth - (cardBorder*2); //px
-	public static var illusHeight : Int = cardHeight - (cardBorder*2); //px
+	public static var illusHeight : Int = cardHeight - (cardBorder*2) - (2*offsetForText); //px
 	
 	private var m_cardDataRef : CardData;
 	
@@ -44,6 +45,8 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	public var isVisible(default, null) : Bool;
 	
 	public var draggable : Bool;
+	
+	public var isPuttable : Bool;
 	
 	/**
 	 * Called when dragg start
@@ -99,6 +102,7 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		
 		setVisible(true);
 		this.draggable = true;
+		this.isPuttable = false;
 		
 		setCardData(cardData, valueToUse);
 	}
@@ -197,13 +201,13 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		if (m_background == null || m_illustration == null || m_titleTxt == null || m_valueTxt == null)
 			return;
 			
-		m_illustration.setPosition(m_background.x + cardBorder, m_background.y + cardBorder);
+		m_illustration.setPosition(m_background.x + cardBorder, m_background.y + CardSkin.cardBorder + CardSkin.offsetForText);
 		
 		m_titleTxt.x = m_background.x + (m_background.width / 2.0) - m_titleTxt.fieldWidth*m_titleTxt.scale.x / 2.0;
-		m_titleTxt.y = m_background.y;
+		m_titleTxt.y = m_background.y + CardSkin.cardBorder;
 		
 		m_valueTxt.x = m_background.x + (m_background.width / 2.0) - m_valueTxt.fieldWidth*m_valueTxt.scale.x / 2.0;
-		m_valueTxt.y = m_background.y + m_background.height - m_valueTxt.height;
+		m_valueTxt.y = m_background.y + m_background.height - m_valueTxt.height - CardSkin.cardBorder;
 	}
 	
 	

@@ -38,12 +38,16 @@ class MainHandUi
 	// Haxeflixel group to update/render all the main and
 	private var m_handUI : CardSkinGroup;
 	
-	// an help variable to keep the card curently dragged. (fur debug)
+	// an help variable to keep the card curently dragged.
 	private var m_cardOnDrag : Card;
 	
-	public function new(maxCardOnHand : Int) 
+	// callback When card is put on timeline
+	private var m_callbackOnPut : Card->Void;
+	
+	public function new(maxCardOnHand : Int, callback : Card->Void) 
 	{
 		m_maxCardOnHand = maxCardOnHand;
+		m_callbackOnPut = callback;
 		m_cards = new Array<Card>();
 		
 		for (i in 0...maxCardOnHand)
@@ -211,7 +215,14 @@ class MainHandUi
 			FlxG.log.error("MainHandUI::onCardStopDrag:: Strange error !");
 		}
 		
-		moveToSlot(card);
+		if (!skin.isPuttable)
+			moveToSlot(card);
+		else
+		{
+			if (m_callbackOnPut != null)
+				m_callbackOnPut(card);
+		}
+			
 		m_cardOnDrag = null;
 	}
 	
@@ -232,5 +243,10 @@ class MainHandUi
 		
 		m_xStart = FlxG.width / 2.0 - totalWidth / 2.0;
 		m_yLine = FlxG.height - (CardSkin.cardHeight * 75/100);
+	}
+	
+	public function getDraggedCard() : Card
+	{
+		return m_cardOnDrag;
 	}
 }
