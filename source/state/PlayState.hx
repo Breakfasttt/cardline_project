@@ -24,6 +24,8 @@ class PlayState extends FlxState
 {
 	private static var m_maxCardOnHand : Int = 6;
 	
+	private static var m_scaleDeckAndGraveyard : Float = 0.60;
+	
 	private var m_board : FlxSprite;
 	
 	private var m_deckUI : DeckUi;
@@ -39,9 +41,11 @@ class PlayState extends FlxState
 		
 		m_board = new FlxSprite(0, 0, AssetsManager.global.getFlxGraphic("assets/images/board.jpg"));
 		
-		m_deckUI = new DeckUi(GameDatas.self.selectedExtention.copy());
+		m_deckUI = new DeckUi(GameDatas.self.selectedExtention.copy(), 50, 25);
+		m_deckUI.setScale(m_scaleDeckAndGraveyard, m_scaleDeckAndGraveyard);
 		
-		m_graveyardUI = new DeckUi(new Array<String>(), (1920 - 50 - CardSkin.cardWidth), 800);
+		m_graveyardUI = new DeckUi(new Array<String>(), 50 + CardSkin.cardWidth*m_scaleDeckAndGraveyard + 30, 25);
+		m_graveyardUI.setScale(m_scaleDeckAndGraveyard, m_scaleDeckAndGraveyard);
 		
 		m_mainHandUI = new MainHandUi(m_maxCardOnHand);
 		

@@ -16,6 +16,11 @@
 			"uniqueId":"com.ext.animals",
 			"extentionFolder":"animals/",
 			"extentionFile":"animals.json"
+		},
+		{
+			"uniqueId":"com.ext.geek",
+			"extentionFolder":"geek/",
+			"extentionFile":"geek.json"
 		}
 	]
 }

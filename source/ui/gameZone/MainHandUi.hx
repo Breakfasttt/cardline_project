@@ -87,6 +87,7 @@ class MainHandUi
 		
 			
 		m_cards[index] = card;
+		card.skin.scaleSkin(1, 1);
 		card.skin.draggable = true;
 		card.skin.setVisible(false);
 		

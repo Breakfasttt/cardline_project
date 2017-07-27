@@ -1,8 +1,11 @@
 package ui.gameZone;
 import data.card.CardsExtention;
 import data.manager.GameDatas;
+import flixel.FlxBasic;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
+import flixel.input.FlxPointer;
+import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
 import source.data.card.CardData;
@@ -45,10 +48,14 @@ class DeckUi
 	 */
 	private var m_deck : Array<Card>;
 	
+	private var m_actualScale : FlxPoint;
+	
 	public function new(playedExtention : Array<String>, x : Float = 50, y : Float = 800) 
 	{
 		m_posX = x;
 		m_posY = y;
+		
+		m_actualScale = new FlxPoint(1, 1);
 		
 		var ticknessValue : Int = 5;
 		var extend : Int = 30;
@@ -191,6 +198,7 @@ class DeckUi
 			
 		card.skin.draggable = false;
 		card.skin.setVisible(false);
+		card.skin.scaleSkin(m_actualScale.x, m_actualScale.y);
 		
 		if (!random)
 		{
@@ -206,5 +214,27 @@ class DeckUi
 		}
 		
 		displayTopOfTheDeck(revealTop);
+	}
+	
+	public function setScale(x : Float, y : Float)
+	{
+		m_actualScale.set(x, y);
+		
+		for (card in m_deck)
+			card.skin.scaleSkin(x, y);
+			
+		if (m_deck.length != 0)
+		{
+			var card : Card = m_deck[m_deck.length - 1];
+			card.skin.setPosition(m_posX, m_posY);
+		}
+		
+		m_deckBorder.scale.set(x,y);
+		
+		var offsetx = (m_deckBorder.width - CardSkin.cardWidth*x) / 2;
+		var offsety = (m_deckBorder.height - CardSkin.cardHeight*y) / 2;
+		
+		m_deckBorder.setPosition(m_posX-offsetx, m_posY-offsety);		
+		
 	}
 }

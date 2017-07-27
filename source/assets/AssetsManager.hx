@@ -162,6 +162,13 @@ class AssetsManager
 		{
 			var fileToLoad : String = m_currentlyLoading.pop();
 			
+			if (fileToLoad == null)
+			{
+				trace("Can't load null files");
+				nextLoading();
+				return;
+			}
+			
 			if (exist(fileToLoad))
 			{
 				trace("Files already loaded, skipping : " + fileToLoad);

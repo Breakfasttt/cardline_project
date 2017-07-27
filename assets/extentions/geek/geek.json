@@ -1,0 +1,377 @@
+{
+	"name":"Extension pour les geeks (sorties européenes)",
+	"background":"assets/extentions/common/cardBg.png",
+	"illusFolder":"assets/extentions/base/illus/",
+	"cards":
+	[
+		{
+			"name":"Lara Croft",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1996
+			}
+		},
+		{
+			"name":"Super Mario Bros. (nes)",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1985
+			}
+		},
+		{
+			"name":"Samus Aran",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1986
+			}
+		},
+		{
+			"name":"Crash Bandicoot",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1996
+			}
+		},
+		{
+			"name":"Luigi",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1983
+			}
+		},
+		{
+			"name":"Mario",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1981
+			}
+		},
+		{
+			"name":"Yoshi",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1990
+			}
+		},
+		{
+			"name":"Pong",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1972
+			}
+		},
+		{
+			"name":"Atari 2600",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1981
+			}
+		},
+		{
+			"name":"Game and Watch",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1980
+			}
+		},
+		{
+			"name":"Master System",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1987
+			}
+		},
+		{
+			"name":"PC Engine",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1989
+			}
+		},
+		{
+			"name":"Game Boy",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1989
+			}
+		},
+		{
+			"name":"Super Nintendo",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1990
+			}
+		},
+		{
+			"name":"Mega Drive",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1988
+			}
+		},
+		{
+			"name":"Sega 32X",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1994
+			}
+		},
+		{
+			"name":"Gameboy Advance",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2001
+			}
+		},
+		{
+			"name":"Playstation",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1994
+			}
+		},
+		{
+			"name":"PS One",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2000
+			}
+		},
+		{
+			"name":"Nintendo 64",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1996
+			}
+		},
+		{
+			"name":"Gameboy Color",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1998
+			}
+		},
+		{
+			"name":"Dreamcast",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1999
+			}
+		},
+		{
+			"name":"Gamecube",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2001
+			}
+		},
+		{
+			"name":"Playstation 2",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2000
+			}
+		},
+		{
+			"name":"N-Gage",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2003
+			}
+		},
+		{
+			"name":"X Box",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2001
+			}
+		},
+		{
+			"name":"Game Boy Micro",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2005
+			}
+		},
+		{
+			"name":"PSP",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2005
+			}
+		},
+		{
+			"name":"PSP",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2005
+			}
+		},
+		{
+			"name":"Playstation 3",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2006
+			}
+		},
+		{
+			"name":"Nintendo DS",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2004
+			}
+		},
+		{
+			"name":"XBOX 360",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2005
+			}
+		},
+		{
+			"name":"Wii",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2006
+			}
+		},
+		{
+			"name":"PS vita",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2011
+			}
+		},
+		{
+			"name":"Nintendo 3DS",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2011
+			}
+		},
+		{
+			"name":"New 3DS",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2014
+			}
+		},
+		{
+			"name":"PS 4",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2013
+			}
+		},
+		{
+			"name":"Wii U",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2012
+			}
+		},
+		{
+			"name":"Xbox One",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2013
+			}
+		},
+		{
+			"name":"Nintendo Switch",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2017
+			}
+		},
+		{
+			"name":"Final Fantasy",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1987
+			}
+		},
+		{
+			"name":"Animal Crossing",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2004
+			}
+		},
+		{
+			"name":"Phoenix Wright: Ace Attorney",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2006
+			}
+		},
+		{
+			"name":"Assassin's Creed",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2007
+			}
+		},
+			{
+			"name":"Baldur's Gate",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1999
+			}
+		},
+		{
+			"name":"Chrono Trigger",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2009
+			}
+		}
+		
+	]
+}

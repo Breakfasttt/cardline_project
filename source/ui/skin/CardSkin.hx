@@ -6,6 +6,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.input.mouse.FlxMouseEventManager;
+import flixel.math.FlxPoint;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.util.FlxSort;
@@ -20,8 +21,8 @@ import source.data.card.CardData;
  */
 class CardSkin extends FlxTypedGroup<FlxSprite>
 {
-	public static var cardWidth : Int = 150; //px
-	public static var cardHeight : Int = 200; //px
+	public static var cardWidth : Int = 265; //px
+	public static var cardHeight : Int = 350; //px
 	
 	public static var cardBorder : Int = 6; //px
 	
@@ -59,9 +60,22 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	 */
 	public var onDragCallback : CardSkin->Void;
 	
+	/**
+	 * For scaling
+	 */
+	private var m_initScaleBg : FlxPoint;
+	private var m_initScaleIllus : FlxPoint;
+	private var m_initScaleTitle : FlxPoint;
+	private var m_initScaleValue : FlxPoint;
+	
 	public function new(cardData : CardData, valueToUse : String) 
 	{
 		super();
+		
+		m_initScaleBg = new FlxPoint(1, 1);
+		m_initScaleIllus = new FlxPoint(1, 1);
+		m_initScaleTitle = new FlxPoint(1, 1);
+		m_initScaleValue = new FlxPoint(1, 1);
 		
 		initBackGround();
 		initIllustration();
@@ -79,6 +93,9 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		
 		m_titleTxt.alignment = FlxTextAlign.CENTER;
 		m_valueTxt.alignment = FlxTextAlign.CENTER;
+		
+		m_titleTxt.scale.copyTo(m_initScaleTitle);
+		m_valueTxt.scale.copyTo(m_initScaleValue);
 		
 		setVisible(true);
 		this.draggable = true;
@@ -116,18 +133,36 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		reconstructSkinOrder();
 	}
 	
-	//stupid
 	public function scaleSkin(x: Float, y : Float)
 	{
-		forEach(scale.bind(_, x, y));
-	}
-	
-	//Stupid
-	private function scale(sprite : FlxSprite, x: Float, y : Float) : Void
-	{
-		sprite.scale.set(x, y);
-		sprite.updateHitbox();
-		this.updateTextPosition();
+		if (m_background != null)
+		{
+			m_background.scale.set(m_initScaleBg.x * x, m_initScaleBg.y * y);
+			m_background.updateHitbox();
+		}
+			
+		if (m_illustration != null)
+		{
+			m_illustration.scale.set(m_initScaleIllus.x * x, m_initScaleIllus.y * y);
+			m_illustration.updateHitbox();
+		}
+			
+		if (m_titleTxt != null)
+		{
+			m_titleTxt.scale.set(m_initScaleTitle.x * x, m_initScaleTitle.y * y);
+			m_titleTxt.updateHitbox();
+		}
+		
+		if (m_valueTxt != null)
+		{
+			m_valueTxt.scale.set(m_initScaleValue.x * x, m_initScaleValue.y * y);
+			m_valueTxt.updateHitbox();
+		}
+			
+		
+		m_background.x = 0;
+		m_background.y = 0;
+		this.updatePosition();
 	}
 	
 	override public function update(elapsed:Float):Void 
@@ -142,7 +177,7 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 				stopDrag();			
 			
 			this.onDrag();
-			this.updateTextPosition();
+			this.updatePosition();
 		}
 	}
 	
@@ -154,10 +189,10 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		if(m_valueTxt!=null)
 			m_valueTxt.text = value;
 			
-		updateTextPosition();
+		updatePosition();
 	}
 	
-	private function updateTextPosition() : Void
+	private function updatePosition() : Void
 	{
 		if (m_background == null || m_illustration == null || m_titleTxt == null || m_valueTxt == null)
 			return;
@@ -254,7 +289,7 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	{
 		m_background.x = x;
 		m_background.y = y;
-		updateTextPosition();
+		updatePosition();
 	}
 	
 	private function initBackGround() : Void
@@ -276,6 +311,9 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 			m_background.makeGraphic(cardWidth, cardHeight, FlxColor.WHITE, false, "cardBackground");
 		}
 		
+		m_background.scale.copyTo(m_initScaleBg);
+		
+		
 		FlxMouseEventManager.add(m_background, onMouseDown, onMouseUp, null, null,false, true, false);
 	}
 	
@@ -296,6 +334,8 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 			
 			m_illustration.makeGraphic(illusWidth, illusHeight, FlxColor.PURPLE, false, "cardIllus");
 		}
+		
+		m_illustration.scale.copyTo(m_initScaleIllus);
 	}
 	
 	private function reconstructSkinOrder() : Void
