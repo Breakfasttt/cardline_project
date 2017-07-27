@@ -49,14 +49,14 @@ class TLLoadingScreen
 	{
 		m_title = new FlxText(0,150);
 		m_title.text = "Chargement";
-		m_title.setFormat(38);
+		m_title.setFormat(AssetPaths.ATypewriterForMe__ttf,38);
 		m_title.screenCenter(FlxAxes.X);
 	}
 	
 	private function initInfos() : Void
 	{
 		m_infos = new FlxText(0,400);
-		m_infos.setFormat(22);
+		m_infos.setFormat(AssetPaths.ATypewriterForMe__ttf, 22);
 		
 	}
 	

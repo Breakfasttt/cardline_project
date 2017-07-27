@@ -4,6 +4,8 @@ import assets.AssetsManager;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.effects.FlxFlicker;
+import flixel.group.FlxGroup;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.input.mouse.FlxMouseEventManager;
 import flixel.math.FlxPoint;
@@ -71,10 +73,13 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	private var m_initScaleTitle : FlxPoint;
 	private var m_initScaleValue : FlxPoint;
 	
+	private var m_generalScaling : FlxPoint;
+	
 	public function new(cardData : CardData, valueToUse : String) 
 	{
 		super();
 		
+		m_generalScaling = new FlxPoint(1, 1);
 		m_initScaleBg = new FlxPoint(1, 1);
 		m_initScaleIllus = new FlxPoint(1, 1);
 		m_initScaleTitle = new FlxPoint(1, 1);
@@ -82,20 +87,20 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		
 		initBackGround();
 		initIllustration();
-		m_titleTxt = new FlxText(0, 0, -1, "", 24);
-		m_valueTxt = new FlxText(0, 0, -1, "", 24);
+		m_titleTxt = new FlxText(0, 0, CardSkin.cardWidth - CardSkin.cardBorder*2, "", 24);
+		m_valueTxt = new FlxText(0, 0, CardSkin.cardWidth - CardSkin.cardBorder*2, "", 24);
 		
-		//m_titleTxt.setFormat(AssetPaths.OptimusPrinceps__ttf,24);
-		//m_valueTxt.setFormat(AssetPaths.OptimusPrinceps__ttf,24);
+		m_titleTxt.setFormat(AssetPaths.OldNewspaperTypes__ttf,24);
+		m_valueTxt.setFormat(AssetPaths.OldNewspaperTypes__ttf,24);
 		
 		m_titleTxt.color = FlxColor.BLACK;
 		m_valueTxt.color = FlxColor.BLACK;
 		
-		m_titleTxt.bold = true;
-		m_valueTxt.bold = true;
-		
 		m_titleTxt.alignment = FlxTextAlign.CENTER;
 		m_valueTxt.alignment = FlxTextAlign.CENTER;
+		
+		m_titleTxt.wordWrap = true;
+		m_valueTxt.wordWrap = true;
 		
 		m_titleTxt.scale.copyTo(m_initScaleTitle);
 		m_valueTxt.scale.copyTo(m_initScaleValue);
@@ -139,6 +144,8 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	
 	public function scaleSkin(x: Float, y : Float)
 	{
+		m_generalScaling.set(x, y);
+		
 		if (m_background != null)
 		{
 			m_background.scale.set(m_initScaleBg.x * x, m_initScaleBg.y * y);
@@ -201,7 +208,7 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		if (m_background == null || m_illustration == null || m_titleTxt == null || m_valueTxt == null)
 			return;
 			
-		m_illustration.setPosition(m_background.x + cardBorder, m_background.y + CardSkin.cardBorder + CardSkin.offsetForText);
+		m_illustration.setPosition(m_background.x + cardBorder * m_generalScaling.x, m_background.y + CardSkin.cardBorder * m_generalScaling.y + CardSkin.offsetForText* m_generalScaling.y);
 		
 		m_titleTxt.x = m_background.x + (m_background.width / 2.0) - m_titleTxt.fieldWidth*m_titleTxt.scale.x / 2.0;
 		m_titleTxt.y = m_background.y + CardSkin.cardBorder;
@@ -362,6 +369,15 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		this.add(m_valueTxt);
 	}
 	
+	public function blink() : Void
+	{
+		forEach(startBlink);
+	}
+	
+	private function startBlink(sprite : FlxSprite)
+	{
+		FlxFlicker.flicker(sprite, 0.5, 0.1);
+	}
 	
 	
 }

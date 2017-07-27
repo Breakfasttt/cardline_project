@@ -100,6 +100,12 @@ class ConfigGameState extends FlxState
 		for (extId in allExtId)
 		{
 			var name = GameDatas.self.extentionManager.getExtentionName(extId);
+			if (name == null)
+			{
+				FlxG.log.warn("Extension " + extId + " is invalid");
+				continue;
+			}
+			
 			var box : FlxUICheckBox = new FlxUICheckBox(0, 0, null, null, name);
 			box.box.setGraphicSize(50, 50);
 			box.box.updateHitbox();

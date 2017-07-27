@@ -54,7 +54,6 @@ class MainHandUi
 			m_cards.push(null);
 		
 			
-		calculStartCoord();	
 		m_handUI = new CardSkinGroup();
 	}
 	
@@ -102,6 +101,7 @@ class MainHandUi
 		
 		m_handUI.add(card.skin);
 		moveToSlot(card);
+		refreshCardPosition();
 		return true;
 	}
 	
@@ -147,8 +147,14 @@ class MainHandUi
 		card.skin.onDragCallback = null;
 		card.skin.onStartDragCallback = null;
 		card.skin.onStopDragCallback = null;
-		
 		m_handUI.remove(card.skin);
+		
+		for (i in (index)...(m_cards.length - 1))
+			m_cards[i] = m_cards[i + 1];
+		m_cards[m_cards.length - 1] = null;
+			
+		refreshCardPosition();
+		
 		return true;
 	}
 	
@@ -178,11 +184,14 @@ class MainHandUi
 	 */
 	private function moveToSlot(card : Card) : Void
 	{
+		if (card == null)
+			return;
+		
 		var index : Int = m_cards.indexOf(card);
 		
 		if (index < 0)
 			return;
-			
+				
 		var posX = m_xStart + index * (CardSkin.cardWidth + m_offsetXBetweenCard);
 		
 		card.skin.setPosition(posX, m_yLine);
@@ -239,10 +248,28 @@ class MainHandUi
 	
 	private function calculStartCoord() : Void
 	{
-		var totalWidth : Float = (CardSkin.cardWidth + m_offsetXBetweenCard) * m_maxCardOnHand - m_offsetXBetweenCard;
+		var totalWidth : Float = (CardSkin.cardWidth + m_offsetXBetweenCard) * getRemainingCard() - m_offsetXBetweenCard;
 		
 		m_xStart = FlxG.width / 2.0 - totalWidth / 2.0;
 		m_yLine = FlxG.height - (CardSkin.cardHeight * 75/100);
+	}
+	
+	private function refreshCardPosition() :Void
+	{
+		calculStartCoord();	
+		for (card in m_cards)
+			this.moveToSlot(card);
+	}
+	
+	public function getRemainingCard() : Int
+	{
+		var result = 0;
+		for (card in m_cards)
+		{
+			if (card != null)
+				result++;
+		}
+		return result;
 	}
 	
 	public function getDraggedCard() : Card

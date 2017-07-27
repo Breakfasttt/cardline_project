@@ -1,11 +1,14 @@
 package ui.gameZone;
+import assets.AssetPaths;
 import data.card.CardsExtention;
 import data.manager.GameDatas;
 import flixel.FlxBasic;
 import flixel.FlxSprite;
+import flixel.addons.text.FlxTextField;
 import flixel.group.FlxGroup;
 import flixel.input.FlxPointer;
 import flixel.math.FlxPoint;
+import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
 import source.data.card.CardData;
@@ -38,6 +41,8 @@ class DeckUi
 	
 	private var m_deckBorder : FlxSprite;
 	
+	private var m_txtInfos : FlxText;
+	
 	/**
 	 * store all played extention
 	 */
@@ -50,7 +55,7 @@ class DeckUi
 	
 	private var m_actualScale : FlxPoint;
 	
-	public function new(playedExtention : Array<String>, x : Float = 50, y : Float = 800) 
+	public function new(playedExtention : Array<String>, infos : String, x : Float = 50, y : Float = 800) 
 	{
 		m_posX = x;
 		m_posY = y;
@@ -71,10 +76,16 @@ class DeckUi
 		var offsetx = (m_deckBorder.width - CardSkin.cardWidth) / 2;
 		var offsety = (m_deckBorder.height - CardSkin.cardHeight) / 2;
 		
-		m_deckBorder.setPosition(m_posX-offsetx, m_posY-offsety);
+		m_deckBorder.setPosition(m_posX - offsetx, m_posY - offsety);
+		
+		m_txtInfos = new FlxText(0, 0, CardSkin.cardWidth, infos);
+		m_txtInfos.alignment = FlxTextAlign.CENTER;
+		m_txtInfos.setFormat(AssetPaths.OldNewspaperTypes__ttf, 32);
+		m_txtInfos.setPosition(m_posX, m_deckBorder.y + m_deckBorder.height + 10);
 		
 		m_deckGroup = new FlxGroup();
 		m_deckGroup.add(m_deckBorder);
+		m_deckGroup.add(m_txtInfos);
 		
 		m_playedExtention = playedExtention;
 		m_deck = new Array<Card>();
@@ -201,10 +212,14 @@ class DeckUi
 		card.skin.setVisible(false);
 		card.skin.scaleSkin(m_actualScale.x, m_actualScale.y);
 		
+		//hide the card at top just in case
+		if (m_deck.length > 0)
+			m_deck[m_deck.length - 1].skin.visible = false;		
+		
 		if (!random)
 		{
 			if (atTop)
-				m_deck.push(card)
+				m_deck.push(card);
 			else
 				m_deck.unshift(card);
 		}
@@ -236,7 +251,9 @@ class DeckUi
 		var offsetx = (m_deckBorder.width - CardSkin.cardWidth*x) / 2;
 		var offsety = (m_deckBorder.height - CardSkin.cardHeight*y) / 2;
 		
-		m_deckBorder.setPosition(m_posX-offsetx, m_posY-offsety);		
+		m_deckBorder.setPosition(m_posX - offsetx, m_posY - offsety);
+		m_txtInfos.fieldWidth = -1;
+		m_txtInfos.setPosition(m_posX + m_deckBorder.width/2 - m_txtInfos.width/2.0 - offsetx, m_deckBorder.y + m_deckBorder.height + 5*y);
 		
 	}
 }

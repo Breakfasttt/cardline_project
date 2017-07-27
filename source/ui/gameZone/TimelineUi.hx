@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
 import flixel.input.FlxAccelerometer;
+import flixel.input.mouse.FlxMouseEventManager;
 import flixel.math.FlxPoint;
 import flixel.util.FlxAxes;
 import flixel.util.FlxColor;
@@ -41,6 +42,7 @@ class TimelineUi
 	private var m_putZone : FlxSprite;
 	private var m_putZoneCollider : FlxSprite;
 	
+	private var m_mouseCollider : FlxSprite;
 	private var m_leftCollider : FlxSprite;
 	private var m_rightCollider : FlxSprite;
 	
@@ -61,6 +63,11 @@ class TimelineUi
 	private static var m_tempoBeforeMove : Float = 0.450;
 	private var m_elapsedTime : Float;
 	
+	//pixel diff need to have between start and actual mouse position before removing card
+	private static var m_mouseSensitivity : Float = 375; 
+	private var m_mouseMove : Bool;
+	private var m_mouseStartPosition : FlxPoint;
+	
 	
 	public function new() 
 	{
@@ -69,7 +76,6 @@ class TimelineUi
 		m_cards = new Array<Card>();
 		m_actualIndex = 0;
 		m_elapsedTime = 0;
-
 		initBorders();
 		initPutZone();
 		initCollider();
@@ -132,17 +138,23 @@ class TimelineUi
 	
 	private function initCollider() : Void
 	{
+		m_mouseCollider = new FlxSprite();
 		m_leftCollider = new FlxSprite();
 		m_rightCollider = new FlxSprite();
 		
+		m_mouseCollider.makeGraphic(FlxG.width, CardSkin.cardHeight + 2 * m_lineOffset - Math.ceil(m_upBorder.thickness), FlxColor.TRANSPARENT);
 		m_leftCollider.makeGraphic(Math.ceil(CardSkin.cardWidth * 1.5), CardSkin.cardHeight + 2 * m_lineOffset - Math.ceil(m_upBorder.thickness) , FlxColor.TRANSPARENT);
 		m_rightCollider.makeGraphic(Math.ceil(CardSkin.cardWidth * 1.5), CardSkin.cardHeight + 2 * m_lineOffset - Math.ceil(m_upBorder.thickness) , FlxColor.TRANSPARENT);
 		
+		m_mouseCollider.setPosition(0, m_linePositionY + m_upBorder.thickness);
 		m_leftCollider.setPosition(0, m_linePositionY + m_upBorder.thickness);
 		m_rightCollider.setPosition(FlxG.width - m_rightCollider.width, m_linePositionY + m_upBorder.thickness);
 		
+		m_displayGroup.add(m_mouseCollider);
 		m_displayGroup.add(m_leftCollider);
 		m_displayGroup.add(m_rightCollider);
+		
+		FlxMouseEventManager.add(m_mouseCollider, onMouseColliderDown, onMouseColliderUp, null, onMouseColliderUp, false, true, false);
 	}
 	
 	public function addCard(card : Card) : Bool
@@ -207,6 +219,33 @@ class TimelineUi
 		return result;
 	}
 	
+	private function moveIndex(toRight : Bool = true) : Void
+	{
+		if (toRight)
+			m_actualIndex++;
+		else
+			m_actualIndex--;
+			
+		if (m_actualIndex < 0)
+			m_actualIndex = 0;
+		else if (m_actualIndex > m_cards.length)
+			m_actualIndex = m_cards.length ;
+				
+		updateCardsPosition();
+	}
+	
+	private function onMouseColliderDown(sprite : FlxSprite) : Void
+	{
+		m_mouseMove = true;
+		m_mouseStartPosition = new FlxPoint(FlxG.mouse.x, FlxG.mouse.y);
+	}
+	
+	private function onMouseColliderUp(sprite : FlxSprite) : Void
+	{
+		m_mouseMove = false;
+		m_mouseStartPosition = null;
+	}	
+	
 	public function updateCardsPosition() : Void
 	{
 		for (i in 0...m_cards.length)
@@ -224,22 +263,7 @@ class TimelineUi
 				
 			m_cards[i].skin.setPosition(x, y);
 		}
-	}
-	
-	private function moveIndex(toRight : Bool = true) : Void
-	{
-		if (toRight)
-			m_actualIndex++;
-		else
-			m_actualIndex--;
-			
-		if (m_actualIndex < 0)
-			m_actualIndex = 0;
-		else if (m_actualIndex > m_cards.length)
-			m_actualIndex = m_cards.length ;
-				
-		updateCardsPosition();
-	}
+	}	
 	
 	public function checkPutCollision(card : Card) : Bool
 	{
@@ -258,18 +282,40 @@ class TimelineUi
 	
 	public function checkMoveCollision(elapsedTime : Float, card : Card) : Void
 	{
-		if (m_elapsedTime > 0.0)
-		{
-			m_elapsedTime -= elapsedTime;
-			return;
-		}
+		m_elapsedTime -= elapsedTime;
+		if (m_elapsedTime < 0.0)
+			m_elapsedTime = 0.0;
 		
-		if(FlxG.overlap(card.skin, m_leftCollider))
-			this.moveIndex(false);
-		else if (FlxG.overlap(card.skin, m_rightCollider))
-			this.moveIndex();
+		if (m_mouseMove)
+		{
+			var actualPoint : FlxPoint = new FlxPoint(FlxG.mouse.x, FlxG.mouse.y);
 			
-		m_elapsedTime = m_tempoBeforeMove;	
+			var diff = m_mouseStartPosition.x - actualPoint.x;
+			if (diff < 0 && Math.abs(diff) >= m_mouseSensitivity)
+			{
+				this.moveIndex();
+				m_mouseStartPosition.x = FlxG.mouse.x;
+			}
+			else if (diff > 0 && diff >= m_mouseSensitivity)
+			{
+				this.moveIndex(false);
+				m_mouseStartPosition.x = FlxG.mouse.x;
+			}
+		}
+		else if(m_elapsedTime <= 0.0 && card != null)
+		{
+		
+			if (FlxG.overlap(card.skin, m_leftCollider))
+			{
+				this.moveIndex(false);
+				m_elapsedTime = m_tempoBeforeMove;
+			}
+			else if (FlxG.overlap(card.skin, m_rightCollider))
+			{
+				this.moveIndex();
+				m_elapsedTime = m_tempoBeforeMove;
+			}
+		}
 	}
 	
 	public function reinitPutColor() : Void

@@ -44,10 +44,10 @@ class PlayState extends FlxState
 		
 		m_board = new FlxSprite(0, 0, AssetsManager.global.getFlxGraphic(AssetPaths.menuGame__jpg));
 		
-		m_deckUI = new DeckUi(GameDatas.self.selectedExtention.copy(), 50, 25);
+		m_deckUI = new DeckUi(GameDatas.self.selectedExtention.copy(), "Pioche", 50, 25);
 		m_deckUI.setScale(m_scaleDeckAndGraveyard, m_scaleDeckAndGraveyard);
 		
-		m_graveyardUI = new DeckUi(new Array<String>(), 50 + CardSkin.cardWidth*m_scaleDeckAndGraveyard + 30, 25);
+		m_graveyardUI = new DeckUi(new Array<String>(), "Défausse" ,50 + CardSkin.cardWidth*m_scaleDeckAndGraveyard + 30, 25);
 		m_graveyardUI.setScale(m_scaleDeckAndGraveyard, m_scaleDeckAndGraveyard);
 		
 		m_mainHandUI = new MainHandUi(m_maxCardOnHand, onPutCard);
@@ -77,10 +77,11 @@ class PlayState extends FlxState
 		
 		var draggedCard : Card = m_mainHandUI.getDraggedCard();
 		
+		//dragged card == null is check into tthe funct because of mouse moving possibility
+		m_timeline.checkMoveCollision(elapsed, draggedCard); 
+		
 		if (draggedCard != null)
 		{
-			m_timeline.checkMoveCollision(elapsed, draggedCard);
-			
 			if (m_timeline.checkPutCollision(draggedCard))
 			{
 				// other stuff ?
@@ -92,7 +93,6 @@ class PlayState extends FlxState
 			}
 			
 		}
-		
 	}
 	
 	private function deckToMainHand() : Void
@@ -138,7 +138,12 @@ class PlayState extends FlxState
 			if (!m_timeline.addCard(card))
 			{
 				cardToGraveyard(card);
+				card.skin.blink();
 				deckToMainHand();
+			}
+			else
+			{
+				card.skin.blink();
 			}
 		}
 			
