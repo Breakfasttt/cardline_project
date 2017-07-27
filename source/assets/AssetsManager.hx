@@ -363,7 +363,13 @@ class AssetsManager
 	{
 		//dafuk. When call a second time with same file name, Bitmapdata is corrupted. Maybe the reference is clean by haxeflixel ?
 		// call .clone to fix the problem but need to check memory.
-		var bmd = this.getBitmapData(file).clone(); 
+		var bmd = this.getBitmapData(file);
+		
+		if (bmd == null)
+			return null;
+			
+		bmd = bmd.clone();
+
 		if (bmd == null)
 			return null;
 		return FlxGraphic.fromBitmapData(bmd);

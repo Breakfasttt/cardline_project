@@ -71,20 +71,20 @@ class ConfigGameState extends FlxState
 	private function initBg() : Void
 	{
 		m_background = new FlxSprite();
-		m_background.loadGraphic(AssetsManager.global.getFlxGraphic(AssetPaths.board__jpg));
+		m_background.loadGraphic(AssetsManager.global.getFlxGraphic(AssetPaths.menuGame__jpg));
 		this.add(m_background);
 	}
 	
 	private function initInfos1() : Void
 	{
-		m_infos1 = new FlxText(0, 50, -1, "Cocher les extensions avec lesquels vous voulez jouer : ", 24);
+		m_infos1 = new FlxText(0, 50, -1, "Cocher les extensions avec lesquels vous voulez jouer : ", 52);
 		m_infos1.screenCenter(FlxAxes.X);
 		this.add(m_infos1);
 	}
 	
 	private function initInfos2() : Void
 	{
-		m_infos2 = new FlxText(0, 550, -1, "Cocher la valeur avec laquelle vous voulez jouer : ", 24);
+		m_infos2 = new FlxText(0, 550, -1, "Cocher la valeur avec laquelle vous voulez jouer : ", 52);
 		m_infos2.screenCenter(FlxAxes.X);
 		this.add(m_infos2);
 	}
@@ -108,7 +108,7 @@ class ConfigGameState extends FlxState
 			box.mark.setGraphicSize(50, 50);
 			box.mark.updateHitbox();
 			var boxLabel = box.getLabel();
-			boxLabel.setFormat(24);
+			boxLabel.setFormat(AssetPaths.ATypewriterForMe__ttf,32);
 			boxLabel.fieldWidth = 245;
 			box.textX = 5;
 			box.textY = 2;
@@ -117,7 +117,7 @@ class ConfigGameState extends FlxState
 			m_allExtention.push(box);
 		}
 		
-		m_listExtention = new FlxUIList(0, 250, m_allExtention, 1920, 75, "Suivant...", FlxUIList.STACK_HORIZONTAL, 300);
+		m_listExtention = new FlxUIList(10, 250, m_allExtention, 1920, 75, "Suivant...", FlxUIList.STACK_HORIZONTAL, 300);
 
 		m_sliderExtention = new FlxSlider(m_listExtention, "scrollIndex", 0, m_listExtention.y + m_listExtention.height, 0, m_allExtention.length - 5, 1920, 30, 50, FlxColor.BROWN, FlxColor.WHITE);
 		m_sliderExtention.minLabel.visible = false;
@@ -125,13 +125,16 @@ class ConfigGameState extends FlxState
 		m_sliderExtention.nameLabel.visible = false;
 		m_sliderExtention.valueLabel.visible = false;
 		
+		if (m_allExtention.length <= 5)
+			m_sliderExtention.visible = false;
+		
 		this.add(m_listExtention);
 		this.add(m_sliderExtention);		
 	}
 	
 	private function initValueChoice() : Void
 	{
-		m_listValue = new FlxUIList(0, 750, [], 1920, 75, "Suivant...", FlxUIList.STACK_HORIZONTAL, 300);
+		m_listValue = new FlxUIList(10, 750, [], 1920, 75, "Suivant...", FlxUIList.STACK_HORIZONTAL, 300);
 
 		m_sliderValue = new FlxSlider(m_listValue, "scrollIndex", 0, m_listValue.y + m_listValue.height, 0, 10, 1920, 30, 50, FlxColor.BROWN, FlxColor.WHITE);
 		m_sliderValue.minLabel.visible = false;
@@ -148,8 +151,12 @@ class ConfigGameState extends FlxState
 	private function initPlayBtn() : Void
 	{
 		m_playBtn = new FlxButtonPlus(1920-400 - 50, 1080-50-50, onClickPlay, "Jouer", 400, 50);
-		m_playBtn.textNormal.size = 24;
-		m_playBtn.textHighlight.size = 24;
+		m_playBtn.textNormal.setFormat(AssetPaths.ATypewriterForMe__ttf, 32);
+		m_playBtn.textHighlight.setFormat(AssetPaths.ATypewriterForMe__ttf, 32);
+		
+		m_playBtn.updateInactiveButtonColors([FlxColor.BROWN, FlxColor.BROWN, FlxColor.BROWN]);
+		m_playBtn.updateActiveButtonColors([FlxColor.BROWN, FlxColor.GRAY]);
+		
 		this.add(m_playBtn);
 	}
 	
@@ -184,7 +191,7 @@ class ConfigGameState extends FlxState
 			box.mark.setGraphicSize(50, 50);
 			box.mark.updateHitbox();
 			var boxLabel = box.getLabel();
-			boxLabel.setFormat(24);
+			boxLabel.setFormat(AssetPaths.ATypewriterForMe__ttf,32);
 			boxLabel.fieldWidth = 245;
 			box.textX = 5;
 			box.textY = 2;
@@ -202,10 +209,13 @@ class ConfigGameState extends FlxState
 			if (m_listValue != null)
 				m_listValue.add(box);
 				
-			
-				
 			if (m_sliderValue != null)
-				m_sliderValue.maxValue = m_allValue.length - 5;
+			{
+				if (m_allValue.length <= 5)
+					m_sliderValue.visible = false;
+				else
+					m_sliderValue.maxValue = m_allValue.length - 5;
+			}
 		}
 	}
 	

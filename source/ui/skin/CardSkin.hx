@@ -79,8 +79,8 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		
 		initBackGround();
 		initIllustration();
-		m_titleTxt = new FlxText(0, 0, -1, "", 16);
-		m_valueTxt = new FlxText(0, 0, -1, "", 16);
+		m_titleTxt = new FlxText(0, 0, -1, "", 24);
+		m_valueTxt = new FlxText(0, 0, -1, "", 24);
 		
 		//m_titleTxt.setFormat(AssetPaths.OptimusPrinceps__ttf,24);
 		//m_valueTxt.setFormat(AssetPaths.OptimusPrinceps__ttf,24);
@@ -199,10 +199,10 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 			
 		m_illustration.setPosition(m_background.x + cardBorder, m_background.y + cardBorder);
 		
-		m_titleTxt.x = m_background.x + (m_background.width / 2.0) - m_titleTxt.fieldWidth / 2.0;
+		m_titleTxt.x = m_background.x + (m_background.width / 2.0) - m_titleTxt.fieldWidth*m_titleTxt.scale.x / 2.0;
 		m_titleTxt.y = m_background.y;
 		
-		m_valueTxt.x = m_background.x + (m_background.width / 2.0) - m_valueTxt.fieldWidth / 2.0;
+		m_valueTxt.x = m_background.x + (m_background.width / 2.0) - m_valueTxt.fieldWidth*m_valueTxt.scale.x / 2.0;
 		m_valueTxt.y = m_background.y + m_background.height - m_valueTxt.height;
 	}
 	

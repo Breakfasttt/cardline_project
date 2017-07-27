@@ -20,8 +20,11 @@ import ui.elements.TLLoadingScreen;
 class LoadingState extends FlxState 
 {
 
-	private static var m_extCatalog : String = "assets/extentions/extCatalog.json";
-	private static var m_defaultBg : String = "assets/images/board.jpg";
+	private static var m_defaultFiles : Array<String> = [	AssetPaths.extCatalog__json,
+															AssetPaths.board__jpg,
+															AssetPaths.menuBg__jpg,
+															AssetPaths.menuGame__jpg
+														];
 	
 	private var m_loadingScreen : TLLoadingScreen;
 	
@@ -36,7 +39,7 @@ class LoadingState extends FlxState
 		
 		//start loading assets
 		new AssetsManager(onProgress);
-		AssetsManager.global.loadFiles( [m_extCatalog, m_defaultBg], onNeededFilesComplete);
+		AssetsManager.global.loadFiles( m_defaultFiles, onNeededFilesComplete);
 	}
 	
 	private function onProgress(total : Float, current : Float, currentFile : String) : Void
@@ -58,7 +61,7 @@ class LoadingState extends FlxState
 		m_loadingScreen.updateGlobalBar(0);
 		m_loadingScreen.updateCurrentBar(0);
 		
-		GameDatas.self.extentionManager.init(m_extCatalog);
+		GameDatas.self.extentionManager.init(AssetPaths.extCatalog__json);
 		var ext : Array<String> = GameDatas.self.extentionManager.getAllExtentionFiles();
 		
 		m_loadingScreen.setInfos("Chargement de " + ext.length +  " fichiers d'extension");

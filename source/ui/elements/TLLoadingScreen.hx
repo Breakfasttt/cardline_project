@@ -41,7 +41,7 @@ class TLLoadingScreen
 	
 	private function initBg() : Void
 	{
-		m_background = new FlxSprite(0, 0, AssetsManager.global.getFlxGraphic(AssetPaths.board__jpg));
+		m_background = new FlxSprite(0, 0, AssetsManager.global.getFlxGraphic(AssetPaths.menuBg__jpg));
 		//other stuff ?
 	}
 	

@@ -161,10 +161,11 @@ class DeckUi
 			return;
 		
 		var card : Card = m_deck[m_deck.length - 1];
+		card.skin.scaleSkin(m_actualScale.x, m_actualScale.y);
 		card.skin.setPosition(m_posX, m_posY);
+		card.skin.setVisible(revealCard);
 		
 		m_deckGroup.add(card.skin);
-		card.skin.setVisible(revealCard);
 	}
 	
 	/**
@@ -229,7 +230,8 @@ class DeckUi
 			card.skin.setPosition(m_posX, m_posY);
 		}
 		
-		m_deckBorder.scale.set(x,y);
+		m_deckBorder.scale.set(x, y);
+		m_deckBorder.updateHitbox();
 		
 		var offsetx = (m_deckBorder.width - CardSkin.cardWidth*x) / 2;
 		var offsety = (m_deckBorder.height - CardSkin.cardHeight*y) / 2;
