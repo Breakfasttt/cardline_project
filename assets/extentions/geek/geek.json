@@ -371,7 +371,150 @@
 			{
 				"year":2009
 			}
-		}
-		
+		},
+		{
+			"name":"Candy Crush Saga (Android)",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2012
+			}
+		},
+		{
+			"name":"Clash of clans",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2013
+			}
+		},
+		{
+			"name":"Chrono Trigger",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2009
+			}
+		},
+		{
+			"name":"iPhone",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2007
+			}
+		},
+		{
+			"name":"Android V1",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2008
+			}
+		},
+		{
+			"name":"Nokia 3310",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2000
+			}
+		},
+				{
+			"name":"Rubik's Cube",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1974
+			}
+		},
+		{
+			"name":"Les Pogs",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1995
+			}
+		},
+		{
+			"name":"Starwars (film)",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1977
+			}
+		},
+		{
+			"name":"Indiana Jones",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1981
+			}
+		},
+		{
+			"name":"Ipad (le premier)",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2010
+			}
+		},
+		{
+			"name":"Nintendo (la société)",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1889
+			}
+		},
+		{
+			"name":"Sony (la société)",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1946
+			}
+		},
+		{
+			"name":"Microsoft (la société)",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1975
+			}
+		},
+		{
+			"name":"Apple (la société)",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":1976
+			}
+		},
+		{
+			"name":"Nyan Cat",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2011
+			}
+		},
+		{
+			"name":"Qu'est-ce qui est jaune et qui attends ?",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2017
+			}
+		},
+		{
+			"name":"Starwars Kid",
+			"illustration":"test1.jpg",
+			"values": 
+			{
+				"year":2003
+			}
+		},
 	]
 }
