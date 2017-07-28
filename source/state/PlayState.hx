@@ -42,7 +42,7 @@ class PlayState extends FlxState
 	{
 		super.create();	
 		
-		m_board = new FlxSprite(0, 0, AssetsManager.global.getFlxGraphic(AssetPaths.menuGame__jpg));
+		m_board = new FlxSprite(0, 0, AssetsManager.global.getFlxGraphic(AssetPaths.board2__jpg));
 		
 		m_deckUI = new DeckUi(GameDatas.self.selectedExtention.copy(), "Pioche", 50, 25);
 		m_deckUI.setScale(m_scaleDeckAndGraveyard, m_scaleDeckAndGraveyard);

@@ -9,8 +9,7 @@
 			"illustration":"fougere.jpg",
 			"values": 
 			{
-				"year":1960,
-				"esperance":1
+				"year":1960
 			}
 		},
 		{
@@ -18,8 +17,7 @@
 			"illustration":"test1.jpg",
 			"values": 
 			{
-				"year":1960,
-				"esperance":2
+				"year":1960
 			}
 		},
 		{
@@ -27,8 +25,7 @@
 			"illustration":"test1.jpg",
 			"values": 
 			{
-				"year":1960,
-				"esperance":3
+				"year":1960
 			}
 		},
 		{
@@ -36,8 +33,7 @@
 			"illustration":"test1.jpg",
 			"values": 
 			{
-				"year":1960,
-				"esperance":4
+				"year":1960
 			}
 		},
 		{
@@ -45,8 +41,7 @@
 			"illustration":"test1.jpg",
 			"values": 
 			{
-				"year":1960,
-				"esperance":5
+				"year":1960
 			}
 		},
 		{
@@ -54,8 +49,7 @@
 			"illustration":"test1.jpg",
 			"values": 
 			{
-				"year":1960,
-				"esperance":6
+				"year":1960
 			}
 		},
 		{
@@ -63,8 +57,7 @@
 			"illustration":"test1.jpg",
 			"values": 
 			{
-				"year":1960,
-				"esperance":7
+				"year":1960
 			}
 		},
 		{
@@ -72,8 +65,7 @@
 			"illustration":"test1.jpg",
 			"values": 
 			{
-				"year":1960,
-				"esperance":8
+				"year":1960
 			}
 		}
 	]

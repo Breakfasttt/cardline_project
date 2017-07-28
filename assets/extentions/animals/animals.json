@@ -2,38 +2,1112 @@
 	"name":"Les animaux",
 	"background":"assets/extentions/common/cardBg.png",
 	"illusFolder":"assets/extentions/animals/illus/",
+	"unitsName":
+	{
+		"poids":"kg",
+		"esperance":"ans",
+		"taille":"cm"
+	},
 	"cards":
 	[
 		{
-			"name":"le chien de la mort qui tue sa maman des ours en slip",
-			"illustration":"chien.jpg",
+			"name":"L'âne",
+			"illustration":"ane.jpg",
 			"values": 
 			{
-				"esperance":20
+				"poids":350,
+				"esperance":35,
+				"taille":245
 			}
 		},
 		{
-			"name":"la fourmi",
+			"name":"Le flamant rose",
+			"illustration":"flamantrose.jpg",
+			"values": 
+			{
+				"poids":3.5,
+				"esperance":13,
+				"taille":128
+			}
+		},
+		{
+			"name":"le tamanoir",
+			"illustration":"tamanoir.jpg",
+			"values": 
+			{
+				"poids":42,
+				"esperance":25,
+				"taille":210
+			}
+		},
+		{
+			"name":"le bison",
+			"illustration":"bison.jpg",
+			"values": 
+			{
+				"poids":880,
+				"esperance":24,
+				"taille":300
+			}
+		},
+		{
+			"name":"le coyote",
+			"illustration":"coyote.jpg",
+			"values": 
+			{
+				"poids":16,
+				"esperance":11,
+				"taille":87
+			}
+		},
+		{
+			"name":"le yack",
+			"illustration":"yack.jpg",
+			"values": 
+			{
+				"poids":900,
+				"esperance":23,
+				"taille":325
+			}
+		},
+		{
+			"name":"le homard",
+			"illustration":"homard.jpg",
+			"values": 
+			{
+				"poids":4,
+				"esperance":40,
+				"taille":50
+			}
+		},
+		{
+			"name":"le morse",
+			"illustration":"morse.jpg",
+			"values": 
+			{
+				"poids":1300,
+				"esperance":40,
+				"taille":315
+			}
+		},
+		{
+			"name":"le rhinocéros",
+			"illustration":"rhino.jpg",
+			"values": 
+			{
+				"poids":2500,
+				"esperance":42,
+				"taille":400
+			}
+		},
+		{
+			"name":"L'éléphant d'asie",
+			"illustration":"elephantasie.jpg",
+			"values": 
+			{
+				"poids":5000,
+				"esperance":60,
+				"taille":600
+			}
+		},
+		{
+			"name":"L'aigle royal",
+			"illustration":"aigleroyal.jpg",
+			"values": 
+			{
+				"poids":4.5,
+				"esperance":25,
+				"taille":83
+			}
+		},
+		{
+			"name":"le grand cachalot",
+			"illustration":"grandcachalot.jpg",
+			"values": 
+			{
+				"poids":40000,
+				"esperance":70,
+				"taille":1600
+			}
+		},
+		{
+			"name":"le lézard vert",
+			"illustration":"lezardvert.jpg",
+			"values": 
+			{
+				"poids":0.030,
+				"esperance":8,
+				"taille":20
+			}
+		},
+		{
+			"name":"le labrador",
+			"illustration":"labrador.jpg",
+			"values": 
+			{
+				"poids":39,
+				"esperance":17,
+				"taille":80
+			}
+		},
+		{
+			"name":"le paon bleu",
+			"illustration":"paonbleu.jpg",
+			"values": 
+			{
+				"poids":3.4,
+				"esperance":10,
+				"taille":105
+			}
+		},
+		{
+			"name":"L'orang-outan",
+			"illustration":"orangoutan.jpg",
+			"values": 
+			{
+				"poids":60,
+				"esperance":35,
+				"taille":125
+			}
+		},
+		{
+			"name":"le panda géant",
+			"illustration":"pandageant.jpg",
+			"values": 
+			{
+				"poids":100,
+				"esperance":28,
+				"taille":165
+			}
+		},
+		{
+			"name":"la lucane cerf-volant",
+			"illustration":"lucancerfvolant.jpg",
+			"values": 
+			{
+				"poids":0.004,
+				"esperance":0.25,
+				"taille":4
+			}
+		},
+		{
+			"name":"la hyène tachetée",
+			"illustration":"hyenetachete.jpg",
+			"values": 
+			{
+				"poids":58,
+				"esperance":23,
+				"taille":130
+			}
+		},
+		{
+			"name":"le lapin de garenne",
+			"illustration":"lapingarenne.jpg",
+			"values": 
+			{
+				"poids":2.5,
+				"esperance":7,
+				"taille":42
+			}
+		},
+		{
+			"name":"le lynx",
+			"illustration":"lynx.jpg",
+			"values": 
+			{
+				"poids":11,
+				"esperance":14,
+				"taille":100
+			}
+		},
+		{
+			"name":"la gazelle",
+			"illustration":"gazelle.jpg",
+			"values": 
+			{
+				"poids":36,
+				"esperance":10,
+				"taille":115
+			}
+		},
+		{
+			"name":"la girafe",
+			"illustration":"girafe.jpg",
+			"values": 
+			{
+				"poids":1000,
+				"esperance":26,
+				"taille":560
+			}
+		},
+		{
+			"name":"le grand requin blanc",
+			"illustration":"requinblanc.jpg",
+			"values": 
+			{
+				"poids":1600,
+				"esperance":41,
+				"taille":600
+			}
+		},
+		{
+			"name":"le lion",
+			"illustration":"lion.jpg",
+			"values": 
+			{
+				"poids":180,
+				"esperance":15,
+				"taille":175
+			}
+		},
+		{
+			"name":"le cobra royal",
+			"illustration":"cobraroyal.jpg",
+			"values": 
+			{
+				"poids":10,
+				"esperance":20,
+				"taille":420
+			}
+		},
+		{
+			"name":"Le colibri",
+			"illustration":"colibri.jpg",
+			"values": 
+			{
+				"poids":0.006,
+				"esperance":7,
+				"taille":10
+			}
+		},
+		{
+			"name":"le caiman à lunettes",
+			"illustration":"caimanlunette.jpg",
+			"values": 
+			{
+				"poids":85,
+				"esperance":47,
+				"taille":190
+			}
+		},
+		{
+			"name":"le chimpanzé",
+			"illustration":"chimpanze.jpg",
+			"values": 
+			{
+				"poids":45,
+				"esperance":45,
+				"taille":95
+			}
+		},
+		{
+			"name":"le saumon atlantique",
+			"illustration":"saumonatlante.jpg",
+			"values": 
+			{
+				"poids":4.5,
+				"esperance":5,
+				"taille":85
+			}
+		},
+		{
+			"name":"le kangourou",
+			"illustration":"kangourou.jpg",
+			"values": 
+			{
+				"poids":66,
+				"esperance":17,
+				"taille":165
+			}
+		},
+		{
+			"name":"la tortue d'hermann",
+			"illustration":"tortueherman.jpg",
+			"values": 
+			{
+				"poids":3,
+				"esperance":75,
+				"taille":23
+			}
+		},
+		{
+			"name":"le cerf",
+			"illustration":"cerf.jpg",
+			"values": 
+			{
+				"poids":175,
+				"esperance":20,
+				"taille":210
+			}
+		},
+		{
+			"name":"le condor des andes",
+			"illustration":"condorande.jpg",
+			"values": 
+			{
+				"poids":12,
+				"esperance":46,
+				"taille":117
+			}
+		},
+		{
+			"name":"le pelican frisé",
+			"illustration":"pelicanfrise.jpg",
+			"values": 
+			{
+				"poids":9,
+				"esperance":32,
+				"taille":170
+			}
+		},
+		{
+			"name":"le mouton",
+			"illustration":"mouton.jpg",
+			"values": 
+			{
+				"poids":90,
+				"esperance":11,
+				"taille":120
+			}
+		},
+		{
+			"name":"le castor du canada",
+			"illustration":"castor.jpg",
+			"values": 
+			{
+				"poids":25,
+				"esperance":11,
+				"taille":92
+			}
+		},
+		{
+			"name":"le thon rouge",
+			"illustration":"thonrouge.jpg",
+			"values": 
+			{
+				"poids":300,
+				"esperance":12,
+				"taille":200
+			}
+		},
+		{
+			"name":"le phacochère",
+			"illustration":"phacochere.jpg",
+			"values": 
+			{
+				"poids":90,
+				"esperance":22,
+				"taille":120
+			}
+		},
+		{
+			"name":"le loup gris",
+			"illustration":"loupgris.jpg",
+			"values": 
+			{
+				"poids":38,
+				"esperance":12,
+				"taille":130
+			}
+		},
+		{
+			"name":"le daim",
+			"illustration":"daim.jpg",
+			"values": 
+			{
+				"poids":62,
+				"esperance":19,
+				"taille":145
+			}
+		},
+		{
+			"name":"le zèbre",
+			"illustration":"zebre.jpg",
+			"values": 
+			{
+				"poids":290,
+				"esperance":27,
+				"taille":235
+			}
+		},
+		{
+			"name":"la chauve-souris",
+			"illustration":"chauvesouris.jpg",
+			"values": 
+			{
+				"poids":0.070,
+				"esperance":20,
+				"taille":14
+			}
+		},
+		{
+			"name":"la mygale",
+			"illustration":"mygale.jpg",
+			"values": 
+			{
+				"poids":0.090,
+				"esperance":18,
+				"taille":11
+			}
+		},
+		{
+			"name":"le crocodile du nil",
+			"illustration":"croconil.jpg",
+			"values": 
+			{
+				"poids":850,
+				"esperance":80,
+				"taille":550
+			}
+		},
+		{
+			"name":"l'abeille",
+			"illustration":"abeille.jpg",
+			"values": 
+			{
+				"poids":0.001,
+				"esperance":0.16,
+				"taille":1.2
+			}
+		},
+		{
+			"name":"l'ours brun",
+			"illustration":"oursbrun.jpg",
+			"values": 
+			{
+				"poids":450,
+				"esperance":32,
+				"taille":240
+			}
+		},
+		{
+			"name":"le martin-pecheur",
+			"illustration":"martinpecheur.jpg",
+			"values": 
+			{
+				"poids":0.040,
+				"esperance":15,
+				"taille":16
+			}
+		},
+		{
+			"name":"la libellule",
+			"illustration":"libellule.jpg",
+			"values": 
+			{
+				"poids":0.00002,
+				"esperance":0.2,
+				"taille":6
+			}
+		},
+		{
+			"name":"le hérisson",
+			"illustration":"herisson.jpg",
+			"values": 
+			{
+				"poids":0.800,
+				"esperance":9,
+				"taille":24
+			}
+		},
+		{
+			"name":"l'ours polaire",
+			"illustration":"ourspolaire.jpg",
+			"values": 
+			{
+				"poids":500,
+				"esperance":22,
+				"taille":260
+			}
+		},
+		{
+			"name":"le gorille",
+			"illustration":"gorille.jpg",
+			"values": 
+			{
+				"poids":200,
+				"esperance":40,
+				"taille":170
+			}
+		},
+		{
+			"name":"le goéland argenté",
+			"illustration":"goelandargente.jpg",
+			"values": 
+			{
+				"poids":1,
+				"esperance":31,
+				"taille":61
+			}
+		},
+		{
+			"name":"le tourteau",
+			"illustration":"tourteau.jpg",
+			"values": 
+			{
+				"poids":1.2,
+				"esperance":20,
+				"taille":22
+			}
+		},
+		{
+			"name":"la mante religieuse",
+			"illustration":"mantereligieuse.jpg",
+			"values": 
+			{
+				"poids":0.005,
+				"esperance":0.5,
+				"taille":7
+			}
+		},
+		{
+			"name":"le guépard",
+			"illustration":"guepard.jpg",
+			"values": 
+			{
+				"poids":48,
+				"esperance":13,
+				"taille":135
+			}
+		},
+		{
+			"name":"le lémurien",
+			"illustration":"lemurien.jpg",
+			"values": 
+			{
+				"poids":3.2,
+				"esperance":12,
+				"taille":42
+			}
+		},
+		{
+			"name":"le scorpion noir",
+			"illustration":"scorpionnoir.jpg",
+			"values": 
+			{
+				"poids":0.025,
+				"esperance":6,
+				"taille":15
+			}
+		},
+		{
+			"name":"le tatou",
+			"illustration":"tatou.jpg",
+			"values": 
+			{
+				"poids":5.5,
+				"esperance":14,
+				"taille":43
+			}
+		},
+		{
+			"name":"le puma",
+			"illustration":"puma.jpg",
+			"values": 
+			{
+				"poids":63,
+				"esperance":15,
+				"taille":135
+			}
+		},
+		{
+			"name":"le tigre du bengale",
+			"illustration":"tigrebengale.jpg",
+			"values": 
+			{
+				"poids":215,
+				"esperance":17,
+				"taille":220
+			}
+		},
+		{
+			"name":"la vache",
+			"illustration":"vache.jpg",
+			"values": 
+			{
+				"poids":700,
+				"esperance":13,
+				"taille":250
+			}
+		},
+		{
+			"name":"le dromadaire",
+			"illustration":"dromadaire.jpg",
+			"values": 
+			{
+				"poids":750,
+				"esperance":37,
+				"taille":285
+			}
+		},
+		{
+			"name":"le pigeon",
+			"illustration":"pigeon.jpg",
+			"values": 
+			{
+				"poids":0.270,
+				"esperance":10,
+				"taille":32
+			}
+		},
+		{
+			"name":"le phoque",
+			"illustration":"phoque.jpg",
+			"values": 
+			{
+				"poids":92,
+				"esperance":29,
+				"taille":165
+			}
+		},
+		{
+			"name":"la reine des fourmis noires",
+			"illustration":"reinefourmi.jpg",
+			"values": 
+			{
+				"poids":0.00003,
+				"esperance":20,
+				"taille":0.9
+			}
+		},
+		{
+			"name":"le suricate",
+			"illustration":"suricate.jpg",
+			"values": 
+			{
+				"poids":0.800,
+				"esperance":9,
+				"taille":31
+			}
+		},
+		{
+			"name":"le putois",
+			"illustration":"putois.jpg",
+			"values": 
+			{
+				"poids":0.900,
+				"esperance":8,
+				"taille":45
+			}
+		},
+		{
+			"name":"le renard roux",
+			"illustration":"renardroux.jpg",
+			"values": 
+			{
+				"poids":6,
+				"esperance":8,
+				"taille":75
+			}
+		},
+		{
+			"name":"la chouette hulotte",
+			"illustration":"chouettehuloote.jpg",
+			"values": 
+			{
+				"poids":0.500,
+				"esperance":18,
+				"taille":38
+			}
+		},
+		{
+			"name":"le sanglier",
+			"illustration":"sanglier.jpg",
+			"values": 
+			{
+				"poids":150,
+				"esperance":15,
+				"taille":135
+			}
+		},
+		{
+			"name":"le rat",
+			"illustration":"rat.jpg",
+			"values": 
+			{
+				"poids":0.400,
+				"esperance":3,
+				"taille":25
+			}
+		},
+		{
+			"name":"le léopard",
+			"illustration":"leopard.jpg",
+			"values": 
+			{
+				"poids":58,
+				"esperance":14,
+				"taille":140
+			}
+		},
+		{
+			"name":"le canard colvert",
+			"illustration":"canardcolvert.jpg",
+			"values": 
+			{
+				"poids":1.1,
+				"esperance":21,
+				"taille":59
+			}
+		},
+		{
+			"name":"le grand corbeau",
+			"illustration":"corbeaugrand.jpg",
+			"values": 
+			{
+				"poids":1.2,
+				"esperance":20,
+				"taille":58
+			}
+		},
+		{
+			"name":"le dragon de komodo",
+			"illustration":"dragonkomodo.jpg",
+			"values": 
+			{
+				"poids":120,
+				"esperance":36,
+				"taille":270
+			}
+		},
+		{
+			"name":"l'autruche",
+			"illustration":"autruche.jpg",
+			"values": 
+			{
+				"poids":135,
+				"esperance":38,
+				"taille":250
+			}
+		},
+		{
+			"name":"Le hibou grand duc",
+			"illustration":"hibougranduc.jpg",
+			"values": 
+			{
+				"poids":2.2,
+				"esperance":24,
+				"taille":72
+			}
+		},
+		{
+			"name":"l'otarie",
+			"illustration":"otarie.jpg",
+			"values": 
+			{
+				"poids":165,
+				"esperance":21,
+				"taille":180
+			}
+		},
+		{
+			"name":"le faucon pélerin",
+			"illustration":"fauconpelerin.jpg",
+			"values": 
+			{
+				"poids":0.600,
+				"esperance":16,
+				"taille":42
+			}
+		},
+		{
+			"name":"l'hippopotame",
+			"illustration":"hypotame.jpg",
+			"values": 
+			{
+				"poids":2200,
+				"esperance":45,
+				"taille":350
+			}
+		},
+		{
+			"name":"le mérou brun",
+			"illustration":"merou.jpg",
+			"values": 
+			{
+				"poids":65,
+				"esperance":50,
+				"taille":150
+			}
+		},
+		{
+			"name":"l'éléphant d'Afrique",
+			"illustration":"elephantafrique.jpg",
+			"values": 
+			{
+				"poids":6000,
+				"esperance":65,
+				"taille":700
+			}
+		},
+		{
+			"name":"l'homme",
+			"illustration":"homme.jpg",
+			"values": 
+			{
+				"poids":70,
+				"esperance":71,
+				"taille":172
+			}
+		},
+		{
+			"name":"la baleine bleue",
+			"illustration":"baleinebleue.jpg",
+			"values": 
+			{
+				"poids":170000,
+				"esperance":82,
+				"taille":2800
+			}
+		},
+		{
+			"name":"le dugong",
+			"illustration":"dugong.jpg",
+			"values": 
+			{
+				"poids":600,
+				"esperance":45,
+				"taille":350
+			}
+		},
+		{
+			"name":"le chameau",
+			"illustration":"chameau.jpg",
+			"values": 
+			{
+				"poids":800,
+				"esperance":48,
+				"taille":315
+			}
+		},
+		{
+			"name":"le porc",
+			"illustration":"proc.jpg",
+			"values": 
+			{
+				"poids":350,
+				"esperance":16,
+				"taille":160
+			}
+		},
+		{
+			"name":"le pingouin",
+			"illustration":"pingouin.jpg",
+			"values": 
+			{
+				"poids":0.7,
+				"esperance":19,
+				"taille":40
+			}
+		},
+		{
+			"name":"le manchot empereur",
+			"illustration":"manchotempereur.jpg",
+			"values": 
+			{
+				"poids":30,
+				"esperance":20,
+				"taille":110
+			}
+		},
+		{
+			"name":"la cigogne",
+			"illustration":"cigogne.jpg",
+			"values": 
+			{
+				"poids":3.3,
+				"esperance":27,
+				"taille":108
+			}
+		},
+		{
+			"name":"le boa constrictor",
+			"illustration":"boaconst.jpg",
+			"values": 
+			{
+				"poids":15,
+				"esperance":21,
+				"taille":260
+			}
+		},
+		{
+			"name":"le percheron",
+			"illustration":"percheron.jpg",
+			"values": 
+			{
+				"poids":750,
+				"esperance":28,
+				"taille":265
+			}
+		},
+		{
+			"name":"le dauphin",
+			"illustration":"dauphin.jpg",
+			"values": 
+			{
+				"poids":95,
+				"esperance":30,
+				"taille":215
+			}
+		},
+		{
+			"name":"la grenouille verte",
+			"illustration":"grenouilleverte.jpg",
+			"values": 
+			{
+				"poids":0.020,
+				"esperance":8,
+				"taille":8
+			}
+		},
+		{
+			"name":"la coccinelle",
+			"illustration":"cocx.jpg",
+			"values": 
+			{
+				"poids":0.000015,
+				"esperance":1,
+				"taille":0.7
+			}
+		},
+		{
+			"name":"le raton laveur",
+			"illustration":"ratonlaveur.jpg",
+			"values": 
+			{
+				"poids":6.5,
+				"esperance":8,
+				"taille":82
+			}
+		},
+		{
+			"name":"la fourmi noire",
 			"illustration":"fourmi.jpg",
 			"values": 
 			{
-				"esperance":2
+				"poids":0.00001,
+				"esperance":3,
+				"taille":0.4
 			}
 		},
 		{
-			"name":"le tigre",
-			"illustration":"tigre.jpg",
+			"name":"le toucan",
+			"illustration":"toucan.jpg",
 			"values": 
 			{
-				"esperance":18
+				"poids":0.540,
+				"esperance":15,
+				"taille":64
 			}
 		},
 		{
-			"name":"le monstre",
-			"illustration":"monstre.jpg",
+			"name":"le coq",
+			"illustration":"coq.jpg",
 			"values": 
 			{
-				"poid":50
+				"poids":3.2,
+				"esperance":14,
+				"taille":65
+			}
+		},
+		{
+			"name":"la marmotte",
+			"illustration":"marmotte.jpg",
+			"values": 
+			{
+				"poids":5,
+				"esperance":16,
+				"taille":50
+			}
+		},
+		{
+			"name":"le kiwi",
+			"illustration":"kiwi.jpg",
+			"values": 
+			{
+				"poids":2.6,
+				"esperance":34,
+				"taille":52
+			}
+		},
+		{
+			"name":"la limace",
+			"illustration":"limace.jpg",
+			"values": 
+			{
+				"poids":0.010,
+				"esperance":2.5,
+				"taille":11
+			}
+		},
+		{
+			"name":"la chèvre",
+			"illustration":"chevre.jpg",
+			"values": 
+			{
+				"poids":55,
+				"esperance":12,
+				"taille":95
+			}
+		},
+		{
+			"name":"la loutre",
+			"illustration":"loutre.jpg",
+			"values": 
+			{
+				"poids":10,
+				"esperance":16,
+				"taille":70
+			}
+		},
+		{
+			"name":"le chamois",
+			"illustration":"chamois.jpg",
+			"values": 
+			{
+				"poids":40,
+				"esperance":18,
+				"taille":130
+			}
+		},
+		{
+			"name":"la raie manta",
+			"illustration":"raiemanta.jpg",
+			"values": 
+			{
+				"poids":1500,
+				"esperance":20,
+				"taille":500
+			}
+		},
+		{
+			"name":"le vautour fauve",
+			"illustration":"vautourfauve.jpg",
+			"values": 
+			{
+				"poids":8,
+				"esperance":33,
+				"taille":105
+			}
+		},
+		{
+			"name":"l'écureuil roux",
+			"illustration":"cureil.jpg",
+			"values": 
+			{
+				"poids":0.300,
+				"esperance":6,
+				"taille":22
+			}
+		},
+		{
+			"name":"le lama",
+			"illustration":"lama.jpg",
+			"values": 
+			{
+				"poids":145,
+				"esperance":20,
+				"taille":125
 			}
 		}
 	]

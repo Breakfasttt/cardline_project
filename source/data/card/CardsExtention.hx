@@ -25,6 +25,7 @@ import source.data.card.CardData;
 	var name : String;
 	var background : String;
 	var illusFolder : String;
+	var unitsName : Dynamic;
 	var cards : Array<CardInfos>;
  }
  
@@ -44,6 +45,8 @@ class CardsExtention
 	
 	private var m_playableValue : Array<String>;
 	
+	private var m_mapUnitsName : Map<String,String>;
+	
 	public function new(uniqueId : String, extentionFolder : String, extentionFile : String) 
 	{
 		m_uniqueId = uniqueId;
@@ -59,7 +62,9 @@ class CardsExtention
 	
 	private function parseRawData() : Bool
 	{
-		m_allCardData = new Array();
+		m_allCardData = new Array<CardData>();
+		m_playableValue = new Array();
+		m_mapUnitsName = new Map<String,String>();
 		
 		if (m_rawData == null)
 			return false;
@@ -81,14 +86,19 @@ class CardsExtention
 		m_backgroundFile = extentionInfos.background;
 		var illusFolder : String = extentionInfos.illusFolder;
 		
-		
 		if (extentionInfos == null)
 			return false;
 		
-		m_playableValue = new Array();	
+		if (extentionInfos.unitsName != null) 
+		{
+			var fields : Array<String> = Reflect.fields(extentionInfos.unitsName);
+			for (field in fields)
+				m_mapUnitsName.set(field, Reflect.getProperty(extentionInfos.unitsName, field));
+		}
+		
 		for (card in extentionInfos.cards)
 		{
-			var mapResult : Map<String, Int> = new Map<String, Int>();
+			var mapResult : Map<String, Float> = new Map<String, Float>();
 			var allValues : Array<String> = Reflect.fields(card.values);
 			
 			for (value in allValues)
@@ -99,7 +109,7 @@ class CardsExtention
 					m_playableValue.push(value);
 			}
 			
-			m_allCardData.push(new CardData(card.name, m_backgroundFile, illusFolder + card.illustration, mapResult));
+			m_allCardData.push(new CardData(this, card.name, m_backgroundFile, illusFolder + card.illustration, mapResult));
 		}
 		
 		return true;
@@ -168,7 +178,7 @@ class CardsExtention
 		return m_allCardData.copy();
 	}
 	
-	public function getPlayableValue() : Array<String>
+	public function getPlayableValue() : Array<String> 
 	{
 		if (m_playableValue == null)
 			return null;
@@ -176,6 +186,16 @@ class CardsExtention
 		return m_playableValue.copy();
 	}
 	
-	
-	
+	public function getUnitOfValue(value : String) : String
+	{
+		if (m_mapUnitsName == null)
+			return "";
+			
+		var result = m_mapUnitsName.get(value);
+		
+		if (result == null)
+			return "";	
+			
+		return result;
+	}
 }

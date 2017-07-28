@@ -22,6 +22,7 @@ class LoadingState extends FlxState
 
 	private static var m_defaultFiles : Array<String> = [	AssetPaths.extCatalog__json,
 															AssetPaths.board__jpg,
+															AssetPaths.board2__jpg,
 															AssetPaths.menuBg__jpg,
 															AssetPaths.menuGame__jpg
 														];

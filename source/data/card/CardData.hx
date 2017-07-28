@@ -1,4 +1,5 @@
 package source.data.card;
+import data.card.CardsExtention;
 import flixel.FlxSprite;
 
 
@@ -9,13 +10,16 @@ import flixel.FlxSprite;
 class CardData 
 {
 	
+	public var extentionRef(default, null) : CardsExtention;
+	
 	public var name(default, null) : String;
 	public var background(default,null) : String;
 	public var illustration(default,null) : String;
-	public var value(default,null) : Map<String,Int>;
+	public var value(default,null) : Map<String,Float>;
 	
-	public function new(name : String, background : String, illustration : String, value : Map<String,Int>) 
+	public function new(extentionRef : CardsExtention, name : String, background : String, illustration : String, value : Map<String,Float>) 
 	{
+		this.extentionRef = extentionRef;
 		this.name = name;
 		this.background = background;
 		this.illustration = illustration;

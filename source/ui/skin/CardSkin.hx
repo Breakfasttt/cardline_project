@@ -138,7 +138,11 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		if (m_cardDataRef.value.exists(valueToUse))
 			value = Std.string(m_cardDataRef.value.get(valueToUse));
 		
-		setText(m_cardDataRef.name, value); // temp
+		var unit : String = "";
+		if(m_cardDataRef.extentionRef != null)
+			unit = m_cardDataRef.extentionRef.getUnitOfValue(valueToUse);	
+			
+		setText(m_cardDataRef.name, value + " " + unit); // temp
 		reconstructSkinOrder();
 	}
 	
