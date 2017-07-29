@@ -25,7 +25,8 @@ class LoadingState extends FlxState
 															AssetPaths.board__jpg,
 															AssetPaths.board2__jpg,
 															AssetPaths.menuBg__jpg,
-															AssetPaths.menuGame__jpg
+															AssetPaths.menuGame__jpg,
+															AssetPaths.button__png
 														];
 	
 	private var m_loadingScreen : TLLoadingScreen;

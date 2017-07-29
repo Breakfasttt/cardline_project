@@ -7,6 +7,7 @@
 		{
 			"name":"La fougère",
 			"illustration":"fougere.jpg",
+			"wikilink":"https://fr.wikipedia.org/wiki/Foug%C3%A8res",
 			"values": 
 			{
 				"year":1960
@@ -15,6 +16,7 @@
 		{
 			"name":"carte de test 2",
 			"illustration":"test1.jpg",
+			"wikilink":"https://fr.wikipedia.org/wiki/Foug%C3%A8res",
 			"values": 
 			{
 				"year":1960
@@ -23,6 +25,7 @@
 		{
 			"name":"carte de test 3",
 			"illustration":"test1.jpg",
+			"wikilink":"https://fr.wikipedia.org/wiki/Foug%C3%A8res",
 			"values": 
 			{
 				"year":1960
@@ -31,6 +34,7 @@
 		{
 			"name":"carte de test 4",
 			"illustration":"test1.jpg",
+			"wikilink":"https://fr.wikipedia.org/wiki/Foug%C3%A8res",
 			"values": 
 			{
 				"year":1960
@@ -39,6 +43,7 @@
 		{
 			"name":"carte de test 5",
 			"illustration":"test1.jpg",
+			"wikilink":"https://fr.wikipedia.org/wiki/Foug%C3%A8res",
 			"values": 
 			{
 				"year":1960
@@ -47,6 +52,7 @@
 		{
 			"name":"carte de test 6",
 			"illustration":"test1.jpg",
+			"wikilink":"https://fr.wikipedia.org/wiki/Foug%C3%A8res",
 			"values": 
 			{
 				"year":1960
@@ -55,6 +61,7 @@
 		{
 			"name":"carte de test 7",
 			"illustration":"test1.jpg",
+			"wikilink":"https://fr.wikipedia.org/wiki/Foug%C3%A8res",
 			"values": 
 			{
 				"year":1960
@@ -63,6 +70,7 @@
 		{
 			"name":"Pour les viewers",
 			"illustration":"test1.jpg",
+			"wikilink":"https://fr.wikipedia.org/wiki/Foug%C3%A8res",
 			"values": 
 			{
 				"year":1960

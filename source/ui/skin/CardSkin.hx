@@ -391,10 +391,10 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 			return ;
 			
 		m_wikiBtn = new FlxButton(0, 0, "", goToWiki.bind(wikiLink));
-		//todo add button image 
-		
-		m_wikiBtn.setSize(35, 35);
+		m_wikiBtn.loadGraphic(AssetsManager.global.getFlxGraphic(AssetPaths.button__png), true, 256, 256);
+		m_wikiBtn.setGraphicSize(50, 50);
 		m_wikiBtn.updateHitbox();
+		
 		this.add(m_wikiBtn);
 	}
 	
