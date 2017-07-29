@@ -9,6 +9,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.graphics.FlxGraphic;
 import flixel.util.FlxSpriteUtil;
+import haxe.Timer;
 import lime.utils.Bytes;
 import openfl.Assets;
 import ui.elements.TLLoadingScreen;
@@ -29,6 +30,9 @@ class LoadingState extends FlxState
 	
 	private var m_loadingScreen : TLLoadingScreen;
 	
+	private static var m_totalStep : Int = 2;
+	private var m_step : Int;
+	
 	public function new() 
 	{
 		super();
@@ -39,28 +43,45 @@ class LoadingState extends FlxState
 		super.create();
 		
 		//start loading assets
+		m_step = -1;
 		new AssetsManager(onProgress);
 		AssetsManager.global.loadFiles( m_defaultFiles, onNeededFilesComplete);
 	}
 	
-	private function onProgress(total : Float, current : Float, currentFile : String) : Void
+	private function onProgress(nbreFile : Int, totalFile : Int, current : Float, currentFile : String) : Void
 	{
-		trace("total = " + total + " current file : " + currentFile + " (" + current +")");
+		trace("Step : " + (m_step / m_totalStep) + " Files Loaded = " + nbreFile/totalFile + " current file : " + currentFile + " (" + current + ")");
+		
+		
+		var stepPurcentDelta = 1 / m_totalStep;
+		var filePurcentDelta = 1 / totalFile;
+		
+		var purcentStepRealised = m_step * stepPurcentDelta;
+		var subPurcentRealiser =  stepPurcentDelta * (nbreFile * filePurcentDelta);
+		
+		var currentPurcent = 0.0;
+		if(current <1.0) // special case when a file is fully loaded. Avoid to count 2 time a files (when % current is at 100%, the file is already count as loaded in nbreFile)
+			currentPurcent = filePurcentDelta * current;
+			
+		var total = purcentStepRealised + subPurcentRealiser + currentPurcent;
+		
+		if (total < 0.0) // special case for file loaded before the loading screen
+			total = 0.0;
+		
+		trace("currentPurcent = " + total);
+		
 		
 		if (m_loadingScreen != null)
-		{
 			m_loadingScreen.updateGlobalBar(total);
-			m_loadingScreen.updateCurrentBar(current);
-		}
 	}
 	
 	private function onNeededFilesComplete(result : Array<String>) : Void
 	{
 		trace("NEEDED FILE COMPLETE");
+		m_step = 0;
 		m_loadingScreen = new TLLoadingScreen();
-		this.add(m_loadingScreen.spriteGroup);
 		m_loadingScreen.updateGlobalBar(0);
-		m_loadingScreen.updateCurrentBar(0);
+		this.add(m_loadingScreen.spriteGroup);
 		
 		GameDatas.self.extentionManager.init(AssetPaths.extCatalog__json);
 		var ext : Array<String> = GameDatas.self.extentionManager.getAllExtentionFiles();
@@ -73,24 +94,25 @@ class LoadingState extends FlxState
 	private function onExtentionFileLoaded(result : Array<String>) : Void
 	{
 		trace("EXTENTION FILE COMPLETE");
+		m_step = 1;
 		GameDatas.self.extentionManager.initAllExtention();
 		
 		var allIllus : Array<String> = GameDatas.self.extentionManager.getAllIllustration();
 		
 		m_loadingScreen.setInfos("Chargement des illustrations des cartes.");
-		m_loadingScreen.updateGlobalBar(0);
-		m_loadingScreen.updateCurrentBar(0);
 		
 		AssetsManager.global.loadFiles(allIllus , onIllustrationFileLoaded);	
 	}
 	
 	private function onIllustrationFileLoaded(result : Array<String>) : Void
 	{
-		//all init change state
 		trace("ILLUSTRATION FILE COMPLETE");
-		FlxG.switchState(new MenuState());
+		m_step = 2;
+		Timer.delay(goToMenu, 800);
 	}
 	
-
-	
+	function goToMenu() : Void
+	{
+		FlxG.switchState(new MenuState());
+	}
 }

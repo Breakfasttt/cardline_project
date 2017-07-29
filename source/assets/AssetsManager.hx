@@ -71,9 +71,9 @@ class AssetsManager
 	
 	/**
 	 * Global progress callback. 
-	 * #files/totalfiles -> currentfiles progress -> Current File name-> void
+	 * files -> totalfiles -> currentfiles progress % -> Current File name-> void
 	 */
-	private var m_onProgressCallback : Float -> Float -> String -> Void; 
+	private var m_onProgressCallback : Int -> Int -> Float -> String -> Void; 
 	
 	
 	/**
@@ -83,7 +83,7 @@ class AssetsManager
 	private var m_bytesCache : Map<String,ByteArray>;
 	 
 	
-	public function new(progressCb : Float->Float->String->Void = null) 
+	public function new(progressCb : Int -> Int -> Float -> String -> Void = null) 
 	{
 		m_waitForLoading = new Map();
 		m_currentlyLoading = new Array<String>();
@@ -110,6 +110,8 @@ class AssetsManager
 	 */
 	public function loadFiles(files : Array<String>, onComplete : Array<String>->Void = null) : Void
 	{
+		files = makeLoadingFileUnique(files);
+		
 		if (m_isLoading)
 		{
 			m_waitForLoading.set(files, onComplete);
@@ -120,7 +122,23 @@ class AssetsManager
 			m_onCompleteCallback = onComplete;
 			startLoad();
 		}
+	}
+	
+	private function makeLoadingFileUnique(files : Array<String>) : Array<String>
+	{
+		var temp : Array<String> = new Array<String>();
+		
+		while (files.length != 0)
+		{
+			var file : String = files.pop();
 			
+			if (Lambda.has(files, file))
+				files.remove(file);
+				
+			temp.push(file);
+		}
+		
+		return files = files.concat(temp);
 	}
 	
 	//loading function
@@ -260,7 +278,7 @@ class AssetsManager
 		{
 			var total = m_currentlyLoaded.length + m_currentlyLoading.length + m_currentlyFailed.length;
 			var purcentlist = m_currentlyLoaded.length / total;
-			m_onProgressCallback(purcentlist, data, file);
+			m_onProgressCallback(m_currentlyLoaded.length, total, data, file);
 		}
 		
 	}

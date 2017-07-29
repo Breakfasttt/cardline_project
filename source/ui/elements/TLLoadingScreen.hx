@@ -20,7 +20,7 @@ class TLLoadingScreen
 	private var m_infos : FlxText;
 	
 	private var m_globalLoadingBar : FlxSprite;
-	private var m_currentLoadingBar : FlxSprite;
+	//private var m_currentLoadingBar : FlxSprite;
 	
 	public function new() 
 	{
@@ -28,7 +28,7 @@ class TLLoadingScreen
 		initTitle();
 		initInfos();
 		initGlobalLoadingBar();
-		initCurrentLoadingBar();
+		//initCurrentLoadingBar();
 		
 		this.spriteGroup = new FlxGroup();
 		
@@ -36,7 +36,7 @@ class TLLoadingScreen
 		this.spriteGroup.add(m_title);
 		this.spriteGroup.add(m_infos);
 		this.spriteGroup.add(m_globalLoadingBar);
-		this.spriteGroup.add(m_currentLoadingBar);
+		//this.spriteGroup.add(m_currentLoadingBar);
 	}
 	
 	private function initBg() : Void
@@ -49,14 +49,14 @@ class TLLoadingScreen
 	{
 		m_title = new FlxText(0,150);
 		m_title.text = "Chargement";
-		m_title.setFormat(AssetPaths.ATypewriterForMe__ttf,38);
+		m_title.setFormat(AssetPaths.OldNewspaperTypes__ttf,45);
 		m_title.screenCenter(FlxAxes.X);
 	}
 	
 	private function initInfos() : Void
 	{
 		m_infos = new FlxText(0,400);
-		m_infos.setFormat(AssetPaths.ATypewriterForMe__ttf, 22);
+		m_infos.setFormat(AssetPaths.OldNewspaperTypes__ttf, 36);
 		
 	}
 	
@@ -67,12 +67,12 @@ class TLLoadingScreen
 		m_globalLoadingBar.origin.set(0,0); // test 
 	}
 	
-	private function initCurrentLoadingBar() : Void
+	/*private function initCurrentLoadingBar() : Void
 	{
 		m_currentLoadingBar = new FlxSprite(50, 475 + 50 + 75);
 		m_currentLoadingBar.makeGraphic((1920 - 100), 50); // Beurk le hard coding !! han lalala !!! (et en plus il copie colle !!)
 		m_currentLoadingBar.origin.set(0,0);
-	}
+	}*/
 	
 	public function setInfos(infos : String) : Void
 	{
@@ -88,10 +88,10 @@ class TLLoadingScreen
 		m_globalLoadingBar.scale.x = value;
 	}
 	
-	public function updateCurrentBar(value : Float)
+	/*public function updateCurrentBar(value : Float)
 	{
 		m_currentLoadingBar.scale.x = value;
-	}
+	}*/
 	
 	
 }
