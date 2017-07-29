@@ -3,6 +3,7 @@ package state;
 
 import assets.AssetPaths;
 import assets.AssetsManager;
+import data.card.CardsExtention;
 import data.manager.GameDatas;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -17,6 +18,7 @@ import flixel.addons.ui.FlxUICheckBox;
 import flixel.text.FlxText;
 import flixel.util.FlxAxes;
 import flixel.util.FlxColor;
+import tools.TimelineTools;
 
 /**
  * ...
@@ -99,14 +101,16 @@ class ConfigGameState extends FlxState
 		
 		for (extId in allExtId)
 		{
-			var name = GameDatas.self.extentionManager.getExtentionName(extId);
-			if (name == null)
+			var ext : CardsExtention =  GameDatas.self.extentionManager.getExtentionByUniqueId(extId);
+			if (ext == null)
 			{
 				FlxG.log.warn("Extension " + extId + " is invalid");
 				continue;
 			}
 			
-			var box : FlxUICheckBox = new FlxUICheckBox(0, 0, null, null, name);
+			var txt : String = ext.name + " (" + ext.getNbrCard() + ")";
+			
+			var box : FlxUICheckBox = new FlxUICheckBox(0, 0, null, null, txt);
 			box.box.setGraphicSize(50, 50);
 			box.box.updateHitbox();
 			box.button.setGraphicSize(50, 50);
@@ -184,6 +188,7 @@ class ConfigGameState extends FlxState
 		GameDatas.self.selectedValue = null;
 		
 		var allPlayableValue : Array<String> = GameDatas.self.extentionManager.getAllPlayableValueByExtentionsUID(m_selectedExtention);
+		allPlayableValue.sort(TimelineTools.sortByString);
 		
 		var firstChecked : Bool = false;
 		

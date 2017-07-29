@@ -259,4 +259,14 @@ class CardExtentionManager
 		
 		return result;
 	}
+	
+	public function getNbreCardOfExtention(uniqueId : String) : Int
+	{
+		var ext : CardsExtention = this.getExtentionByUniqueId(uniqueId);
+		if (ext == null)
+			return 0;
+			
+			
+		return ext.getNbrCard();	
+	}
 }

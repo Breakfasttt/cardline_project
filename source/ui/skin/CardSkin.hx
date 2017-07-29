@@ -10,9 +10,12 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.input.mouse.FlxMouseEventManager;
 import flixel.math.FlxPoint;
 import flixel.text.FlxText;
+import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 import flixel.util.FlxSort;
 import haxe.unit.TestRunner;
+import openfl.Lib;
+import openfl.net.URLRequest;
 import openfl.text.AntiAliasType;
 import openfl.text.TextFieldAutoSize;
 import source.data.card.CardData;
@@ -74,6 +77,8 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	private var m_initScaleValue : FlxPoint;
 	
 	private var m_generalScaling : FlxPoint;
+	
+	private var m_wikiBtn : FlxButton;
 	
 	public function new(cardData : CardData, valueToUse : String) 
 	{
@@ -143,6 +148,7 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 			unit = m_cardDataRef.extentionRef.getUnitOfValue(valueToUse);	
 			
 		setText(m_cardDataRef.name, value + " " + unit); // temp
+		initWikiButton(m_cardDataRef.wikilink);
 		reconstructSkinOrder();
 	}
 	
@@ -219,6 +225,13 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		
 		m_valueTxt.x = m_background.x + (m_background.width / 2.0) - m_valueTxt.fieldWidth*m_valueTxt.scale.x / 2.0;
 		m_valueTxt.y = m_background.y + m_background.height - m_valueTxt.height - CardSkin.cardBorder;
+		
+		if (m_wikiBtn != null)
+		{
+			m_wikiBtn.setPosition(	m_illustration.x + m_illustration.width - m_wikiBtn.width, 
+									m_illustration.y + m_illustration.height - m_wikiBtn.height);
+		}
+		
 	}
 	
 	
@@ -297,7 +310,19 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	public function setVisible(vis : Bool)
 	{
 		isVisible = vis;
-		m_valueTxt.visible = isVisible;
+		this.reconstructSkinOrder();
+		//m_valueTxt.visible = isVisible;
+		
+		/*if (m_wikiBtn != null)
+		{
+			
+			if (isVisible)
+			{
+				this.add(m_wikiBtn);
+			}
+			else
+				this.remove(m_wikiBtn);
+		}*/
 	}
 	
 	public function setPosition(x : Float, y : Float)
@@ -353,6 +378,31 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		m_illustration.scale.copyTo(m_initScaleIllus);
 	}
 	
+	private function initWikiButton(wikiLink : String) : Void
+	{
+		if (m_wikiBtn != null)
+		{
+			this.remove(m_wikiBtn);
+			m_wikiBtn.destroy();
+			m_wikiBtn = null;
+		}
+
+		if (wikiLink == null)
+			return ;
+			
+		m_wikiBtn = new FlxButton(0, 0, "", goToWiki.bind(wikiLink));
+		//todo add button image 
+		
+		m_wikiBtn.setSize(35, 35);
+		m_wikiBtn.updateHitbox();
+		this.add(m_wikiBtn);
+	}
+	
+	private function goToWiki(wikilink : String) : Void
+	{
+		Lib.getURL(new URLRequest(wikilink));
+	}
+	
 	private function reconstructSkinOrder() : Void
 	{
 		if (m_background != null)
@@ -367,10 +417,18 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		if (m_valueTxt != null)
 			this.remove(m_valueTxt);
 			
+		if (m_wikiBtn != null)
+			this.remove(m_wikiBtn);
+			
 		this.add(m_background);
 		this.add(m_illustration);
 		this.add(m_titleTxt);
-		this.add(m_valueTxt);
+		
+		if(isVisible)
+			this.add(m_valueTxt);
+		
+		if (m_wikiBtn != null && isVisible)
+			this.add(m_wikiBtn);
 	}
 	
 	public function blink() : Void
@@ -383,5 +441,64 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		FlxFlicker.flicker(sprite, 0.5, 0.1);
 	}
 	
+	override public function destroy():Void 
+	{
+		m_cardDataRef = null;
+		
+		FlxMouseEventManager.remove(m_background);
+		this.remove(m_background);
+		
+		if (m_background != null)
+		{
+			m_background.destroy();
+			m_background = null;
+		}
+		
+		this.remove(m_illustration);
+		
+		if (m_illustration != null)
+		{
+			m_illustration.destroy();
+			m_illustration = null;
+		}
+		
+		this.remove(m_titleTxt);
+		
+		if (m_titleTxt != null)
+		{
+			m_titleTxt.destroy();
+			m_titleTxt = null;
+		}
+		
+		this.remove(m_valueTxt);
+		
+		if (m_valueTxt != null)
+		{
+			m_valueTxt.destroy();
+			m_valueTxt = null;
+		}
+		
+		if (m_wikiBtn != null)
+		{
+			this.remove(m_wikiBtn);
+			m_wikiBtn.destroy();
+			m_wikiBtn = null;
+		}
+		
+		onStartDragCallback = null;
+		onStopDragCallback = null;
+		
+		m_initScaleBg.destroy();
+		m_initScaleIllus.destroy();
+		m_initScaleTitle.destroy();
+		m_initScaleValue.destroy();
+		
+		m_initScaleBg = null;
+		m_initScaleIllus = null;
+		m_initScaleTitle = null;
+		m_initScaleValue = null;	
+		
+		super.destroy();
+	}
 	
 }

@@ -18,6 +18,7 @@ import source.data.card.CardData;
 	var name : String;
 	var illustration : String;
 	var values : Dynamic; // map string/int
+	var wikilink : String; // optionnal
  } 
  
  typedef ExtentionInfos = 
@@ -25,7 +26,7 @@ import source.data.card.CardData;
 	var name : String;
 	var background : String;
 	var illusFolder : String;
-	var unitsName : Dynamic;
+	var unitsName : Dynamic; // optionnal
 	var cards : Array<CardInfos>;
  }
  
@@ -109,7 +110,7 @@ class CardsExtention
 					m_playableValue.push(value);
 			}
 			
-			m_allCardData.push(new CardData(this, card.name, m_backgroundFile, illusFolder + card.illustration, mapResult));
+			m_allCardData.push(new CardData(this, card.name, m_backgroundFile, illusFolder + card.illustration, mapResult, card.wikilink));
 		}
 		
 		return true;

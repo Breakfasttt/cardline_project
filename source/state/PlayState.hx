@@ -2,24 +2,21 @@ package state;
 
 import assets.AssetPaths;
 import assets.AssetsManager;
-import data.manager.CardExtentionManager;
-import data.card.CardsExtention;
 import data.manager.GameDatas;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.system.FlxAssets.FlxGraphicAsset;
-import flixel.util.FlxSort;
-import openfl.Assets;
-import source.data.card.CardData;
+import flixel.addons.ui.FlxButtonPlus;
+import flixel.system.FlxAssets;
+import flixel.util.FlxColor;
 import source.ui.skin.CardSkin;
 import ui.elements.Card;
-import ui.gameZone.TimelineUi;
-import ui.skin.CardSkinGroup;
+import ui.elements.ConfirmPopup;
 import ui.gameZone.DeckUi;
 import ui.gameZone.MainHandUi;
-import flixel.addons.display.FlxBackdrop;
+import ui.gameZone.TimelineUi;
+
+import flixel.addons.ui.FlxUIPopup;
 
 class PlayState extends FlxState
 {
@@ -36,7 +33,10 @@ class PlayState extends FlxState
 	private var m_mainHandUI : MainHandUi;
 	
 	private var m_timeline : TimelineUi;
-
+	
+	private var m_quitBtn : FlxButtonPlus;
+	
+	private var m_confirmPopup : ConfirmPopup;
 
 	override public function create():Void
 	{
@@ -54,6 +54,8 @@ class PlayState extends FlxState
 		
 		m_timeline = new TimelineUi();
 		
+		initConfirmPopup();
+		
 		// put a first card on timeline
 		var card : Card = m_deckUI.drawACard();
 		m_timeline.addCard(card);
@@ -62,17 +64,26 @@ class PlayState extends FlxState
 		for (i in 0...m_maxCardOnHand)
 			deckToMainHand();
 			
+		m_quitBtn = new FlxButtonPlus(0, 0, onQuitBtn, "Abandonner", 300, 45);
+		m_quitBtn.setPosition(1920 - m_quitBtn.width - 50, 50); 
 		
+		m_quitBtn.textNormal.setFormat(FlxAssets.FONT_DEFAULT, 32);
+		m_quitBtn.textHighlight.setFormat(FlxAssets.FONT_DEFAULT, 32);
+		m_quitBtn.updateInactiveButtonColors([FlxColor.BROWN, FlxColor.BROWN, FlxColor.BROWN]);
+		m_quitBtn.updateActiveButtonColors([FlxColor.BROWN, FlxColor.GRAY]);		
+			
 		this.add(m_board);
 		m_timeline.attachTo(this);
 		m_deckUI.attachTo(this);
 		m_graveyardUI.attachTo(this);
 		m_mainHandUI.attachTo(this);
+		this.add(m_quitBtn);
 	}
 
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+		
 		m_mainHandUI.update(elapsed);
 		
 		var draggedCard : Card = m_mainHandUI.getDraggedCard();
@@ -148,5 +159,48 @@ class PlayState extends FlxState
 		}
 			
 	}
-
+	
+	private function initConfirmPopup() : Void
+	{
+		m_confirmPopup = new ConfirmPopup("Etes-vous sur de vouloir abandonner ?",onAccept, onCancel);
+	}
+	
+	private function onQuitBtn() : Void
+	{
+		m_confirmPopup.attachTo(this);
+	}	
+	
+	private function onCancel() : Void
+	{
+		m_confirmPopup.attachTo(null);
+	}		
+	
+	private function onAccept() : Void
+	{
+		m_confirmPopup.attachTo(null);
+		releaseAll();
+		FlxG.switchState(new MenuState());
+	}
+	
+	private function releaseAll() : Void
+	{
+		m_deckUI.destroy();
+		m_graveyardUI.destroy();
+		
+		m_mainHandUI.destroy();
+		m_timeline.destroy();
+		
+		this.remove(m_board);
+		m_board.destroy();
+		m_board = null;
+		
+		this.remove(m_quitBtn);
+		m_quitBtn.destroy();
+		m_quitBtn = null;
+		
+		m_graveyardUI = null;
+		m_deckUI = null;
+		m_mainHandUI = null;
+		m_timeline = null;
+	}
 }

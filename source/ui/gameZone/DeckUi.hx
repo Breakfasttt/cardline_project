@@ -254,6 +254,46 @@ class DeckUi
 		m_deckBorder.setPosition(m_posX - offsetx, m_posY - offsety);
 		m_txtInfos.fieldWidth = -1;
 		m_txtInfos.setPosition(m_posX + m_deckBorder.width/2 - m_txtInfos.width/2.0 - offsetx, m_deckBorder.y + m_deckBorder.height + 5*y);
-		
 	}
+	
+	public function destroy() : Void
+	{
+		attachTo(null);
+		m_groupRef = null;
+		
+		m_deckGroup.remove(m_deckBorder);
+		m_deckGroup.remove(m_txtInfos);
+		
+		for (card in m_deck)
+		{
+			m_deckGroup.remove(card.skin);
+			card.destroy();
+			card = null;
+		}
+			
+		m_deckGroup.destroy();
+		m_deckGroup = null;
+		m_deck = null;
+		
+		m_deckBorder.destroy();
+		m_deckBorder = null;
+		
+		m_txtInfos.destroy();
+		m_txtInfos = null;
+		
+		m_playedExtention = null;
+		
+		m_actualScale = null;
+		
+		m_deck = null;
+	}
+	
+	public function debugShowCard() : Void
+	{
+		trace("== start ==");
+		for (card in m_deck)	
+			trace("test = " + card.data.name);	
+		trace("===========");
+	}
+	
 }

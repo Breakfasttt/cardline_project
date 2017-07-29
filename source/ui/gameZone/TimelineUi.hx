@@ -323,4 +323,55 @@ class TimelineUi
 		if (m_putZone != null)
 			m_putZone.color = FlxColor.YELLOW;
 	}
+	
+	public function destroy() : Void
+	{
+		attachTo(null);
+		m_groupRef = null;
+		
+		m_displayGroup.remove(m_upBorder);
+		m_displayGroup.remove(m_downBorder);
+		m_displayGroup.remove(m_putZone);
+		m_displayGroup.remove(m_putZoneCollider);
+		m_displayGroup.remove(m_mouseCollider);
+		m_displayGroup.remove(m_leftCollider);
+		m_displayGroup.remove(m_rightCollider);
+		
+		
+		for (card in m_cards)
+		{
+			if (card == null)
+				continue;
+				
+			m_displayGroup.remove(card.skin);
+			card.destroy();
+			card = null;
+		}
+		
+		m_cards = null;
+		m_displayGroup = null;
+		
+		m_upBorder.destroy();
+		m_upBorder = null;
+		m_downBorder.destroy();
+		m_downBorder = null;
+		m_putZone.destroy();
+		m_putZone = null;
+		m_putZoneCollider.destroy();
+		m_putZoneCollider = null;
+		m_mouseCollider.destroy();
+		m_mouseCollider = null;
+		m_leftCollider.destroy();
+		m_leftCollider = null;
+		m_rightCollider.destroy();
+		m_rightCollider = null;
+		m_firstCardPosition.destroy();
+		m_firstCardPosition = null;
+		
+		if (m_mouseStartPosition != null)
+		{
+			m_mouseStartPosition.destroy();
+			m_mouseStartPosition = null;
+		}
+	}
 }

@@ -9,7 +9,7 @@ import source.ui.skin.CardSkin;
 class Card 
 {
 
-	public var data(default, null) : CardData;
+	public var data(default, null) : CardData; // reference, don't delete, only set to null to remove
 	public var skin(default, null) : CardSkin;
 	
 	public function new(data : CardData, valueToUse : String)  : Void
@@ -23,5 +23,14 @@ class Card
 		
 		this.data = data;
 		this.skin = new CardSkin(this.data, valueToUse);
+	}
+	
+	public function destroy() : Void
+	{
+		this.data = null;
+		
+		if (skin != null)
+			skin.destroy();
+		skin = null;
 	}
 }

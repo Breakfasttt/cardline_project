@@ -27,7 +27,6 @@ class CardSkinGroup
 		groups.remove(skin);
 	}
 	
-	
 	/**
 	 * This function sort cardskin on drag
 	 */
@@ -65,5 +64,5 @@ class CardSkinGroup
 			groups.members[groups.members.length - 1] = temp;
 		}
 	}
-	
+
 }

@@ -276,4 +276,26 @@ class MainHandUi
 	{
 		return m_cardOnDrag;
 	}
+	
+	public function destroy() : Void
+	{
+		m_cardOnDrag = null;
+		attachTo(null);
+		m_groupRef = null;
+		
+		for (card in m_cards)
+		{
+			if (card != null)
+			{
+				m_handUI.remove(card.skin);
+				card.destroy();
+				card = null;
+			}
+		}
+		
+		m_handUI = null;
+		m_cards = null;
+		m_callbackOnPut = null;
+		
+	}
 }
