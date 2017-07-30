@@ -182,14 +182,14 @@ class AssetsManager
 			
 			if (fileToLoad == null)
 			{
-				trace("Can't load null files");
+				FlxG.log.notice("Can't load null files");
 				nextLoading();
 				return;
 			}
 			
 			if (exist(fileToLoad))
 			{
-				trace("Files already loaded, skipping : " + fileToLoad);
+				FlxG.log.notice("Files already loaded, skipping : " + fileToLoad);
 				nextLoading();
 				return;
 			}
@@ -220,7 +220,9 @@ class AssetsManager
 	{
 		var future  = Assets.loadText(file);
 		future.onComplete(onTextLoaded.bind(_, file));
-		future.onProgress(onCurrentlyProgress.bind(_,file));
+		#if !html5
+		future.onProgress(onCurrentlyProgress.bind(_, file));
+		#end
 		future.onError(onError.bind(_,file));
 	}
 	
@@ -228,7 +230,9 @@ class AssetsManager
 	{
 		var future  = Assets.loadBitmapData(file);
 		future.onComplete(onBitmapLoaded.bind(_, file));
-		future.onProgress(onCurrentlyProgress.bind(_,file));
+		#if !html5
+		future.onProgress(onCurrentlyProgress.bind(_, file));
+		#end
 		future.onError(onError.bind(_,file));
 	}
 	
@@ -236,7 +240,9 @@ class AssetsManager
 	{
 		var future  = Assets.loadSound(file);
 		future.onComplete(onSoundLoaded.bind(_, file));
-		future.onProgress(onCurrentlyProgress.bind(_,file));
+		#if !html5
+		future.onProgress(onCurrentlyProgress.bind(_, file));
+		#end
 		future.onError(onError.bind(_,file));
 	}
 	
@@ -244,7 +250,9 @@ class AssetsManager
 	{
 		var future  = Assets.loadMusic(file);
 		future.onComplete(onSoundLoaded.bind(_, file));
-		future.onProgress(onCurrentlyProgress.bind(_,file));
+		#if !html5
+		future.onProgress(onCurrentlyProgress.bind(_, file));
+		#end
 		future.onError(onError.bind(_,file));
 	}
 	
@@ -252,7 +260,9 @@ class AssetsManager
 	{
 		var future  = Assets.loadFont(file);
 		future.onComplete(onFontLoaded.bind(_, file));
-		future.onProgress(onCurrentlyProgress.bind(_,file));
+		#if !html5
+		future.onProgress(onCurrentlyProgress.bind(_, file));
+		#end
 		future.onError(onError.bind(_,file));
 	}
 	
@@ -273,7 +283,7 @@ class AssetsManager
 	//on progress callback
 	private function onCurrentlyProgress(data : Float, file : String) : Void
 	{
-		//trace("Current progress for " + file + " is : " + data);
+		FlxG.log.notice("Current progress for " + file + " is : " + data);
 		if (m_onProgressCallback != null)
 		{
 			var total = m_currentlyLoaded.length + m_currentlyLoading.length + m_currentlyFailed.length;
@@ -287,43 +297,70 @@ class AssetsManager
 	
 	private function onTextLoaded(data : String, file : String)
 	{
-		trace("Text succesfully loaded:" + file);
+		FlxG.log.notice("Text succesfully loaded:" + file);
 		m_currentlyLoaded.push(file);
 		m_currentlyLoading.remove(file);
 		m_textCache.set(file, data);
+		
+		#if html5
+		this.onCurrentlyProgress(1.0, file);
+		#end
+		
 		nextLoading();
 	}
 	
 	private function onBitmapLoaded(data : BitmapData, file : String)
 	{
-		trace("Bitmap succesfully loaded:" + file);
+		FlxG.log.notice("Bitmap succesfully loaded:" + file);
 		m_currentlyLoaded.push(file);
 		m_currentlyLoading.remove(file);
+		
+		#if html5
+		this.onCurrentlyProgress(1.0, file);
+		#end
+		
 		nextLoading();
 	}
 	
 	private function onSoundLoaded(data : Sound, file : String)
 	{
-		trace("Sound succesfully loaded:" + file);
+		FlxG.log.notice("Sound succesfully loaded:" + file);
 		m_currentlyLoaded.push(file);
 		m_currentlyLoading.remove(file);
+		
+
+		#if html5
+		this.onCurrentlyProgress(1.0, file);
+		#end		
+		
 		nextLoading();
 	}
 	
 	private function onFontLoaded(data : Font, file : String)
 	{
-		trace("Font succesfully loaded:" + file);
+		FlxG.log.notice("Font succesfully loaded:" + file);
 		m_currentlyLoaded.push(file);
 		m_currentlyLoading.remove(file);
+		
+		#if html5
+		this.onCurrentlyProgress(1.0, file);
+		#end
+		
 		nextLoading();
 	}
 	
 	private function onBytesLoaded(data : ByteArray, file : String)
 	{
-		trace("Bytes succesfully loaded:" + file);
+		FlxG.log.notice("Bytes succesfully loaded:" + file);
 		m_currentlyLoaded.push(file);
 		m_currentlyLoading.remove(file);
 		m_bytesCache.set(file, data);
+		
+
+		#if html5
+		this.onCurrentlyProgress(1.0, file);
+		#end		
+		
 		nextLoading();
 	}
 	
@@ -331,9 +368,15 @@ class AssetsManager
 	
 	private function onError(data : Dynamic, file : String) : Void
 	{
-		trace("AssetsLibrary:: An error has occur : " + data);
+		FlxG.log.notice("AssetsLibrary:: An error has occur : " + data);
 		m_currentlyFailed.push(file);
 		m_currentlyLoading.remove(file);
+		
+
+		#if html5
+		this.onCurrentlyProgress(1.0, file);
+		#end
+		
 		nextLoading();
 	}
 	

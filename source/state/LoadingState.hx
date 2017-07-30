@@ -55,7 +55,7 @@ class LoadingState extends FlxState
 	
 	private function onProgress(nbreFile : Int, totalFile : Int, current : Float, currentFile : String) : Void
 	{
-		trace("Step : " + (m_step / m_totalStep) + " Files Loaded = " + nbreFile/totalFile + " current file : " + currentFile + " (" + current + ")");
+		FlxG.log.notice("Step : " + (m_step / m_totalStep) + " Files Loaded = " + nbreFile/totalFile + " current file : " + currentFile + " (" + current + ")");
 		
 		
 		var stepPurcentDelta = 1 / m_totalStep;
@@ -73,16 +73,13 @@ class LoadingState extends FlxState
 		if (total < 0.0) // special case for file loaded before the loading screen
 			total = 0.0;
 		
-		trace("currentPurcent = " + total);
-		
-		
 		if (m_loadingScreen != null)
 			m_loadingScreen.updateGlobalBar(total);
 	}
 	
 	private function onNeededFilesComplete(result : Array<String>) : Void
 	{
-		trace("NEEDED FILE COMPLETE");
+		FlxG.log.notice("NEEDED FILE COMPLETE");
 		m_step = 0;
 		m_loadingScreen = new TLLoadingScreen();
 		m_loadingScreen.updateGlobalBar(0);
@@ -98,7 +95,7 @@ class LoadingState extends FlxState
 	
 	private function onExtentionFileLoaded(result : Array<String>) : Void
 	{
-		trace("EXTENTION FILE COMPLETE");
+		FlxG.log.notice("EXTENTION FILE COMPLETE");
 		m_step = 1;
 		GameDatas.self.extentionManager.initAllExtention();
 		
@@ -111,7 +108,7 @@ class LoadingState extends FlxState
 	
 	private function onIllustrationFileLoaded(result : Array<String>) : Void
 	{
-		trace("ILLUSTRATION FILE COMPLETE");
+		FlxG.log.notice("ILLUSTRATION FILE COMPLETE");
 		m_step = 2;
 		Timer.delay(goToMenu, 800);
 	}
