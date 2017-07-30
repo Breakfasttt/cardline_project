@@ -79,7 +79,7 @@ class ConfigGameState extends FlxState
 	
 	private function initInfos1() : Void
 	{
-		m_infos1 = new FlxText(0, 50, -1, "Cocher les extensions avec lesquels vous voulez jouer : ", 52);
+		m_infos1 = new FlxText(0, 50, -1, "Cocher les extensions avec lesquelles vous voulez jouer : ", 52);
 		m_infos1.color = FlxColor.BLACK;
 		m_infos1.screenCenter(FlxAxes.X);
 		this.add(m_infos1);
