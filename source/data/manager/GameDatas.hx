@@ -16,10 +16,13 @@ class GameDatas
 	
 	public var selectedExtention : Array<String>;
 	
+	public var isWin : Bool;
+	
 	private function new() 
 	{
 		extentionManager = new CardExtentionManager();
 		selectedValue = null;
 		selectedExtention = null;
+		isWin = false;
 	}
 }

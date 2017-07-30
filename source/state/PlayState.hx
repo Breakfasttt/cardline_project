@@ -8,7 +8,9 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.ui.FlxButtonPlus;
 import flixel.system.FlxAssets;
+import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import haxe.Timer;
 import source.ui.skin.CardSkin;
 import ui.elements.Card;
 import ui.elements.ConfirmPopup;
@@ -37,17 +39,32 @@ class PlayState extends FlxState
 	private var m_quitBtn : FlxButtonPlus;
 	
 	private var m_confirmPopup : ConfirmPopup;
+	
+	
+	/**
+	 * Stats
+	 */
+	private var m_maxWrongCard : Int;
+	private var m_wrongCard : Int;
+	private var m_correctCard : Int;
+	
+	private var m_wrongCardTxt : FlxText;
+	private var m_correctCardTxt : FlxText;
 
 	override public function create():Void
 	{
 		super.create();	
 		
+		m_wrongCard = 0;
+		m_correctCard = 0;
+		
 		m_board = new FlxSprite(0, 0, AssetsManager.global.getFlxGraphic(AssetPaths.board2__jpg));
 		
 		m_deckUI = new DeckUi(GameDatas.self.selectedExtention.copy(), "Pioche", 50, 25);
 		m_deckUI.setScale(m_scaleDeckAndGraveyard, m_scaleDeckAndGraveyard);
+		m_maxWrongCard = Math.ceil(m_deckUI.getNbreCard() * 15 / 100);
 		
-		m_graveyardUI = new DeckUi(new Array<String>(), "Défausse" ,50 + CardSkin.cardWidth*m_scaleDeckAndGraveyard + 30, 25);
+		m_graveyardUI = new DeckUi(new Array<String>(), "Défausse" ,50 + CardSkin.cardWidth*m_scaleDeckAndGraveyard + 40, 25);
 		m_graveyardUI.setScale(m_scaleDeckAndGraveyard, m_scaleDeckAndGraveyard);
 		
 		m_mainHandUI = new MainHandUi(m_maxCardOnHand, onPutCard);
@@ -55,6 +72,7 @@ class PlayState extends FlxState
 		m_timeline = new TimelineUi();
 		
 		initConfirmPopup();
+		initStatsText();
 		
 		// put a first card on timeline
 		var card : Card = m_deckUI.drawACard();
@@ -73,11 +91,14 @@ class PlayState extends FlxState
 		m_quitBtn.updateActiveButtonColors([FlxColor.BROWN, FlxColor.GRAY]);		
 			
 		this.add(m_board);
+		this.add(m_quitBtn);
+		this.add(m_correctCardTxt);
+		this.add(m_wrongCardTxt);
 		m_timeline.attachTo(this);
 		m_deckUI.attachTo(this);
 		m_graveyardUI.attachTo(this);
 		m_mainHandUI.attachTo(this);
-		this.add(m_quitBtn);
+		
 	}
 
 	override public function update(elapsed:Float):Void
@@ -102,7 +123,6 @@ class PlayState extends FlxState
 			{
 				draggedCard.skin.isPuttable = false;
 			}
-			
 		}
 	}
 	
@@ -151,13 +171,38 @@ class PlayState extends FlxState
 				cardToGraveyard(card);
 				card.skin.blink();
 				deckToMainHand();
+				m_wrongCard++;
 			}
 			else
 			{
+				m_correctCard++;
 				card.skin.blink();
 			}
+			
+			this.updateStatsText();
+			checkEndGame();
 		}
 			
+	}
+	
+	private function initStatsText() : Void
+	{
+		m_wrongCardTxt = new FlxText();
+		m_correctCardTxt = new FlxText();
+		
+		m_correctCardTxt.setFormat(AssetPaths.OldNewspaperTypes__ttf, 32);
+		m_wrongCardTxt.setFormat(AssetPaths.OldNewspaperTypes__ttf, 32);
+		
+		m_correctCardTxt.setPosition(50 + CardSkin.cardWidth * 2 * m_scaleDeckAndGraveyard + 40 * 2, 25);
+		m_wrongCardTxt.setPosition(m_correctCardTxt.x, m_correctCardTxt.y + m_correctCardTxt.height + 25);
+		
+		updateStatsText();
+	}
+	
+	private function updateStatsText() : Void
+	{
+		m_correctCardTxt.text = "Carte a placer : " + m_correctCard + "/" + m_maxCardOnHand;
+		m_wrongCardTxt.text = "Erreur : " + m_wrongCard + "/" + m_maxWrongCard;
 	}
 	
 	private function initConfirmPopup() : Void
@@ -182,6 +227,30 @@ class PlayState extends FlxState
 		FlxG.switchState(new MenuState());
 	}
 	
+	private function checkEndGame() : Void
+	{
+		if (m_correctCard == m_maxCardOnHand)
+		{
+			GameDatas.self.isWin = true;
+		}
+		else if (m_wrongCard == m_maxWrongCard)
+		{
+			GameDatas.self.isWin = false;
+		}
+		else
+			return;
+		
+		FlxG.mouse.enabled = false;
+		Timer.delay(onEndGame, 800);
+	}
+	
+	private function onEndGame() : Void
+	{
+		releaseAll();
+		FlxG.mouse.enabled = true;
+		FlxG.switchState(new EndGameState());
+	}
+	
 	private function releaseAll() : Void
 	{
 		m_deckUI.destroy();
@@ -197,6 +266,15 @@ class PlayState extends FlxState
 		this.remove(m_quitBtn);
 		m_quitBtn.destroy();
 		m_quitBtn = null;
+		
+		this.remove(m_correctCardTxt);
+		this.remove(m_wrongCardTxt);
+		
+		m_correctCardTxt.destroy();
+		m_wrongCardTxt.destroy();
+		
+		m_correctCardTxt = null;
+		m_wrongCardTxt = null;
 		
 		m_graveyardUI = null;
 		m_deckUI = null;

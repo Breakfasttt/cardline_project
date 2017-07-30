@@ -26,7 +26,11 @@ class LoadingState extends FlxState
 															AssetPaths.board2__jpg,
 															AssetPaths.menuBg__jpg,
 															AssetPaths.menuGame__jpg,
-															AssetPaths.button__png
+															AssetPaths.button__png, 
+															AssetPaths.githubButton__png,
+															AssetPaths.bug__png,
+															AssetPaths.twitchBtn__png,
+															AssetPaths.twitterBtn__png
 														];
 	
 	private var m_loadingScreen : TLLoadingScreen;

@@ -73,13 +73,14 @@ class ConfigGameState extends FlxState
 	private function initBg() : Void
 	{
 		m_background = new FlxSprite();
-		m_background.loadGraphic(AssetsManager.global.getFlxGraphic(AssetPaths.menuGame__jpg));
+		m_background.loadGraphic(AssetsManager.global.getFlxGraphic(AssetPaths.board2__jpg));
 		this.add(m_background);
 	}
 	
 	private function initInfos1() : Void
 	{
 		m_infos1 = new FlxText(0, 50, -1, "Cocher les extensions avec lesquels vous voulez jouer : ", 52);
+		m_infos1.color = FlxColor.BLACK;
 		m_infos1.screenCenter(FlxAxes.X);
 		this.add(m_infos1);
 	}
@@ -87,6 +88,7 @@ class ConfigGameState extends FlxState
 	private function initInfos2() : Void
 	{
 		m_infos2 = new FlxText(0, 550, -1, "Cocher la valeur avec laquelle vous voulez jouer : ", 52);
+		m_infos2.color = FlxColor.BLACK;
 		m_infos2.screenCenter(FlxAxes.X);
 		this.add(m_infos2);
 	}
@@ -96,15 +98,19 @@ class ConfigGameState extends FlxState
 		m_allExtention = new Array<IFlxUIWidget>();
 		m_selectedExtention = new Array<String>();
 		var allExtId : Array<String> = GameDatas.self.extentionManager.getAllExtentionsUniqueId();
-		m_selectedExtention = allExtId.copy();
-		GameDatas.self.selectedExtention = m_selectedExtention;
 		
 		for (extId in allExtId)
 		{
 			var ext : CardsExtention =  GameDatas.self.extentionManager.getExtentionByUniqueId(extId);
 			if (ext == null)
 			{
-				FlxG.log.warn("Extension " + extId + " is invalid");
+				FlxG.log.notice("Extension " + extId + " is unknow");
+				continue;
+			}
+			
+			if(!ext.isValid)
+			{
+				FlxG.log.notice("Extension " + extId + " is invalid (not enough card : " + ext.getNbrCard() + "/" + CardsExtention.validMinNbreCard + ")");
 				continue;
 			}
 			
@@ -120,12 +126,16 @@ class ConfigGameState extends FlxState
 			var boxLabel = box.getLabel();
 			boxLabel.setFormat(AssetPaths.ATypewriterForMe__ttf,32);
 			boxLabel.fieldWidth = 245;
+			//boxLabel.color = FlxColor.BLACK;
 			box.textX = 5;
 			box.textY = 2;
 			box.checked = true;
 			box.callback = onCheckExtentionId.bind(box, extId);
+			m_selectedExtention.push(extId);
 			m_allExtention.push(box);
 		}
+		
+		GameDatas.self.selectedExtention = m_selectedExtention;
 		
 		m_listExtention = new FlxUIList(10, 250, m_allExtention, 1920, 75, "Suivant...", FlxUIList.STACK_HORIZONTAL, 300);
 
@@ -202,7 +212,8 @@ class ConfigGameState extends FlxState
 			box.mark.setGraphicSize(50, 50);
 			box.mark.updateHitbox();
 			var boxLabel = box.getLabel();
-			boxLabel.setFormat(AssetPaths.ATypewriterForMe__ttf,32);
+			boxLabel.setFormat(AssetPaths.ATypewriterForMe__ttf, 32);
+			//boxLabel.color = FlxColor.BLACK;
 			boxLabel.fieldWidth = 245;
 			box.textX = 5;
 			box.textY = 2;
@@ -223,13 +234,15 @@ class ConfigGameState extends FlxState
 			if (m_sliderValue != null)
 			{
 				if (m_allValue.length <= 5)
+				{
+					m_sliderValue.maxValue = m_allValue.length - 5;
 					m_sliderValue.visible = false;
+				}
 				else
 					m_sliderValue.maxValue = m_allValue.length - 5;
 			}
 		}
 	}
-	
 	
 	private function onCheckExtentionId(box : FlxUICheckBox, uniqueId : String) : Void
 	{

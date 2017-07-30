@@ -40,7 +40,6 @@ class CardExtentionManager
 	public function new() 
 	{
 		m_extentionsFolderPath = "";
-		
 	}
 	
 	public function init(rawDataFile : String) : Void

@@ -1,0 +1,32 @@
+{
+	"name":"Exemple Extention",
+	"background":"assets/extentions/common/cardBg.png",
+	"illusFolder":"assets/extentions/exempleExtention/illus/",
+	"unitsName":
+	{
+		"heigh":"ans",
+		"pound":"cm"
+	},
+	"cards":
+	[
+		{
+			"name":"first card",
+			"illustration":"firstcard.jpg",
+			"wikilink":"https://fr.wikipedia.org/wiki/firstcard",
+			"values": 
+			{
+				"year":1960,
+				"heigh":150,
+				"pound"35
+			}
+		},
+		{
+			"name":"second card",
+			"illustration":"secondCard.jpg",
+			"values": 
+			{
+				"year":1960
+			}
+		}
+	]
+}

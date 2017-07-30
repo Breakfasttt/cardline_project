@@ -32,7 +32,11 @@ import source.data.card.CardData;
  
 class CardsExtention 
 {
-
+	/**
+	 * An extention is valid only if it has 10+ cards
+	 */
+	public static var validMinNbreCard : Int = 10;
+	
 	public var name(default, null) : String;
 	private var m_uniqueId : String;
 	
@@ -44,9 +48,14 @@ class CardsExtention
 	
 	private var m_backgroundFile : String;
 	
-	private var m_playableValue : Array<String>;
+	private var m_playableValue : Map<String, Int>;
 	
 	private var m_mapUnitsName : Map<String,String>;
+	
+	/**
+	 * An extention is valid only if it has 10+ cards
+	 */
+	public var isValid : Bool;
 	
 	public function new(uniqueId : String, extentionFolder : String, extentionFile : String) 
 	{
@@ -64,7 +73,7 @@ class CardsExtention
 	private function parseRawData() : Bool
 	{
 		m_allCardData = new Array<CardData>();
-		m_playableValue = new Array();
+		m_playableValue = new Map<String,Int>();
 		m_mapUnitsName = new Map<String,String>();
 		
 		if (m_rawData == null)
@@ -97,6 +106,7 @@ class CardsExtention
 				m_mapUnitsName.set(field, Reflect.getProperty(extentionInfos.unitsName, field));
 		}
 		
+		var valueValid : Bool = false;
 		for (card in extentionInfos.cards)
 		{
 			var mapResult : Map<String, Float> = new Map<String, Float>();
@@ -106,12 +116,24 @@ class CardsExtention
 			{
 				mapResult.set(value, Reflect.getProperty(card.values, value));
 				
-				if (!Lambda.has(m_playableValue, value))
-					m_playableValue.push(value);
+				if (m_playableValue.exists(value))
+				{
+					var count = m_playableValue.get(value);
+					count++;
+					m_playableValue.set(value, count);
+					
+					if (count >= CardsExtention.validMinNbreCard)
+						valueValid = true;
+				}
+				else
+					m_playableValue.set(value, 1);
 			}
 			
 			m_allCardData.push(new CardData(this, card.name, m_backgroundFile, illusFolder + card.illustration, mapResult, card.wikilink));
 		}
+			
+		
+		this.isValid = valueValid && (m_allCardData.length >= CardsExtention.validMinNbreCard);
 		
 		return true;
 	}
@@ -184,7 +206,15 @@ class CardsExtention
 		if (m_playableValue == null)
 			return null;
 			
-		return m_playableValue.copy();
+		var result : Array<String> = new Array<String>();
+		
+		for (key in m_playableValue.keys())
+		{
+			if (m_playableValue.get(key) >= CardsExtention.validMinNbreCard)
+				result.push(key);
+		}
+
+		return result;
 	}
 	
 	public function getUnitOfValue(value : String) : String

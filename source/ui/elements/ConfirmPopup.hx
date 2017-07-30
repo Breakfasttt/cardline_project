@@ -1,5 +1,6 @@
 package ui.elements;
 import assets.AssetPaths;
+import assets.AssetsManager;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -88,7 +89,9 @@ class ConfirmPopup
 	private function initBackground() : Void
 	{
 		m_background = new FlxSprite();
-		m_background.makeGraphic(m_width, m_height);
+		m_background.loadGraphic( AssetsManager.global.getFlxGraphic(AssetPaths.board2__jpg));
+		m_background.setGraphicSize(m_width, m_height);
+		m_background.updateHitbox();
 		m_background.screenCenter(FlxAxes.XY);
 		m_displayGroup.add(m_background);
 	}
@@ -96,6 +99,7 @@ class ConfirmPopup
 	private function initDesc() : Void
 	{
 		m_desc = new FlxText(m_background.x + 50, m_background.y +50, m_background.width - 100, m_descStr);
+		m_desc.alignment = FlxTextAlign.CENTER;
 		m_desc.setFormat(AssetPaths.OldNewspaperTypes__ttf, 30);
 		m_desc.color = FlxColor.BLACK;
 		m_displayGroup.add(m_desc);

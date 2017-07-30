@@ -351,9 +351,8 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 			m_background.makeGraphic(cardWidth, cardHeight, FlxColor.WHITE, false, "cardBackground");
 		}
 		
+		
 		m_background.scale.copyTo(m_initScaleBg);
-		
-		
 		FlxMouseEventManager.add(m_background, onMouseDown, onMouseUp, null, null,false, true, false);
 	}
 	

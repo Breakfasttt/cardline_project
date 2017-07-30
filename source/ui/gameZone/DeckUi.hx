@@ -41,6 +41,8 @@ class DeckUi
 	
 	private var m_deckBorder : FlxSprite;
 	
+	
+	private var m_infos : String;
 	private var m_txtInfos : FlxText;
 	
 	/**
@@ -78,9 +80,10 @@ class DeckUi
 		
 		m_deckBorder.setPosition(m_posX - offsetx, m_posY - offsety);
 		
-		m_txtInfos = new FlxText(0, 0, CardSkin.cardWidth, infos);
+		m_infos = infos;
+		m_txtInfos = new FlxText(0, 0, CardSkin.cardWidth, m_infos);
 		m_txtInfos.alignment = FlxTextAlign.CENTER;
-		m_txtInfos.setFormat(AssetPaths.OldNewspaperTypes__ttf, 32);
+		m_txtInfos.setFormat(AssetPaths.OldNewspaperTypes__ttf, 28);
 		m_txtInfos.setPosition(m_posX, m_deckBorder.y + m_deckBorder.height + 10);
 		
 		m_deckGroup = new FlxGroup();
@@ -134,6 +137,8 @@ class DeckUi
 				m_deck.push(new Card(cardData, valueToUse));
 			}
 		}
+		
+		updateInfos();
 	}	
 	
 	/**
@@ -179,6 +184,20 @@ class DeckUi
 		m_deckGroup.add(card.skin);
 	}
 	
+	private function updateInfos() : Void
+	{
+		var nbreCard : String = "";
+		
+		if (m_deck.length != 0)
+			nbreCard = " (" + m_deck.length + ")";
+		
+		if (m_infos != null)
+		{
+			m_txtInfos.text = m_infos + nbreCard;
+			m_txtInfos.setPosition(m_posX, m_deckBorder.y + m_deckBorder.height + 10);
+		}
+	}
+	
 	/**
 	 * Return the card at the top of the deck.
 	 * The card is remove from the dec, so be carefull to keep any reference.
@@ -194,6 +213,7 @@ class DeckUi
 		
 		m_deckGroup.remove(result.skin);
 		displayTopOfTheDeck();
+		updateInfos();
 		return result;
 	}
 	
@@ -229,6 +249,7 @@ class DeckUi
 			m_deck.insert(rand, card);
 		}
 		
+		updateInfos();
 		displayTopOfTheDeck(revealTop);
 	}
 	
@@ -286,6 +307,13 @@ class DeckUi
 		m_actualScale = null;
 		
 		m_deck = null;
+	}
+	
+	public function getNbreCard() : Int
+	{
+		if (m_deck == null)
+			return 0;
+		return m_deck.length;
 	}
 	
 	public function debugShowCard() : Void
