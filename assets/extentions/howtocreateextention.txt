@@ -1,0 +1,78 @@
+#################################
+
+How to create an extention
+
+#################################
+
+
+1 - Create the extention folder
+_______________________________
+
+First, you need to create a new folder : assets/extentions/{extentionName}/
+Second, you need to create the illustration folder : assets/extentions/{extentionName}/illus/
+Third, you must create the JSON extention file definition : assets/extentions/{extentionName}/{extentionName}.json
+
+2 - Define the extention 
+________________________
+
+- Open  the definition file ("assets/extentions/{extentionName}/{extentionName}.json")
+- Copie The data from "Assets/extentions/defExtentionTemplate.json" to your json file
+
+Json Key explained here : 
+
+"name" :					The Ingame name of your extention
+
+"background" :				relative path (relative to the .exe) to the card background. You can use the default Card background, or use a custum.
+
+"illusFolder" :				relative path (relative to the .exe) to the illustration folder.  (where cards load there illustration)
+
+"unitsName" (optionnal): 	A key/data object represent the units of game value.
+							if a card have "pound" game value, you can specify here that "pound" unit is "kg". 
+							It's global to all card of this extention (you can't specify multiple unit name for one value for now)
+				
+
+"cards":					An Array of Card Definition (See 3 - card definition of this document)
+
+
+3 - Card Definition
+___________________
+
+Card definition must be add into the array "cards" JSON value. See exemple into "Assets/extentions/defExtentionTemplate.json"
+
+
+"name": 					The ingame name of the card (must be unique)
+
+"illustration":				The file name of the illustration (.jpg or .png only). The file must be in "illusFolder" define earlier
+
+"wikilink" (optionnal):		An external link to a web page to have some information about the card (if exist, an ingame button is adding on the card to open the link)
+
+"values": 					A key/data object represent the ingame value to play with. You can define several custom values. 
+							All card can have different value. But remember, to be valid for a specific value, an extention must have 10+ card with the same value
+
+
+4 - Subscribe the extention to the catalog
+__________________________________________
+
+Open "assets/extentions/extCatalog.json" and add this object to the structure : 
+	
+{
+	"uniqueId":"{your_unique_id}",
+	"extentionFolder":"extention_folder_name",
+	"extentionFile":"{extentionName}.json"
+}
+
+"uniqueId":				Must be unique on the catalog. A good idea to name it is to follow this schema : {langage}.{author}.{extName}
+"extentionFolder": 		The name of your extention folder created on step 1/ (only the folder name, not the path.)
+"extentionFile":		The name of yout JSON extention definition file (just the name, not the path);
+
+
+4 - Other Informations
+______________________
+
+- A tool to check if all of your JSON is valid : https://jsonlint.com/
+- An extention is valid only if it have 10+ cards define AND have a valid Game Value
+- A game value (year, pound, etc.) is valid only if there are 10+ cards in the extention with this value 
+- An invalid extention is not show in game on screen Extention/value choice
+- The card background size is : 265*350 px
+- Cards' illustration size is : 253*268 px
+- if an illustration or a background exceed the size below, there are automatically resize in game. But please, to save memory, try to keep these size (or the same ratio)

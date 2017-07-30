@@ -13,6 +13,7 @@
 		{
 			"name":"L'âne",
 			"illustration":"ane.jpg",
+			"wikilink":"https://fr.wikipedia.org/wiki/%C3%82ne",
 			"values": 
 			{
 				"poids":350,
