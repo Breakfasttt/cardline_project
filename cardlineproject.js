@@ -132,7 +132,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "3", company : "Breakyt", file : "cardlineproject", fps : 60, name : "cardline_project", orientation : "", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : true, hardware : false, height : 720, parameters : "{}", resizable : true, stencilBuffer : true, title : "cardline_project", vsync : true, width : 1280, x : null, y : null}]};
+	ApplicationMain.config = { build : "7", company : "Breakyt", file : "cardlineproject", fps : 60, name : "cardline_project", orientation : "", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : true, hardware : false, height : 720, parameters : "{}", resizable : true, stencilBuffer : true, title : "cardline_project", vsync : true, width : 1280, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -6091,18 +6091,18 @@ assets_AssetsManager.prototype = {
 		} else {
 			var fileToLoad = this.m_currentlyLoading.pop();
 			if(fileToLoad == null) {
-				haxe_Log.trace("Can't load null files",{ fileName : "AssetsManager.hx", lineNumber : 185, className : "assets.AssetsManager", methodName : "nextLoading"});
+				var _this = flixel_FlxG.log;
 				this.nextLoading();
 				return;
 			}
 			if(this.exist(fileToLoad)) {
-				haxe_Log.trace("Files already loaded, skipping : " + fileToLoad,{ fileName : "AssetsManager.hx", lineNumber : 192, className : "assets.AssetsManager", methodName : "nextLoading"});
+				var _this1 = flixel_FlxG.log;
 				this.nextLoading();
 				return;
 			}
 			var type = this.getFileType(fileToLoad);
 			if(type == null) {
-				var _this = flixel_FlxG.log;
+				var _this2 = flixel_FlxG.log;
 				this.nextLoading();
 				return;
 			}
@@ -6135,15 +6135,10 @@ assets_AssetsManager.prototype = {
 		future.onComplete(function(a1) {
 			f(a1,a2);
 		});
-		var f1 = $bind(this,this.onCurrentlyProgress);
+		var f1 = $bind(this,this.onError);
 		var a21 = file;
-		future.onProgress(function(a11) {
+		future.onError(function(a11) {
 			f1(a11,a21);
-		});
-		var f2 = $bind(this,this.onError);
-		var a22 = file;
-		future.onError(function(a12) {
-			f2(a12,a22);
 		});
 	}
 	,loadBitmap: function(file) {
@@ -6153,15 +6148,10 @@ assets_AssetsManager.prototype = {
 		future.onComplete(function(a1) {
 			f(a1,a2);
 		});
-		var f1 = $bind(this,this.onCurrentlyProgress);
+		var f1 = $bind(this,this.onError);
 		var a21 = file;
-		future.onProgress(function(a11) {
+		future.onError(function(a11) {
 			f1(a11,a21);
-		});
-		var f2 = $bind(this,this.onError);
-		var a22 = file;
-		future.onError(function(a12) {
-			f2(a12,a22);
 		});
 	}
 	,loadSound: function(file) {
@@ -6171,15 +6161,10 @@ assets_AssetsManager.prototype = {
 		future.onComplete(function(a1) {
 			f(a1,a2);
 		});
-		var f1 = $bind(this,this.onCurrentlyProgress);
+		var f1 = $bind(this,this.onError);
 		var a21 = file;
-		future.onProgress(function(a11) {
+		future.onError(function(a11) {
 			f1(a11,a21);
-		});
-		var f2 = $bind(this,this.onError);
-		var a22 = file;
-		future.onError(function(a12) {
-			f2(a12,a22);
 		});
 	}
 	,loadMusic: function(file) {
@@ -6189,15 +6174,10 @@ assets_AssetsManager.prototype = {
 		future.onComplete(function(a1) {
 			f(a1,a2);
 		});
-		var f1 = $bind(this,this.onCurrentlyProgress);
+		var f1 = $bind(this,this.onError);
 		var a21 = file;
-		future.onProgress(function(a11) {
+		future.onError(function(a11) {
 			f1(a11,a21);
-		});
-		var f2 = $bind(this,this.onError);
-		var a22 = file;
-		future.onError(function(a12) {
-			f2(a12,a22);
 		});
 	}
 	,loadFont: function(file) {
@@ -6207,21 +6187,17 @@ assets_AssetsManager.prototype = {
 		future.onComplete(function(a1) {
 			f(a1,a2);
 		});
-		var f1 = $bind(this,this.onCurrentlyProgress);
+		var f1 = $bind(this,this.onError);
 		var a21 = file;
-		future.onProgress(function(a11) {
+		future.onError(function(a11) {
 			f1(a11,a21);
-		});
-		var f2 = $bind(this,this.onError);
-		var a22 = file;
-		future.onError(function(a12) {
-			f2(a12,a22);
 		});
 	}
 	,loadBytes: function(file) {
 		this.onError("Actually, can't load bytes file, skipping",file);
 	}
 	,onCurrentlyProgress: function(data,file) {
+		var _this = flixel_FlxG.log;
 		if(this.m_onProgressCallback != null) {
 			var total = this.m_currentlyLoaded.length + this.m_currentlyLoading.length + this.m_currentlyFailed.length;
 			var purcentlist = this.m_currentlyLoaded.length / total;
@@ -6229,51 +6205,58 @@ assets_AssetsManager.prototype = {
 		}
 	}
 	,onTextLoaded: function(data,file) {
-		haxe_Log.trace("Text succesfully loaded:" + file,{ fileName : "AssetsManager.hx", lineNumber : 290, className : "assets.AssetsManager", methodName : "onTextLoaded"});
+		var _this = flixel_FlxG.log;
 		this.m_currentlyLoaded.push(file);
 		HxOverrides.remove(this.m_currentlyLoading,file);
-		var _this = this.m_textCache;
+		var _this1 = this.m_textCache;
 		if(__map_reserved[file] != null) {
-			_this.setReserved(file,data);
+			_this1.setReserved(file,data);
 		} else {
-			_this.h[file] = data;
+			_this1.h[file] = data;
 		}
+		this.onCurrentlyProgress(1.0,file);
 		this.nextLoading();
 	}
 	,onBitmapLoaded: function(data,file) {
-		haxe_Log.trace("Bitmap succesfully loaded:" + file,{ fileName : "AssetsManager.hx", lineNumber : 299, className : "assets.AssetsManager", methodName : "onBitmapLoaded"});
+		var _this = flixel_FlxG.log;
 		this.m_currentlyLoaded.push(file);
 		HxOverrides.remove(this.m_currentlyLoading,file);
+		this.onCurrentlyProgress(1.0,file);
 		this.nextLoading();
 	}
 	,onSoundLoaded: function(data,file) {
-		haxe_Log.trace("Sound succesfully loaded:" + file,{ fileName : "AssetsManager.hx", lineNumber : 307, className : "assets.AssetsManager", methodName : "onSoundLoaded"});
+		var _this = flixel_FlxG.log;
 		this.m_currentlyLoaded.push(file);
 		HxOverrides.remove(this.m_currentlyLoading,file);
+		this.onCurrentlyProgress(1.0,file);
 		this.nextLoading();
 	}
 	,onFontLoaded: function(data,file) {
-		haxe_Log.trace("Font succesfully loaded:" + file,{ fileName : "AssetsManager.hx", lineNumber : 315, className : "assets.AssetsManager", methodName : "onFontLoaded"});
+		var _this = flixel_FlxG.log;
 		this.m_currentlyLoaded.push(file);
 		HxOverrides.remove(this.m_currentlyLoading,file);
+		this.onCurrentlyProgress(1.0,file);
 		this.nextLoading();
 	}
 	,onBytesLoaded: function(data,file) {
-		haxe_Log.trace("Bytes succesfully loaded:" + file,{ fileName : "AssetsManager.hx", lineNumber : 323, className : "assets.AssetsManager", methodName : "onBytesLoaded"});
+		var _this = flixel_FlxG.log;
 		this.m_currentlyLoaded.push(file);
 		HxOverrides.remove(this.m_currentlyLoading,file);
-		var _this = this.m_bytesCache;
+		var _this1 = this.m_bytesCache;
 		if(__map_reserved[file] != null) {
-			_this.setReserved(file,data);
+			_this1.setReserved(file,data);
 		} else {
-			_this.h[file] = data;
+			_this1.h[file] = data;
 		}
+		this.onCurrentlyProgress(1.0,file);
 		this.nextLoading();
 	}
 	,onError: function(data,file) {
-		haxe_Log.trace("AssetsLibrary:: An error has occur : " + Std.string(data),{ fileName : "AssetsManager.hx", lineNumber : 334, className : "assets.AssetsManager", methodName : "onError"});
+		var _this = flixel_FlxG.log;
+		var Data = "AssetsLibrary:: An error has occur : " + Std.string(data);
 		this.m_currentlyFailed.push(file);
 		HxOverrides.remove(this.m_currentlyLoading,file);
+		this.onCurrentlyProgress(1.0,file);
 		this.nextLoading();
 	}
 	,getText: function(file) {
@@ -98404,7 +98387,8 @@ state_LoadingState.prototype = $extend(flixel_FlxState.prototype,{
 		assets_AssetsManager.global.loadFiles(state_LoadingState.m_defaultFiles,$bind(this,this.onNeededFilesComplete));
 	}
 	,onProgress: function(nbreFile,totalFile,current,currentFile) {
-		haxe_Log.trace("Step : " + this.m_step / state_LoadingState.m_totalStep + " Files Loaded = " + nbreFile / totalFile + " current file : " + currentFile + " (" + current + ")",{ fileName : "LoadingState.hx", lineNumber : 58, className : "state.LoadingState", methodName : "onProgress"});
+		var _this = flixel_FlxG.log;
+		var Data = "Step : " + this.m_step / state_LoadingState.m_totalStep + " Files Loaded = " + nbreFile / totalFile + " current file : " + currentFile + " (" + current + ")";
 		var stepPurcentDelta = 1 / state_LoadingState.m_totalStep;
 		var filePurcentDelta = 1 / totalFile;
 		var purcentStepRealised = this.m_step * stepPurcentDelta;
@@ -98417,13 +98401,12 @@ state_LoadingState.prototype = $extend(flixel_FlxState.prototype,{
 		if(total < 0.0) {
 			total = 0.0;
 		}
-		haxe_Log.trace("currentPurcent = " + total,{ fileName : "LoadingState.hx", lineNumber : 76, className : "state.LoadingState", methodName : "onProgress"});
 		if(this.m_loadingScreen != null) {
 			this.m_loadingScreen.updateGlobalBar(total);
 		}
 	}
 	,onNeededFilesComplete: function(result) {
-		haxe_Log.trace("NEEDED FILE COMPLETE",{ fileName : "LoadingState.hx", lineNumber : 85, className : "state.LoadingState", methodName : "onNeededFilesComplete"});
+		var _this = flixel_FlxG.log;
 		this.m_step = 0;
 		this.m_loadingScreen = new ui_elements_TLLoadingScreen();
 		this.m_loadingScreen.updateGlobalBar(0);
@@ -98434,7 +98417,7 @@ state_LoadingState.prototype = $extend(flixel_FlxState.prototype,{
 		assets_AssetsManager.global.loadFiles(ext,$bind(this,this.onExtentionFileLoaded));
 	}
 	,onExtentionFileLoaded: function(result) {
-		haxe_Log.trace("EXTENTION FILE COMPLETE",{ fileName : "LoadingState.hx", lineNumber : 101, className : "state.LoadingState", methodName : "onExtentionFileLoaded"});
+		var _this = flixel_FlxG.log;
 		this.m_step = 1;
 		data_manager_GameDatas.self.extentionManager.initAllExtention();
 		var allIllus = data_manager_GameDatas.self.extentionManager.getAllIllustration();
@@ -98442,7 +98425,7 @@ state_LoadingState.prototype = $extend(flixel_FlxState.prototype,{
 		assets_AssetsManager.global.loadFiles(allIllus,$bind(this,this.onIllustrationFileLoaded));
 	}
 	,onIllustrationFileLoaded: function(result) {
-		haxe_Log.trace("ILLUSTRATION FILE COMPLETE",{ fileName : "LoadingState.hx", lineNumber : 114, className : "state.LoadingState", methodName : "onIllustrationFileLoaded"});
+		var _this = flixel_FlxG.log;
 		this.m_step = 2;
 		haxe_Timer.delay($bind(this,this.goToMenu),800);
 	}
