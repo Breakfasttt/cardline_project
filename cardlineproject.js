@@ -132,7 +132,7 @@ ApplicationMain.init = function() {
 	}
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "107", company : "Breakyt", file : "cardlineproject", fps : 60, name : "cardline_project", orientation : "", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : true, hardware : false, height : 720, parameters : "{}", resizable : true, stencilBuffer : true, title : "cardline_project", vsync : true, width : 1280, x : null, y : null}]};
+	ApplicationMain.config = { build : "3", company : "Breakyt", file : "cardlineproject", fps : 60, name : "cardline_project", orientation : "", packageName : "com.example.myapp", version : "0.0.1", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : true, hardware : false, height : 720, parameters : "{}", resizable : true, stencilBuffer : true, title : "cardline_project", vsync : true, width : 1280, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -98162,7 +98162,7 @@ state_ConfigGameState.prototype = $extend(flixel_FlxState.prototype,{
 		this.add(this.m_background);
 	}
 	,initInfos1: function() {
-		this.m_infos1 = new flixel_text_FlxText(0,50,-1,"Cocher les extensions avec lesquels vous voulez jouer : ",52);
+		this.m_infos1 = new flixel_text_FlxText(0,50,-1,"Cocher les extensions avec lesquelles vous voulez jouer : ",52);
 		this.m_infos1.set_color(-16777216);
 		this.m_infos1.screenCenter(flixel_util_FlxAxes.X);
 		this.add(this.m_infos1);
