@@ -61,7 +61,11 @@ class CardGoTo extends BasicMotionScript
 		
 		if (m_withArrival)
 		{
-			var slow = Math.max((dist / m_lengthForArrival), 0.50);
+			var slow = Math.max((dist / (m_lengthForArrival / 2.0)), 0.50);
+			
+			if (slow > 1.0)	
+				slow = 1.0;
+			
 			newX = distanceVector.x * speed * slow * elapsed ;
 			newY = distanceVector.y * speed * slow * elapsed ;
 		}
