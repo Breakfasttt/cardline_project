@@ -210,7 +210,7 @@ class TimelineUi
 			
 		m_cards.insert(m_actualIndex, card);
 		card.skin.scaleSkin(1.0, 1.0);
-		card.skin.setVisible(true);
+		//card.skin.setVisible(true);
 		card.skin.draggable = false;
 		
 		m_displayGroup.add(card.skin);

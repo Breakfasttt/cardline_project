@@ -76,6 +76,8 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	private var m_initScaleTitle : FlxPoint;
 	private var m_initScaleValue : FlxPoint;
 	
+	private var m_generalPosition : FlxPoint;
+	private var m_generalOffset : FlxPoint;
 	private var m_generalScaling : FlxPoint;
 	
 	private var m_wikiBtn : FlxButton;
@@ -85,6 +87,8 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		super();
 		
 		m_generalScaling = new FlxPoint(1, 1);
+		m_generalOffset = new FlxPoint(0, 0);
+		m_generalPosition = new FlxPoint(1, 1);
 		m_initScaleBg = new FlxPoint(1, 1);
 		m_initScaleIllus = new FlxPoint(1, 1);
 		m_initScaleTitle = new FlxPoint(1, 1);
@@ -156,6 +160,7 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	{
 		m_generalScaling.set(x, y);
 		
+		
 		if (m_background != null)
 		{
 			m_background.scale.set(m_initScaleBg.x * x, m_initScaleBg.y * y);
@@ -181,9 +186,12 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		}
 			
 		
-		m_background.x = 0;
-		m_background.y = 0;
 		this.updatePosition();
+	}
+	
+	public function getGeneralScale() : FlxPoint
+	{
+		return new FlxPoint(m_generalScaling.x, m_generalScaling.y);
 	}
 	
 	override public function update(elapsed:Float):Void 
@@ -217,6 +225,9 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	{
 		if (m_background == null || m_illustration == null || m_titleTxt == null || m_valueTxt == null)
 			return;
+			
+		m_background.x = m_generalPosition.x + m_generalOffset.x;
+		m_background.y = m_generalPosition.y + m_generalOffset.y;
 			
 		m_illustration.setPosition(m_background.x + cardBorder * m_generalScaling.x, m_background.y + CardSkin.cardBorder * m_generalScaling.y + CardSkin.offsetForText* m_generalScaling.y);
 		
@@ -275,22 +286,23 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		if (!isDrag)
 			return;
 			
-		m_background.x = FlxG.mouse.x - m_mouseOffsetX;
-		m_background.y = FlxG.mouse.y - m_mouseOffsetY;
+		m_generalPosition.x = FlxG.mouse.x - m_mouseOffsetX;
+		m_generalPosition.y = FlxG.mouse.y - m_mouseOffsetY;
 		
-		if (m_background.x < 0)
-			m_background.x = 0;
+		if (m_generalPosition.x < 0)
+			m_generalPosition.x = 0;
 		
-		if (m_background.y < 0)
-			m_background.y = 0;
+		if (m_generalPosition.y < 0)
+			m_generalPosition.y = 0;
 			
-		if ( m_background.x > (FlxG.width - m_background.width))
-			m_background.x = FlxG.width - m_background.width;
+		if ( m_generalPosition.x > (FlxG.width - m_background.width))
+			m_generalPosition.x = FlxG.width - m_background.width;
 			
 		
-		if ( m_background.y  > (FlxG.height - m_background.height ))
-			m_background.y = FlxG.height - m_background.height;
+		if ( m_generalPosition.y  > (FlxG.height - m_background.height ))
+			m_generalPosition.y = FlxG.height - m_background.height;
 			
+		updatePosition();
 
 		if (onDragCallback != null)
 			onDragCallback(this);			
@@ -325,10 +337,24 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		}*/
 	}
 	
+	public function setOffset(x : Float, y : Float) : Void
+	{
+		m_generalOffset.x = x;
+		m_generalOffset.y = y;
+		updatePosition();
+	}
+	
+	public function addPosition(x : Float, y : Float) : Void
+	{
+		m_generalPosition.x += x;
+		m_generalPosition.y += y;
+		updatePosition();
+	}
+	
 	public function setPosition(x : Float, y : Float)
 	{
-		m_background.x = x;
-		m_background.y = y;
+		m_generalPosition.x = x;
+		m_generalPosition.y = y;
 		updatePosition();
 	}
 	

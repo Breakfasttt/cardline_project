@@ -11,6 +11,8 @@ import flixel.system.FlxAssets;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import haxe.Timer;
+import motion.CardSkinMotionManager;
+import motion.motionScript.FlipCard;
 import source.ui.skin.CardSkin;
 import ui.elements.Card;
 import ui.elements.ConfirmPopup;
@@ -41,6 +43,8 @@ class PlayState extends FlxState
 	private var m_confirmPopup : ConfirmPopup;
 	
 	
+	private var m_motion : CardSkinMotionManager;
+	
 	/**
 	 * Stats
 	 */
@@ -57,6 +61,7 @@ class PlayState extends FlxState
 		
 		m_wrongCard = 0;
 		m_correctCard = 0;
+		m_motion = new CardSkinMotionManager();
 		
 		m_board = new FlxSprite(0, 0, AssetsManager.global.getFlxGraphic(AssetPaths.board2__jpg));
 		
@@ -90,6 +95,7 @@ class PlayState extends FlxState
 		m_quitBtn.updateInactiveButtonColors([FlxColor.BROWN, FlxColor.BROWN, FlxColor.BROWN]);
 		m_quitBtn.updateActiveButtonColors([FlxColor.BROWN, FlxColor.GRAY]);		
 			
+		this.add(m_motion);
 		this.add(m_board);
 		this.add(m_quitBtn);
 		this.add(m_correctCardTxt);
@@ -176,7 +182,8 @@ class PlayState extends FlxState
 			else
 			{
 				m_correctCard++;
-				card.skin.blink();
+				//card.skin.blink();
+				m_motion.add(new FlipCard(card.skin, 8.0, null));
 			}
 			
 			this.updateStatsText();
