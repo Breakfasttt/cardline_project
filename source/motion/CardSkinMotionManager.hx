@@ -1,6 +1,7 @@
 package motion;
 import flixel.FlxBasic;
 import motion.motionScript.BasicMotionScript;
+import source.ui.skin.CardSkin;
 
 /**
  * ...
@@ -47,5 +48,24 @@ class CardSkinMotionManager extends FlxBasic
 	public function add(script : BasicMotionScript) : Void
 	{
 		m_motionScripts.push(script);
+	}
+	
+	public function remove(skin : CardSkin, classToRemove : Class<BasicMotionScript> = null)
+	{
+		for (script in m_motionScripts)
+		{
+			if (script.cardSkinRef == skin)
+			{
+				if (classToRemove != null)
+				{
+					if (Type.getClass(script) == classToRemove)
+						script.isEnded = true;
+				}
+				else
+				{
+					script.isEnded = true;
+				}
+			}
+		}
 	}
 }

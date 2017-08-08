@@ -11,6 +11,9 @@ import flixel.math.FlxPoint;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
+import motion.CardSkinMotionManager;
+import motion.motionScript.CardGoTo;
+import motion.motionScript.FlipCard;
 import source.data.card.CardData;
 import source.ui.skin.CardSkin;
 import ui.elements.Card;
@@ -57,8 +60,14 @@ class DeckUi
 	
 	private var m_actualScale : FlxPoint;
 	
-	public function new(playedExtention : Array<String>, infos : String, x : Float = 50, y : Float = 800) 
+	/**
+	 * Reference du motion manager
+	 */
+	private var m_motionManagerRef : CardSkinMotionManager;
+	
+	public function new(motionRef : CardSkinMotionManager, playedExtention : Array<String>, infos : String, x : Float = 50, y : Float = 800) 
 	{
+		m_motionManagerRef = motionRef;
 		m_posX = x;
 		m_posY = y;
 		
@@ -178,11 +187,12 @@ class DeckUi
 		
 		var card : Card = m_deck[m_deck.length - 1];
 		card.skin.scaleSkin(m_actualScale.x, m_actualScale.y);
-		card.skin.setPosition(m_posX, m_posY);
-		card.skin.setVisible(revealCard);
-		
 		m_deckGroup.add(card.skin);
+		card.skin.setPosition(m_posX, m_posY);
+		//m_motionManagerRef.add(new FlipCard(card.skin, 6.0, null));
+		card.skin.setVisible(revealCard);
 	}
+	
 	
 	private function updateInfos() : Void
 	{
@@ -229,27 +239,44 @@ class DeckUi
 			return;
 			
 		card.skin.draggable = false;
-		card.skin.setVisible(false);
 		card.skin.scaleSkin(m_actualScale.x, m_actualScale.y);
 		
 		//hide the card at top just in case
-		if (m_deck.length > 0)
+		if (m_deck.length > 0 && !atTop)
 			m_deck[m_deck.length - 1].skin.visible = false;		
 		
 		if (!random)
 		{
 			if (atTop)
+			{
 				m_deck.push(card);
+				m_deckGroup.add(card.skin);
+				m_motionManagerRef.add(new CardGoTo(card.skin, 1600, FlxPoint.get(m_posX, m_posY), true, onEndMoving.bind(_,revealTop)));
+			}
 			else
+			{
 				m_deck.unshift(card);
+				card.skin.setVisible(false);
+			}
 		}
 		else
 		{
 			var rand : Int = Std.random(m_deck.length);
 			m_deck.insert(rand, card);
+			card.skin.setVisible(false);
 		}
 		
 		updateInfos();
+		
+		if(!atTop)
+			displayTopOfTheDeck(revealTop);
+	}
+	
+	private function onEndMoving(skin : CardSkin, revealTop : Bool)
+	{
+		if (m_deck.length > 1)
+			m_deck[m_deck.length - 2].skin.visible = false;	
+		m_deckGroup.remove(skin);
 		displayTopOfTheDeck(revealTop);
 	}
 	

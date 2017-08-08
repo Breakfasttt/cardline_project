@@ -2,6 +2,9 @@ package ui.gameZone;
 import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.input.FlxAccelerometer;
+import flixel.math.FlxPoint;
+import motion.CardSkinMotionManager;
+import motion.motionScript.CardGoTo;
 import source.ui.skin.CardSkin;
 import ui.elements.Card;
 import ui.skin.CardSkinGroup;
@@ -44,8 +47,14 @@ class MainHandUi
 	// callback When card is put on timeline
 	private var m_callbackOnPut : Card->Void;
 	
-	public function new(maxCardOnHand : Int, callback : Card->Void) 
+	/**
+	 * Reference du motion manager
+	 */
+	private var m_motionManagerRef : CardSkinMotionManager;	
+	
+	public function new(motion : CardSkinMotionManager,  maxCardOnHand : Int, callback : Card->Void) 
 	{
+		m_motionManagerRef = motion;
 		m_maxCardOnHand = maxCardOnHand;
 		m_callbackOnPut = callback;
 		m_cards = new Array<Card>();
@@ -100,7 +109,7 @@ class MainHandUi
 		card.skin.onDragCallback = this.onCardDrag.bind(_, card);
 		
 		m_handUI.add(card.skin);
-		moveToSlot(card);
+		//moveToSlot(card);
 		refreshCardPosition();
 		return true;
 	}
@@ -194,7 +203,9 @@ class MainHandUi
 				
 		var posX = m_xStart + index * (CardSkin.cardWidth + m_offsetXBetweenCard);
 		
-		card.skin.setPosition(posX, m_yLine);
+		m_motionManagerRef.remove(card.skin, CardGoTo);
+		m_motionManagerRef.add(new CardGoTo(card.skin, 3600, FlxPoint.get(posX, m_yLine), true, null));
+		//card.skin.setPosition(posX, m_yLine);
 	}
 	
 	/**

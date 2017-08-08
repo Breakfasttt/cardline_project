@@ -59,6 +59,7 @@ class FlipCard extends BasicMotionScript
 		}
 		else if (m_middleFlip && m_currentMotion >= 1.0)
 		{
+			this.cardSkinRef.setOffset(0, 0);
 			this.isEnded = true;
 			if (m_endingCallback != null)
 				m_endingCallback(this.cardSkinRef);

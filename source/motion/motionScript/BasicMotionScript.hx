@@ -23,7 +23,7 @@ class BasicMotionScript
 	/**
 	 * Set this bool when motion is ended
 	 */
-	public var isEnded(default, null) : Bool;
+	public var isEnded : Bool;
 	
 	/**
 	 * The callback called when motion is finished

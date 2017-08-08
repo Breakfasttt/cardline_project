@@ -65,14 +65,14 @@ class PlayState extends FlxState
 		
 		m_board = new FlxSprite(0, 0, AssetsManager.global.getFlxGraphic(AssetPaths.board2__jpg));
 		
-		m_deckUI = new DeckUi(GameDatas.self.selectedExtention.copy(), "Pioche", 50, 25);
+		m_deckUI = new DeckUi(m_motion, GameDatas.self.selectedExtention.copy(), "Pioche", 50, 25);
 		m_deckUI.setScale(m_scaleDeckAndGraveyard, m_scaleDeckAndGraveyard);
 		m_maxWrongCard = Math.ceil(m_deckUI.getNbreCard() * 15 / 100);
 		
-		m_graveyardUI = new DeckUi(new Array<String>(), "Défausse" ,50 + CardSkin.cardWidth*m_scaleDeckAndGraveyard + 40, 25);
+		m_graveyardUI = new DeckUi(m_motion, new Array<String>(), "Défausse" ,50 + CardSkin.cardWidth*m_scaleDeckAndGraveyard + 40, 25);
 		m_graveyardUI.setScale(m_scaleDeckAndGraveyard, m_scaleDeckAndGraveyard);
 		
-		m_mainHandUI = new MainHandUi(m_maxCardOnHand, onPutCard);
+		m_mainHandUI = new MainHandUi(m_motion, m_maxCardOnHand, onPutCard);
 		
 		m_timeline = new TimelineUi();
 		
@@ -175,7 +175,7 @@ class PlayState extends FlxState
 			if (!m_timeline.addCard(card))
 			{
 				cardToGraveyard(card);
-				card.skin.blink();
+				//card.skin.blink();
 				deckToMainHand();
 				m_wrongCard++;
 			}

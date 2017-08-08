@@ -191,7 +191,7 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 	
 	public function getGeneralScale() : FlxPoint
 	{
-		return new FlxPoint(m_generalScaling.x, m_generalScaling.y);
+		return FlxPoint.get(m_generalScaling.x, m_generalScaling.y);
 	}
 	
 	override public function update(elapsed:Float):Void 
@@ -242,7 +242,6 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 			m_wikiBtn.setPosition(	m_illustration.x + m_illustration.width - m_wikiBtn.width, 
 									m_illustration.y + m_illustration.height - m_wikiBtn.height);
 		}
-		
 	}
 	
 	
@@ -356,6 +355,11 @@ class CardSkin extends FlxTypedGroup<FlxSprite>
 		m_generalPosition.x = x;
 		m_generalPosition.y = y;
 		updatePosition();
+	}
+	
+	public function getPosition() : FlxPoint
+	{
+		return FlxPoint.get(m_generalPosition.x, m_generalPosition.y);
 	}
 	
 	private function initBackGround() : Void
