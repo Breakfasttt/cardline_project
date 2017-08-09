@@ -74,7 +74,7 @@ class PlayState extends FlxState
 		
 		m_mainHandUI = new MainHandUi(m_motion, m_maxCardOnHand, onPutCard);
 		
-		m_timeline = new TimelineUi();
+		m_timeline = new TimelineUi(m_motion);
 		
 		initConfirmPopup();
 		initStatsText();
@@ -183,7 +183,7 @@ class PlayState extends FlxState
 			{
 				m_correctCard++;
 				//card.skin.blink();
-				m_motion.add(new FlipCard(card.skin, 8.0, null));
+				//m_motion.add(new FlipCard(card.skin, 8.0, null));
 			}
 			
 			this.updateStatsText();

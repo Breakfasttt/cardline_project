@@ -9,6 +9,9 @@ import flixel.math.FlxPoint;
 import flixel.util.FlxAxes;
 import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
+import motion.CardSkinMotionManager;
+import motion.motionScript.CardGoTo;
+import motion.motionScript.FlipCard;
 import source.ui.skin.CardSkin;
 import ui.elements.Card;
 
@@ -69,8 +72,12 @@ class TimelineUi
 	private var m_mouseStartPosition : FlxPoint;
 	
 	
-	public function new() 
+	private var m_motionManagerRef : CardSkinMotionManager;
+	
+	
+	public function new(motionref : CardSkinMotionManager) 
 	{
+		m_motionManagerRef = motionref;
 		m_groupRef = null;
 		m_displayGroup = new FlxGroup();
 		m_cards = new Array<Card>();
@@ -261,9 +268,20 @@ class TimelineUi
 			else
 				x = m_firstCardPosition.x + (i - m_actualIndex) * (CardSkin.cardWidth + m_cardOffset);
 				
-			m_cards[i].skin.setPosition(x, y);
+			//m_cards[i].skin.setPosition(x, y);
+			m_motionManagerRef.remove(m_cards[i].skin, CardGoTo);
+			m_motionManagerRef.add(new CardGoTo(m_cards[i].skin, 3200, FlxPoint.get(x, y), true, null, checkFlip));
 		}
-	}	
+	}
+	
+	private function checkFlip(skin : CardSkin) : Void
+	{
+		if (!skin.isVisible)
+		{
+			m_motionManagerRef.remove(skin, FlipCard);
+			m_motionManagerRef.add(new FlipCard(skin, 6, null));
+		}
+	}
 	
 	public function checkPutCollision(card : Card) : Bool
 	{
@@ -328,6 +346,7 @@ class TimelineUi
 	{
 		attachTo(null);
 		m_groupRef = null;
+		m_motionManagerRef = null;
 		
 		m_displayGroup.remove(m_upBorder);
 		m_displayGroup.remove(m_downBorder);

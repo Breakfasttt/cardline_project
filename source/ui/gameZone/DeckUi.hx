@@ -189,10 +189,11 @@ class DeckUi
 		card.skin.scaleSkin(m_actualScale.x, m_actualScale.y);
 		m_deckGroup.add(card.skin);
 		card.skin.setPosition(m_posX, m_posY);
-		//m_motionManagerRef.add(new FlipCard(card.skin, 6.0, null));
-		card.skin.setVisible(revealCard);
+		
+		card.skin.setVisible(false); //security
+		if(revealCard)
+			m_motionManagerRef.add(new FlipCard(card.skin, 6.0, null));
 	}
-	
 	
 	private function updateInfos() : Void
 	{
@@ -239,7 +240,7 @@ class DeckUi
 			return;
 			
 		card.skin.draggable = false;
-		card.skin.scaleSkin(m_actualScale.x, m_actualScale.y);
+		//card.skin.scaleSkin(m_actualScale.x, m_actualScale.y);
 		
 		//hide the card at top just in case
 		if (m_deck.length > 0 && !atTop)
@@ -251,7 +252,7 @@ class DeckUi
 			{
 				m_deck.push(card);
 				m_deckGroup.add(card.skin);
-				m_motionManagerRef.add(new CardGoTo(card.skin, 1600, FlxPoint.get(m_posX, m_posY), true, onEndMoving.bind(_,revealTop)));
+				m_motionManagerRef.add(new CardGoTo(card.skin, 1600, FlxPoint.get(m_posX, m_posY), true, FlxPoint.get(m_actualScale.x,m_actualScale.y), onEndMoving.bind(_,revealTop)));
 			}
 			else
 			{
@@ -308,6 +309,7 @@ class DeckUi
 	{
 		attachTo(null);
 		m_groupRef = null;
+		m_motionManagerRef = null;
 		
 		m_deckGroup.remove(m_deckBorder);
 		m_deckGroup.remove(m_txtInfos);

@@ -99,7 +99,7 @@ class MainHandUi
 		
 			
 		m_cards[index] = card;
-		card.skin.scaleSkin(1, 1);
+		//card.skin.scaleSkin(1, 1);
 		card.skin.draggable = true;
 		card.skin.setVisible(false);
 		
@@ -204,7 +204,7 @@ class MainHandUi
 		var posX = m_xStart + index * (CardSkin.cardWidth + m_offsetXBetweenCard);
 		
 		m_motionManagerRef.remove(card.skin, CardGoTo);
-		m_motionManagerRef.add(new CardGoTo(card.skin, 3600, FlxPoint.get(posX, m_yLine), true, null));
+		m_motionManagerRef.add(new CardGoTo(card.skin, 3600, FlxPoint.get(posX, m_yLine), true, FlxPoint.get(1.0,1.0), null));
 		//card.skin.setPosition(posX, m_yLine);
 	}
 	
@@ -293,6 +293,7 @@ class MainHandUi
 		m_cardOnDrag = null;
 		attachTo(null);
 		m_groupRef = null;
+		m_motionManagerRef = null;
 		
 		for (card in m_cards)
 		{

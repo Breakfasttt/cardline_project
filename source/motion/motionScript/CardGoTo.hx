@@ -1,5 +1,6 @@
 package motion.motionScript;
 
+import flash.display.InteractiveObject;
 import flixel.math.FlxPoint;
 import source.ui.skin.CardSkin;
 
@@ -20,13 +21,18 @@ class CardGoTo extends BasicMotionScript
 	
 	private var m_lengthForArrival : Float;
 	
+	private var m_endScale : FlxPoint;
 	
-	public function new(ref:CardSkin, speed:Float, target : FlxPoint, withArrival : Bool, endingCallBack:CardSkin->Void) 
+	private var m_startScale : FlxPoint;
+	
+	public function new(ref:CardSkin, speed:Float, target : FlxPoint, withArrival : Bool, endScale : FlxPoint, endingCallBack:CardSkin->Void) 
 	{
 		super(ref, speed, endingCallBack);
 		m_target = target;
 		m_withArrival = withArrival;
 		m_startPosition = ref.getPosition();
+		m_startScale = ref.getGeneralScale();
+		m_endScale = endScale;
 		
 		m_sens = FlxPoint.get(m_target.x - m_startPosition.x, m_target.y - m_startPosition.y);
 		m_lengthForArrival = Math.sqrt(m_sens.x * m_sens.x + m_sens.y * m_sens.y);
@@ -58,10 +64,11 @@ class CardGoTo extends BasicMotionScript
 		
 		var newX : Float = 0.0;
 		var newY : Float = 0.0;
+		var ratioDist : Float = dist / m_lengthForArrival;
 		
 		if (m_withArrival)
 		{
-			var slow = Math.max((dist / (m_lengthForArrival / 2.0)), 0.50);
+			var slow = Math.max(ratioDist*2, 0.50);
 			
 			if (slow > 1.0)	
 				slow = 1.0;
@@ -73,6 +80,13 @@ class CardGoTo extends BasicMotionScript
 		{
 			newX = distanceVector.x * speed * elapsed ;
 			newY = distanceVector.y * speed * elapsed ;
+		}
+		
+		if (m_endScale != null)
+		{
+			var scaleX = ((m_startScale.x - m_endScale.x) )  * ratioDist + m_endScale.x;
+			var scaleY = ((m_startScale.y - m_endScale.y) )  * ratioDist + m_endScale.y;
+			this.cardSkinRef.scaleSkin(scaleX, scaleY);
 		}
 		
 		this.cardSkinRef.addPosition(newX, newY);

@@ -48,7 +48,7 @@ class FlipCard extends BasicMotionScript
 		var newScale = m_startScale.x * m_currentMotion;
 		this.cardSkinRef.scaleSkin(newScale, m_startScale.y);
 		
-		var diff = (CardSkin.cardWidth - CardSkin.cardWidth * newScale) / 2.0;
+		var diff = (CardSkin.cardWidth * m_startScale.x - CardSkin.cardWidth * newScale) / 2.0 ;
 		
 		this.cardSkinRef.setOffset(diff, 0);
 		
