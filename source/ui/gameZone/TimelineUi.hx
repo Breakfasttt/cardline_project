@@ -1,4 +1,6 @@
 package ui.gameZone;
+import assets.AssetPaths;
+import assets.AssetsManager;
 import data.manager.GameDatas;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -6,6 +8,7 @@ import flixel.group.FlxGroup;
 import flixel.input.FlxAccelerometer;
 import flixel.input.mouse.FlxMouseEventManager;
 import flixel.math.FlxPoint;
+import flixel.ui.FlxButton;
 import flixel.util.FlxAxes;
 import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
@@ -30,6 +33,8 @@ class TimelineUi
 	
 	private static var m_cardOffset : Int = 25;
 	
+	private static var m_buttonSize : Int = 85;
+	
 	/**
 	 * Groups
 	 */	
@@ -46,8 +51,13 @@ class TimelineUi
 	private var m_putZoneCollider : FlxSprite;
 	
 	private var m_mouseCollider : FlxSprite;
-	private var m_leftCollider : FlxSprite;
-	private var m_rightCollider : FlxSprite;
+	//private var m_leftCollider : FlxSprite;
+	//private var m_rightCollider : FlxSprite;
+	
+	private var m_nextBtn : FlxButton;
+	private var m_previousBtn : FlxButton;
+	private var m_goToBeginBtn : FlxButton;
+	private var m_goToEndBtn : FlxButton;
 	
 	/**
 	 * Card management
@@ -84,6 +94,7 @@ class TimelineUi
 		m_actualIndex = 0;
 		m_elapsedTime = 0;
 		initBorders();
+		initButton();
 		initPutZone();
 		initCollider();
 	}
@@ -146,23 +157,77 @@ class TimelineUi
 	private function initCollider() : Void
 	{
 		m_mouseCollider = new FlxSprite();
-		m_leftCollider = new FlxSprite();
-		m_rightCollider = new FlxSprite();
+		//m_leftCollider = new FlxSprite();
+		//m_rightCollider = new FlxSprite();
 		
 		m_mouseCollider.makeGraphic(FlxG.width, CardSkin.cardHeight + 2 * m_lineOffset - Math.ceil(m_upBorder.thickness), FlxColor.TRANSPARENT);
-		m_leftCollider.makeGraphic(Math.ceil(CardSkin.cardWidth * 1.5), CardSkin.cardHeight + 2 * m_lineOffset - Math.ceil(m_upBorder.thickness) , FlxColor.TRANSPARENT);
-		m_rightCollider.makeGraphic(Math.ceil(CardSkin.cardWidth * 1.5), CardSkin.cardHeight + 2 * m_lineOffset - Math.ceil(m_upBorder.thickness) , FlxColor.TRANSPARENT);
+		//m_leftCollider.makeGraphic(Math.ceil(CardSkin.cardWidth * 1.5), CardSkin.cardHeight + 2 * m_lineOffset - Math.ceil(m_upBorder.thickness) , FlxColor.TRANSPARENT);
+		//m_rightCollider.makeGraphic(Math.ceil(CardSkin.cardWidth * 1.5), CardSkin.cardHeight + 2 * m_lineOffset - Math.ceil(m_upBorder.thickness) , FlxColor.TRANSPARENT);
 		
 		m_mouseCollider.setPosition(0, m_linePositionY + m_upBorder.thickness);
-		m_leftCollider.setPosition(0, m_linePositionY + m_upBorder.thickness);
-		m_rightCollider.setPosition(FlxG.width - m_rightCollider.width, m_linePositionY + m_upBorder.thickness);
+		//m_leftCollider.setPosition(0, m_linePositionY + m_upBorder.thickness);
+		//m_rightCollider.setPosition(FlxG.width - m_rightCollider.width, m_linePositionY + m_upBorder.thickness);
 		
 		m_displayGroup.add(m_mouseCollider);
-		m_displayGroup.add(m_leftCollider);
-		m_displayGroup.add(m_rightCollider);
+		//m_displayGroup.add(m_leftCollider);
+		//m_displayGroup.add(m_rightCollider);
 		
 		FlxMouseEventManager.add(m_mouseCollider, onMouseColliderDown, onMouseColliderUp, null, onMouseColliderUp, false, true, false);
 	}
+	
+	private function initButton() : Void
+	{
+		m_nextBtn = new FlxButton(0, 0, "+1", this.moveIndex.bind(true));
+		m_goToEndBtn = new FlxButton(0, 0, "fin", this.gotoExtremity.bind(false));
+		
+		m_nextBtn.loadGraphic(AssetsManager.global.getFlxGraphic(AssetPaths.nextBtn__png), true, 128, 128);
+		m_nextBtn.setGraphicSize(m_buttonSize, m_buttonSize);
+		m_nextBtn.updateHitbox();
+		
+		m_goToEndBtn.loadGraphic(AssetsManager.global.getFlxGraphic(AssetPaths.gotoBtn__png), true, 128, 128);
+		m_goToEndBtn.setGraphicSize(m_buttonSize, m_buttonSize);
+		m_goToEndBtn.updateHitbox();
+		
+		m_previousBtn = new FlxButton(0,0,"-1", this.moveIndex.bind(false));
+		m_goToBeginBtn = new FlxButton(0, 0, "debut", this.gotoExtremity.bind(true));
+		
+
+		m_previousBtn.loadGraphic(AssetsManager.global.getFlxGraphic(AssetPaths.nextBtn__png), true, 128, 128);
+		m_previousBtn.setGraphicSize(m_buttonSize, m_buttonSize);
+		m_previousBtn.scale.x = -m_previousBtn.scale.x;
+		m_previousBtn.updateHitbox();
+		
+		m_goToBeginBtn.loadGraphic(AssetsManager.global.getFlxGraphic(AssetPaths.gotoBtn__png), true, 128, 128);
+		m_goToBeginBtn.setGraphicSize(m_buttonSize, m_buttonSize);
+		m_goToBeginBtn.scale.x = -m_goToBeginBtn.scale.x;
+		m_goToBeginBtn.updateHitbox();		
+		
+		m_nextBtn.setPosition(FlxG.width/2.0 + 100, m_downBorder.y + m_downBorder.height + 5);
+		m_goToEndBtn.setPosition(m_nextBtn.x + m_nextBtn.width + 25, m_nextBtn.y);
+		
+		m_previousBtn.setPosition(FlxG.width/2.0 - 100 - m_previousBtn.width, m_downBorder.y + m_downBorder.height + 5);
+		m_goToBeginBtn.setPosition(m_previousBtn.x - m_goToBeginBtn.width - 25, m_previousBtn.y);
+		
+		m_displayGroup.add(m_nextBtn);
+		m_displayGroup.add(m_previousBtn);
+		m_displayGroup.add(m_goToBeginBtn);
+		m_displayGroup.add(m_goToEndBtn);
+	}
+	
+	private function gotoExtremity(begin : Bool)
+	{
+		if (begin)
+		{
+			m_actualIndex = 0;
+			this.moveIndex(false);
+		}
+		else
+		{
+			m_actualIndex = m_cards.length;
+			this.moveIndex(true);
+		}
+	}
+	
 	
 	public function addCard(card : Card) : Bool
 	{
@@ -320,7 +385,7 @@ class TimelineUi
 				m_mouseStartPosition.x = FlxG.mouse.x;
 			}
 		}
-		else if(m_elapsedTime <= 0.0 && card != null)
+		/*else if(m_elapsedTime <= 0.0 && card != null)
 		{
 		
 			if (FlxG.overlap(card.skin, m_leftCollider))
@@ -333,7 +398,7 @@ class TimelineUi
 				this.moveIndex();
 				m_elapsedTime = m_tempoBeforeMove;
 			}
-		}
+		}*/
 	}
 	
 	public function reinitPutColor() : Void
@@ -353,8 +418,8 @@ class TimelineUi
 		m_displayGroup.remove(m_putZone);
 		m_displayGroup.remove(m_putZoneCollider);
 		m_displayGroup.remove(m_mouseCollider);
-		m_displayGroup.remove(m_leftCollider);
-		m_displayGroup.remove(m_rightCollider);
+		//m_displayGroup.remove(m_leftCollider);
+		//m_displayGroup.remove(m_rightCollider);
 		
 		
 		for (card in m_cards)
@@ -380,10 +445,10 @@ class TimelineUi
 		m_putZoneCollider = null;
 		m_mouseCollider.destroy();
 		m_mouseCollider = null;
-		m_leftCollider.destroy();
+		/*m_leftCollider.destroy();
 		m_leftCollider = null;
 		m_rightCollider.destroy();
-		m_rightCollider = null;
+		m_rightCollider = null;*/
 		m_firstCardPosition.destroy();
 		m_firstCardPosition = null;
 		
