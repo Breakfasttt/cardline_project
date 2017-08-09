@@ -1,5 +1,5 @@
-The cardline project (Work in progress)
-=======================================
+The cardline project 
+====================
 
 
 There is a simple game project make with [Haxeflixel](http://haxeflixel.com/).
@@ -13,5 +13,10 @@ I Stream the development at https://www.twitch.tv/breakfast_fr . Feel free to sa
 If you want to compile it, you need to [install & configure Haxeflixel](http://haxeflixel.com/documentation/getting-started/)
 
 Feel free to Download/modify it.
+
+Test the [html5 version](https://breakfasttt.github.io/cardline_project/)
+
+or download the [latest release](https://github.com/Breakfasttt/cardline_project/releases)
+
 
 have fun
