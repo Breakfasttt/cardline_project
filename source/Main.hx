@@ -9,6 +9,7 @@ import openfl.display.Sprite;
 import state.LoadingState;
 import state.MenuState;
 import state.PlayState;
+import assets.CardlinePreloader;
 
 class Main extends Sprite
 {
